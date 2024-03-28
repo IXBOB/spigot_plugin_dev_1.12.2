@@ -20,7 +20,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getCommand("lobby").setExecutor(new CommandKit());
-        this.getCommand("testkit").setExecutor(new CommandTestkit());
+        this.getCommand("testkit").setExecutor(new CommandTestkit(this));
 
         Listener OnJoinListener = new OnJoinListener();
         getServer().getPluginManager().registerEvents(OnJoinListener, this);

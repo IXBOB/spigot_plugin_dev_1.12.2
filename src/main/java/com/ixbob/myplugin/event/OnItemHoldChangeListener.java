@@ -29,6 +29,8 @@ public class OnItemHoldChangeListener implements Listener {
                 NBTItem nbti = new NBTItem(newSlotItem);
                 float currentExp = nbti.getFloat("cooldown_progress");
                 player.setExp(currentExp);
+                int shou_qiang_ammo = player.getMetadata("shou_qiang_ammo").get(0).asInt();
+                player.setLevel(shou_qiang_ammo);
             }
         }
     }
