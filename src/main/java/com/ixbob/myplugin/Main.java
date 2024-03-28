@@ -45,6 +45,7 @@ public class Main extends JavaPlugin {
     public boolean connect(String ip, int port) {
         try {
             client = new MongoClient(ip, port);
+            System.out.println("database connected!");
         } catch (UnknownHostException e) {
             System.out.println("Could not connect to database!");
             e.printStackTrace();
