@@ -1,7 +1,6 @@
 
 package com.ixbob.myplugin.command;
 
-import de.tr7zw.nbtapi.NBTEntity;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
