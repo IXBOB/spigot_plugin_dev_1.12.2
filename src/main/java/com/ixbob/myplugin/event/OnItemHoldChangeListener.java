@@ -22,6 +22,9 @@ public class OnItemHoldChangeListener implements Listener {
 
         }
         if (newSlotItem != null) {
+            if (newSlotItem.getType() != Material.WOOD_HOE) {
+                player.setExp(0.0f);
+            }
             if (newSlotItem.getType() == Material.WOOD_HOE) {
                 NBTItem nbti = new NBTItem(newSlotItem);
                 float currentExp = nbti.getFloat("cooldown_progress");
