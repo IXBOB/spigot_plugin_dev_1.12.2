@@ -5,10 +5,7 @@ import com.ixbob.myplugin.task.BulletMoveTask;
 import com.ixbob.myplugin.task.ReloadGunTask;
 import com.ixbob.myplugin.task.ShotCoolDownTask;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,10 +45,11 @@ public class OnUseHoeListener implements Listener {
                 && item.getType() == Material.WOOD_HOE) {
 
             int shou_qiang_ammo_origin = player.getMetadata("shou_qiang_ammo").get(0).asInt();
+            NBTItem nbtItem = new NBTItem(item);
 
             if ((action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK)
                     && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
-                    && player.getExp() == 1.0f
+                    && nbtItem.getFloat("cooldown_progress") == 1.0f
                     && shou_qiang_ammo_origin > 0) {
                 Vector interactDirection = player.getLocation().getDirection();
                 Location interactLocation = new Location(world, player.getLocation().getX(), player.getLocation().getY() + 1.5, player.getLocation().getZ());
@@ -62,6 +60,7 @@ public class OnUseHoeListener implements Listener {
                 armorStand.setVisible(false);
                 armorStand.teleport(interactLocation);
                 armorStand.teleport(armorStand.getLocation().setDirection(interactDirection));
+                armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, (int) 0));
                 bulletMove(armorStand);
 
                 player.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
@@ -70,7 +69,6 @@ public class OnUseHoeListener implements Listener {
                     reloadGunAmmo(plugin, item, player);
                 }
                 player.setExp(0f);
-                NBTItem nbtItem = new NBTItem(item);
                 nbtItem.setFloat("cooldown_progress", 0.0f);
                 item = nbtItem.getItem();
                 player.getInventory().setItemInMainHand(item);
@@ -80,6 +78,8 @@ public class OnUseHoeListener implements Listener {
                 int shou_qiang_ammo_left = shou_qiang_ammo_origin - 1;
                 player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, shou_qiang_ammo_left));
                 player.setLevel(shou_qiang_ammo_left);
+
+                world.playSound(interactLocation, Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 1, 2f);
 
 
             }
@@ -135,6 +135,7 @@ public class OnUseHoeListener implements Listener {
     public void bulletMove(ArmorStand armorStand){
         System.out.println("running");
         armorStand.teleport(armorStand.getLocation().add(armorStand.getLocation().getDirection().multiply(1.2)));
+        armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, armorStand.getMetadata("fly_distance").get(0).asInt() + 1));
         List<Entity> nearbyEntities = armorStand.getNearbyEntities(0.5,0.5,0.5);
         if (!nearbyEntities.isEmpty()) {
             for (Entity entity : nearbyEntities) {
@@ -150,7 +151,8 @@ public class OnUseHoeListener implements Listener {
                 }
             }
         }
-        if (armorStand.getLocation().getBlock().getType() != Material.AIR) {
+        if (armorStand.getLocation().getBlock().getType() != Material.AIR
+                || armorStand.getMetadata("fly_distance").get(0).asInt() >= 20) {
             armorStand.remove();
             return;
         }
