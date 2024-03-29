@@ -1,15 +1,13 @@
 package com.ixbob.myplugin.event;
 
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.rmi.server.ExportException;
+import java.util.Objects;
 
 public class OnItemHoldChangeListener implements Listener {
     @EventHandler
@@ -19,18 +17,30 @@ public class OnItemHoldChangeListener implements Listener {
         ItemStack newSlotItem = event.getPlayer().getInventory().getItem(newSlotNum);
         if (newSlotItem == null) {
             player.setExp(0.0f);
-
         }
         if (newSlotItem != null) {
-            if (newSlotItem.getType() != Material.WOOD_HOE) {
-                player.setExp(0.0f);
-            }
-            if (newSlotItem.getType() == Material.WOOD_HOE) {
-                NBTItem nbti = new NBTItem(newSlotItem);
-                float currentExp = nbti.getFloat("cooldown_progress");
+            NBTItem nbtNewSlotItem = new NBTItem(newSlotItem);
+            if (Objects.equals(nbtNewSlotItem.getString("item_type"), "gun")) {
+                float currentExp = nbtNewSlotItem.getFloat("cooldown_progress");
                 player.setExp(currentExp);
-                int shou_qiang_ammo = player.getMetadata("shou_qiang_ammo").get(0).asInt();
-                player.setLevel(shou_qiang_ammo);
+                int gun_ammo;
+                switch (nbtNewSlotItem.getString("gun_name")) {
+                    case ("shou_qiang"): {
+                        gun_ammo = player.getMetadata("shou_qiang_ammo").get(0).asInt();
+                        break;
+                    }
+                    case ("bu_qiang"): {
+                        gun_ammo = player.getMetadata("bu_qiang_ammo").get(0).asInt();
+                        break;
+                    }
+                    default: {
+                        throw new NullPointerException("Are you kidding me? no gun matches.");
+                    }
+                }
+                player.setLevel(gun_ammo);
+            }
+            else {
+                player.setExp(0.0f);
             }
         }
     }

@@ -2,6 +2,7 @@ package com.ixbob.myplugin;
 
 import com.ixbob.myplugin.command.CommandKit;
 import com.ixbob.myplugin.command.CommandTestkit;
+import com.ixbob.myplugin.event.OnBreakBlockListener;
 import com.ixbob.myplugin.event.OnItemHoldChangeListener;
 import com.ixbob.myplugin.event.OnJoinListener;
 import com.ixbob.myplugin.event.OnUseHoeListener;
@@ -30,6 +31,9 @@ public class Main extends JavaPlugin {
 
         Listener OnItemHoldChangeListener = new OnItemHoldChangeListener();
         getServer().getPluginManager().registerEvents(OnItemHoldChangeListener, this);
+
+        Listener OnBreakBlockListener = new OnBreakBlockListener();
+        getServer().getPluginManager().registerEvents(OnBreakBlockListener, this);
 
         connect("127.0.0.1", 27017);
 

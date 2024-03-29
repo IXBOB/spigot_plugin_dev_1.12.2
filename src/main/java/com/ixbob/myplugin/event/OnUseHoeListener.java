@@ -16,8 +16,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
@@ -39,56 +37,86 @@ public class OnUseHoeListener implements Listener {
         this.eventPlayer = player;
         World world = event.getPlayer().getWorld();
 
-        if (event.getHand() ==
-                EquipmentSlot.HAND
-                && item != null
-                && item.getType() == Material.WOOD_HOE) {
+        if (event.getHand() == EquipmentSlot.HAND
+                && item != null) {
 
-            int shou_qiang_ammo_origin = player.getMetadata("shou_qiang_ammo").get(0).asInt();
             NBTItem nbtItem = new NBTItem(item);
 
-            if ((action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK)
-                    && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
-                    && nbtItem.getFloat("cooldown_progress") == 1.0f
-                    && shou_qiang_ammo_origin > 0) {
-                Vector interactDirection = player.getLocation().getDirection();
-                Location interactLocation = new Location(world, player.getLocation().getX(), player.getLocation().getY() + 1.5, player.getLocation().getZ());
+            if (Objects.equals(nbtItem.getString("item_type"), "gun")) {
 
-                Location spawnCacheLocation = new Location(world,interactLocation.getX(), interactLocation.getY() + 100d, interactLocation.getZ());
-                ArmorStand armorStand = (ArmorStand) world.spawnEntity(spawnCacheLocation, EntityType.ARMOR_STAND);
-                armorStand.setGravity(false);
-                armorStand.setVisible(false);
-                armorStand.teleport(interactLocation);
-                armorStand.teleport(armorStand.getLocation().setDirection(interactDirection));
-                armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, (int) 0));
-                bulletMove(armorStand);
-
-                player.getInventory().removeItem(new ItemStack(Material.ARROW, 1));
-                item.setDurability((short) (item.getDurability() + 1));
-                if (item.getDurability() >= 59) {
-                    reloadGunAmmo(plugin, item, player);
+                event.setCancelled(true);
+                int ammo_origin;
+                String using_gun_type;
+                switch (nbtItem.getString("gun_name")) {
+                    case ("shou_qiang"): {
+                        ammo_origin = player.getMetadata("shou_qiang_ammo").get(0).asInt();
+                        using_gun_type = "shou_qiang";
+                        break;
+                    }
+                    case ("bu_qiang"): {
+                        ammo_origin = player.getMetadata("bu_qiang_ammo").get(0).asInt();
+                        using_gun_type = "bu_qiang";
+                        break;
+                    }
+                    default:
+                        throw new NullPointerException("Are you kidding me? no gun matches.");
                 }
-                player.setExp(0f);
-                nbtItem.setFloat("cooldown_progress", 0.0f);
-                item = nbtItem.getItem();
-                player.getInventory().setItemInMainHand(item);
-                float addExpPerCount = calculateAddExpCount(1.0f);
-                shotCoolDown(player, addExpPerCount, item);
 
-                int shou_qiang_ammo_left = shou_qiang_ammo_origin - 1;
-                player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, shou_qiang_ammo_left));
-                player.setLevel(shou_qiang_ammo_left);
+                if ((action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK)
+                        && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                        && nbtItem.getFloat("cooldown_progress") == 1.0f
+                        && ammo_origin > 0) {
+                    Vector interactDirection = player.getLocation().getDirection();
+                    Location interactLocation = new Location(world, player.getLocation().getX(), player.getLocation().getY() + 1.5, player.getLocation().getZ());
 
-                world.playSound(interactLocation, Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 1, 2f);
+                    Location spawnCacheLocation = new Location(world,interactLocation.getX(), interactLocation.getY() + 100d, interactLocation.getZ());
+                    ArmorStand armorStand = (ArmorStand) world.spawnEntity(spawnCacheLocation, EntityType.ARMOR_STAND);
+                    armorStand.setGravity(false);
+                    armorStand.setVisible(false);
+                    armorStand.teleport(interactLocation);
+                    armorStand.teleport(armorStand.getLocation().setDirection(interactDirection));
+                    armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, 0));
+                    bulletMove(armorStand);
+
+                    item.setDurability((short) (item.getDurability() + 1));
+                    if (item.getDurability() >= 59) {
+                        reloadGunAmmo(item, player);
+                    }
+                    player.setExp(0f);
+                    nbtItem.setFloat("cooldown_progress", 0.0f);
+                    item = nbtItem.getItem();
+                    player.getInventory().setItemInMainHand(item);
+                    float addExpPerCount = calculateAddExpCount(1.0f);
+                    shotCoolDown(player, addExpPerCount, item);
+
+                    int ammo_left = ammo_origin - 1;
+                    switch (using_gun_type) {
+                        case ("shou_qiang"): {
+                            player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, ammo_left));
+                            break;
+                        }
+                        case ("bu_qiang"): {
+                            player.setMetadata("bu_qiang_ammo", new FixedMetadataValue(plugin, ammo_left));
+                            break;
+                        }
+                        default:
+                            throw new NullPointerException("Are you kidding me? no gun matches.");
+                    }
+                    player.setLevel(ammo_left);
+
+                    world.playSound(interactLocation, Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 1, 2f);
 
 
-            }
-            if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK)
-                    && item.getDurability() != 0){
-                item.setDurability((short) 59);
-                reloadGunAmmo(plugin, item, player);
+                }
+                if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK)
+                        && item.getDurability() != 0){
+                    item.setDurability((short) 59);
+                    reloadGunAmmo(item, player);
+                }
             }
         }
+
+
     }
 
     public float calculateAddExpCount (float coolDownTime) {   //Update xp bar per 0.05s (1 tick)
@@ -97,23 +125,35 @@ public class OnUseHoeListener implements Listener {
     }
 
     public void shotCoolDown(Player player, float addExpPerCount, ItemStack eventInteractItem) {
-        NBTItem event_nbt_item = new NBTItem(eventInteractItem);
-        ItemStack inhand_item = player.getInventory().getItemInMainHand();
-        if (inhand_item.getType() == Material.WOOD_HOE) {
-            NBTItem inhand_nbt_item = new NBTItem(inhand_item);
-            String check_target_name = inhand_nbt_item.getString("gun_name");
-            if (Objects.equals(check_target_name, "shou_qiang")) {
+        NBTItem nbtEventItem = new NBTItem(eventInteractItem);
+        ItemStack inhandItem = player.getInventory().getItemInMainHand();
+        if (inhandItem != null) {
+            NBTItem nbtInhandItem = new NBTItem(inhandItem);
+            if (Objects.equals(nbtInhandItem.getString("item_type"),"gun")
+                    && Objects.equals(player.getInventory().getItemInMainHand(),eventInteractItem)) {
                 float newExp = setNew(player.getExp() + addExpPerCount); //Prevent float from reporting errors due to accuracy
                 player.setExp(newExp);
             }
         }
-        event_nbt_item.setFloat("cooldown_progress", setNew(event_nbt_item.getFloat("cooldown_progress") + addExpPerCount));
-        eventInteractItem = event_nbt_item.getItem();
-        player.getInventory().setItem(1, eventInteractItem);
+        nbtEventItem.setFloat("cooldown_progress", setNew(nbtEventItem.getFloat("cooldown_progress") + addExpPerCount));
+        eventInteractItem = nbtEventItem.getItem();
+        switch (nbtEventItem.getString("gun_name")) {
+            case ("shou_qiang"): {
+                player.getInventory().setItem(1, eventInteractItem);
+                break;
+            }
+            case ("bu_qiang"): {
+                player.getInventory().setItem(2, eventInteractItem);
+                break;
+            }
+            default:
+                throw new NullPointerException("Are you kidding me? no gun matches.");
+        }
+
         BukkitTask task = new ShotCoolDownTask(player, addExpPerCount, eventInteractItem,this).runTaskLater(plugin, 1);
     }
 
-    public void reloadGunAmmo(JavaPlugin plugin, ItemStack item, Player player) {  //TODO: remove the 'JavaPlugin plugin' here.
+    public void reloadGunAmmo(ItemStack item, Player player) {
         short newDurability = (short) (item.getDurability() - 1);
         item.setDurability(newDurability);
         NBTItem nbti = new NBTItem(item);
@@ -128,8 +168,19 @@ public class OnUseHoeListener implements Listener {
             itemMeta_finish.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             item.setItemMeta(itemMeta_finish);
         }
-        player.getInventory().setItem(1, item);
-        BukkitTask task = new ReloadGunTask(plugin, item, player, this).runTaskLater(plugin, 1);
+        switch (nbti.getString("dun_name")) {
+            case ("shou_qiang"): {
+                player.getInventory().setItem(1, item);
+                break;
+            }
+            case ("bu_qiang"): {
+                player.getInventory().setItem(2, item);
+                break;
+            }
+            default:
+                throw new NullPointerException("Are you kidding me? no gun matches.");
+        }
+        BukkitTask task = new ReloadGunTask(item, player, this).runTaskLater(plugin, 1);
     }
 
     public void bulletMove(ArmorStand armorStand){
@@ -139,9 +190,13 @@ public class OnUseHoeListener implements Listener {
         List<Entity> nearbyEntities = armorStand.getNearbyEntities(0.5,0.5,0.5);
         if (!nearbyEntities.isEmpty()) {
             for (Entity entity : nearbyEntities) {
-                if (entity.getType() != EntityType.DROPPED_ITEM) {
+                if (entity.getType() != EntityType.DROPPED_ITEM
+                        && entity.getType() != EntityType.ARROW
+                        && entity.getType() != EntityType.LINGERING_POTION
+                        && entity.getType() != EntityType.SPLASH_POTION) {
                     LivingEntity nearbyEntity = (LivingEntity) nearbyEntities.get(0);
                     if (nearbyEntity.getType() == EntityType.ZOMBIE
+                            || nearbyEntity.getType() == EntityType.SKELETON
                             || nearbyEntity.getType() == EntityType.CREEPER
                             || nearbyEntity.getType() == EntityType.SPIDER) {
                         nearbyEntity.damage(5, eventPlayer);

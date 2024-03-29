@@ -23,13 +23,23 @@ public class CommandTestkit implements CommandExecutor {
 
             ItemStack item_wood_hoe = new ItemStack(Material.WOOD_HOE);
             NBTItem nbti_wood_hoe = new NBTItem(item_wood_hoe);
+            nbti_wood_hoe.setString("item_type", "gun");
             nbti_wood_hoe.setString("gun_name", "shou_qiang");
             nbti_wood_hoe.setFloat("cooldown_progress", 1.0f);
             item_wood_hoe = nbti_wood_hoe.getItem();
 
+            ItemStack item_stone_hoe = new ItemStack(Material.STONE_HOE);
+            NBTItem nbti_stone_hoe = new NBTItem(item_stone_hoe);
+            nbti_stone_hoe.setString("item_type", "gun");
+            nbti_stone_hoe.setString("gun_name", "bu_qiang");
+            nbti_stone_hoe.setFloat("cooldown_progress", 1.0f);
+            item_stone_hoe = nbti_stone_hoe.getItem();
+
             player.getInventory().setItem(1, item_wood_hoe);
+            player.getInventory().setItem(2, item_stone_hoe);
 
             player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, 300));
+            player.setMetadata("bu_qiang_ammo", new FixedMetadataValue(plugin, 300));
         }
 
         return true;
