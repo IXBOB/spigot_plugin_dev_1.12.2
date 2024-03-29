@@ -40,6 +40,9 @@ public class CommandTestkit implements CommandExecutor {
 
             player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, 300));
             player.setMetadata("bu_qiang_ammo", new FixedMetadataValue(plugin, 300));
+
+            player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 30));
+            player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 50));
         }
 
         return true;

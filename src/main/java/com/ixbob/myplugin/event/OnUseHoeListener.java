@@ -20,17 +20,36 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class OnUseHoeListener implements Listener {
     private final Main plugin;
     private Player eventPlayer;
+    private String usingGunName;
+
+    private final Map<String, Float> gunCoolDownTime = Map.of(
+        "shou_qiang", 1.0f,
+        "bu_qiang", 0.5f
+    );
+    private final Map<String, Float> gunDamage = Map.of(
+            "shou_qiang", 4.5f,
+            "bu_qiang", 3.0f
+    );
+    private final Map<String, Integer> gunMagazineFullAmmo = Map.of(
+            "shou_qiang", 30,
+            "bu_qiang", 50
+    );
+    private final Map<String, Integer> gunDurabilityLegacy = Map.of(
+            "shou_qiang", 59,
+            "bu_qiang", 131
+    );
 
     public OnUseHoeListener(Main plugin) {
         this.plugin = plugin;
     }
     @EventHandler
-    public void onUseWoodenHoe(PlayerInteractEvent event) {
+    public void onUseHoe(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
         Action action = event.getAction();
         Player player = event.getPlayer();
@@ -46,16 +65,20 @@ public class OnUseHoeListener implements Listener {
 
                 event.setCancelled(true);
                 int ammo_origin;
-                String using_gun_type;
+                int shou_qiang_current_magazine_ammo = player.getMetadata("shou_qiang_current_magazine_ammo").get(0).asInt();
+                int bu_qiang_current_magazine_ammo = player.getMetadata("bu_qiang_current_magazine_ammo").get(0).asInt();
+                int current_magazine_ammo;
                 switch (nbtItem.getString("gun_name")) {
                     case ("shou_qiang"): {
                         ammo_origin = player.getMetadata("shou_qiang_ammo").get(0).asInt();
-                        using_gun_type = "shou_qiang";
+                        current_magazine_ammo = shou_qiang_current_magazine_ammo;
+                        usingGunName = "shou_qiang";
                         break;
                     }
                     case ("bu_qiang"): {
                         ammo_origin = player.getMetadata("bu_qiang_ammo").get(0).asInt();
-                        using_gun_type = "bu_qiang";
+                        current_magazine_ammo = bu_qiang_current_magazine_ammo;
+                        usingGunName = "bu_qiang";
                         break;
                     }
                     default:
@@ -78,39 +101,45 @@ public class OnUseHoeListener implements Listener {
                     armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, 0));
                     bulletMove(armorStand);
 
-                    item.setDurability((short) (item.getDurability() + 1));
-                    if (item.getDurability() >= 59) {
-                        reloadGunAmmo(item, player);
-                    }
-                    player.setExp(0f);
-                    nbtItem.setFloat("cooldown_progress", 0.0f);
-                    item = nbtItem.getItem();
-                    player.getInventory().setItemInMainHand(item);
-                    float addExpPerCount = calculateAddExpCount(1.0f);
-                    shotCoolDown(player, addExpPerCount, item);
-
                     int ammo_left = ammo_origin - 1;
-                    switch (using_gun_type) {
+                    switch (usingGunName) {
                         case ("shou_qiang"): {
                             player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, ammo_left));
+                            shou_qiang_current_magazine_ammo -= 1;
+                            player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, shou_qiang_current_magazine_ammo));
                             break;
                         }
                         case ("bu_qiang"): {
                             player.setMetadata("bu_qiang_ammo", new FixedMetadataValue(plugin, ammo_left));
+                            bu_qiang_current_magazine_ammo -= 1;
+                            player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, bu_qiang_current_magazine_ammo));
                             break;
                         }
                         default:
                             throw new NullPointerException("Are you kidding me? no gun matches.");
                     }
+
+                    current_magazine_ammo -= 1;
+                    player.setExp(0f);
                     player.setLevel(ammo_left);
-
+                    System.out.println(current_magazine_ammo);
+                    System.out.println(shou_qiang_current_magazine_ammo);
+                    System.out.println(bu_qiang_current_magazine_ammo);
+                    nbtItem.setFloat("cooldown_progress", 0.0f);
+                    item = nbtItem.getItem();
+                    item.setDurability((short) ((gunMagazineFullAmmo.get(usingGunName).shortValue() - current_magazine_ammo) * gunDurabilityLegacy.get(usingGunName).shortValue() / gunMagazineFullAmmo.get(usingGunName).shortValue()));
+                    player.getInventory().setItemInMainHand(item);
+                    float addExpPerCount = calculateAddExpCount(gunCoolDownTime.get(usingGunName));
+                    shotCoolDown(player, addExpPerCount, item);
                     world.playSound(interactLocation, Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 1, 2f);
-
+                    if (current_magazine_ammo == 0) {
+                        reloadGunAmmo(item, player);
+                    }
 
                 }
                 if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK)
                         && item.getDurability() != 0){
-                    item.setDurability((short) 59);
+                    item.setDurability(gunDurabilityLegacy.get(usingGunName).shortValue());
                     reloadGunAmmo(item, player);
                 }
             }
@@ -120,6 +149,7 @@ public class OnUseHoeListener implements Listener {
     }
 
     public float calculateAddExpCount (float coolDownTime) {   //Update xp bar per 0.05s (1 tick)
+
         float addExpCount = coolDownTime / 0.05f;  //fill it with how many times
         return 1.0f / addExpCount;  //fill how much per time
     }
@@ -127,7 +157,7 @@ public class OnUseHoeListener implements Listener {
     public void shotCoolDown(Player player, float addExpPerCount, ItemStack eventInteractItem) {
         NBTItem nbtEventItem = new NBTItem(eventInteractItem);
         ItemStack inhandItem = player.getInventory().getItemInMainHand();
-        if (inhandItem != null) {
+        if (inhandItem != null && inhandItem.getType() != Material.AIR) {
             NBTItem nbtInhandItem = new NBTItem(inhandItem);
             if (Objects.equals(nbtInhandItem.getString("item_type"),"gun")
                     && Objects.equals(player.getInventory().getItemInMainHand(),eventInteractItem)) {
@@ -167,8 +197,20 @@ public class OnUseHoeListener implements Listener {
             ItemMeta itemMeta_finish = item.getItemMeta();
             itemMeta_finish.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             item.setItemMeta(itemMeta_finish);
+            switch (nbti.getString("gun_name")) {
+                case ("shou_qiang"): {
+                    player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 30));
+                    break;
+                }
+                case ("bu_qiang"): {
+                    player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 50));
+                    break;
+                }
+                default:
+                    throw new NullPointerException("Are you kidding me? no gun matches.");
+            }
         }
-        switch (nbti.getString("dun_name")) {
+        switch (nbti.getString("gun_name")) {
             case ("shou_qiang"): {
                 player.getInventory().setItem(1, item);
                 break;
@@ -193,13 +235,14 @@ public class OnUseHoeListener implements Listener {
                 if (entity.getType() != EntityType.DROPPED_ITEM
                         && entity.getType() != EntityType.ARROW
                         && entity.getType() != EntityType.LINGERING_POTION
-                        && entity.getType() != EntityType.SPLASH_POTION) {
+                        && entity.getType() != EntityType.SPLASH_POTION
+                        && entity.getType() != EntityType.EXPERIENCE_ORB) {
                     LivingEntity nearbyEntity = (LivingEntity) nearbyEntities.get(0);
                     if (nearbyEntity.getType() == EntityType.ZOMBIE
                             || nearbyEntity.getType() == EntityType.SKELETON
                             || nearbyEntity.getType() == EntityType.CREEPER
                             || nearbyEntity.getType() == EntityType.SPIDER) {
-                        nearbyEntity.damage(5, eventPlayer);
+                        nearbyEntity.damage(gunDamage.get(usingGunName), eventPlayer);
                         armorStand.remove();
                         return;
                     }

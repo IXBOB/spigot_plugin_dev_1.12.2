@@ -1,6 +1,6 @@
 name: MyPlugin
 version: 1.0.0
-api-version: 1.18
+api-version: 1.12
 author: IXBOB
 description: This plugin does so much stuff it can't be contained!
 website: www.example.com
@@ -13,4 +13,7 @@ commands:
     aliases: [l, hub]
   testkit:
     description: get a test kit.
+    usage: /<command>
+  test:
+    description: test command.
     usage: /<command>

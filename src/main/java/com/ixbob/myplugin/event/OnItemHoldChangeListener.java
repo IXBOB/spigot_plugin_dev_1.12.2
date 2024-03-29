@@ -17,6 +17,7 @@ public class OnItemHoldChangeListener implements Listener {
         ItemStack newSlotItem = event.getPlayer().getInventory().getItem(newSlotNum);
         if (newSlotItem == null) {
             player.setExp(0.0f);
+            player.setLevel(0);
         }
         if (newSlotItem != null) {
             NBTItem nbtNewSlotItem = new NBTItem(newSlotItem);
@@ -41,6 +42,7 @@ public class OnItemHoldChangeListener implements Listener {
             }
             else {
                 player.setExp(0.0f);
+                player.setLevel(0);
             }
         }
     }
