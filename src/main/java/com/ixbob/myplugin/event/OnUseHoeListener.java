@@ -36,6 +36,11 @@ public class OnUseHoeListener implements Listener {
             "shou_qiang", 4.5f,
             "bu_qiang", 3.0f
     );
+
+    private final Map<String, Float> gunReloadAmmoTime = Map.of(
+            "shou_qiang", 2.0f,
+            "bu_qiang", 3.0f
+    );
     private final Map<String, Integer> gunMagazineFullAmmo = Map.of(
             "shou_qiang", 30,
             "bu_qiang", 50
@@ -130,15 +135,16 @@ public class OnUseHoeListener implements Listener {
                     item.setDurability((short) ((gunMagazineFullAmmo.get(usingGunName).shortValue() - current_magazine_ammo) * gunDurabilityLegacy.get(usingGunName).shortValue() / gunMagazineFullAmmo.get(usingGunName).shortValue()));
                     player.getInventory().setItemInMainHand(item);
                     float addExpPerCount = calculateAddExpCount(gunCoolDownTime.get(usingGunName));
-                    shotCoolDown(player, addExpPerCount, item);
                     world.playSound(interactLocation, Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 1, 2f);
                     if (current_magazine_ammo == 0) {
                         reloadGunAmmo(item, player);
                     }
+                    shotCoolDown(player, addExpPerCount, item);
 
                 }
                 if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK)
-                        && item.getDurability() != 0){
+                        && item.getDurability() != 0
+                        && !nbtItem.getBoolean("reloading")){
                     item.setDurability(gunDurabilityLegacy.get(usingGunName).shortValue());
                     reloadGunAmmo(item, player);
                 }
@@ -187,16 +193,21 @@ public class OnUseHoeListener implements Listener {
         short newDurability = (short) (item.getDurability() - 1);
         item.setDurability(newDurability);
         NBTItem nbti = new NBTItem(item);
-        nbti.setShort("durability", newDurability);
+        nbti.setFloat("cooldown_progress", 1.0f);
+        nbti.setBoolean("reloading", true);
         item = nbti.getItem();
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         item.setItemMeta(itemMeta);
         short durability_new = item.getDurability();
         if (durability_new == 0) {
+            System.out.println("set_false");
+            nbti.setBoolean("reloading", false);
+            item = nbti.getItem();
             ItemMeta itemMeta_finish = item.getItemMeta();
             itemMeta_finish.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             item.setItemMeta(itemMeta_finish);
+            player.setExp(1.0f);
             switch (nbti.getString("gun_name")) {
                 case ("shou_qiang"): {
                     player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 30));

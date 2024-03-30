@@ -26,6 +26,7 @@ public class CommandTestkit implements CommandExecutor {
             nbti_wood_hoe.setString("item_type", "gun");
             nbti_wood_hoe.setString("gun_name", "shou_qiang");
             nbti_wood_hoe.setFloat("cooldown_progress", 1.0f);
+            nbti_wood_hoe.setBoolean("reloading", false);
             item_wood_hoe = nbti_wood_hoe.getItem();
 
             ItemStack item_stone_hoe = new ItemStack(Material.STONE_HOE);
@@ -33,6 +34,7 @@ public class CommandTestkit implements CommandExecutor {
             nbti_stone_hoe.setString("item_type", "gun");
             nbti_stone_hoe.setString("gun_name", "bu_qiang");
             nbti_stone_hoe.setFloat("cooldown_progress", 1.0f);
+            nbti_stone_hoe.setBoolean("reloading", false);
             item_stone_hoe = nbti_stone_hoe.getItem();
 
             player.getInventory().setItem(1, item_wood_hoe);
