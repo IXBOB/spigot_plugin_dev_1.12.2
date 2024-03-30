@@ -23,7 +23,6 @@ public class ShotCoolDownTask extends BukkitRunnable {
     public void run() {
         NBTItem nbtEventInteractItem = new NBTItem(eventInteractItem);
         if (nbtEventInteractItem.getFloat("cooldown_progress") < 1.0f){
-
             listener.shotCoolDown(player, addExpPerCount, eventInteractItem);
         }
     }

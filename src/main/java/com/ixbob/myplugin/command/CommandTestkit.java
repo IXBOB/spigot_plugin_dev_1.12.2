@@ -21,7 +21,7 @@ public class CommandTestkit implements CommandExecutor {
         if(commandSender instanceof Player) {
             Player player = (Player) commandSender;
 
-            ItemStack item_wood_hoe = new ItemStack(Material.WOOD_HOE);
+            ItemStack item_wood_hoe = new ItemStack(Material.WOOD_HOE, 30);
             NBTItem nbti_wood_hoe = new NBTItem(item_wood_hoe);
             nbti_wood_hoe.setString("item_type", "gun");
             nbti_wood_hoe.setString("gun_name", "shou_qiang");
@@ -29,7 +29,7 @@ public class CommandTestkit implements CommandExecutor {
             nbti_wood_hoe.setBoolean("reloading", false);
             item_wood_hoe = nbti_wood_hoe.getItem();
 
-            ItemStack item_stone_hoe = new ItemStack(Material.STONE_HOE);
+            ItemStack item_stone_hoe = new ItemStack(Material.STONE_HOE, 50);
             NBTItem nbti_stone_hoe = new NBTItem(item_stone_hoe);
             nbti_stone_hoe.setString("item_type", "gun");
             nbti_stone_hoe.setString("gun_name", "bu_qiang");

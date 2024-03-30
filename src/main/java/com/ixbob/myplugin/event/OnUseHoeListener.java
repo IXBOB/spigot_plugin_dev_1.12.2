@@ -38,8 +38,8 @@ public class OnUseHoeListener implements Listener {
     );
 
     private final Map<String, Float> gunReloadAmmoTime = Map.of(
-            "shou_qiang", 2.0f,
-            "bu_qiang", 3.0f
+            "shou_qiang", 4.0f,
+            "bu_qiang", 5.0f
     );
     private final Map<String, Integer> gunMagazineFullAmmo = Map.of(
             "shou_qiang", 30,
@@ -132,19 +132,23 @@ public class OnUseHoeListener implements Listener {
                     System.out.println(bu_qiang_current_magazine_ammo);
                     nbtItem.setFloat("cooldown_progress", 0.0f);
                     item = nbtItem.getItem();
-                    item.setDurability((short) ((gunMagazineFullAmmo.get(usingGunName).shortValue() - current_magazine_ammo) * gunDurabilityLegacy.get(usingGunName).shortValue() / gunMagazineFullAmmo.get(usingGunName).shortValue()));
                     player.getInventory().setItemInMainHand(item);
                     float addExpPerCount = calculateAddExpCount(gunCoolDownTime.get(usingGunName));
                     world.playSound(interactLocation, Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 1, 2f);
                     if (current_magazine_ammo == 0) {
+                        item.setDurability(gunDurabilityLegacy.get(nbtItem.getString("gun_name")).shortValue());
                         reloadGunAmmo(item, player);
+                    }
+                    else {
+                        item.setAmount(current_magazine_ammo);
                     }
                     shotCoolDown(player, addExpPerCount, item);
 
                 }
                 if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK)
-                        && item.getDurability() != 0
+                        && item.getAmount() != gunMagazineFullAmmo.get(nbtItem.getString("gun_name"))
                         && !nbtItem.getBoolean("reloading")){
+                    item.setAmount(1);
                     item.setDurability(gunDurabilityLegacy.get(usingGunName).shortValue());
                     reloadGunAmmo(item, player);
                 }
@@ -163,15 +167,17 @@ public class OnUseHoeListener implements Listener {
     public void shotCoolDown(Player player, float addExpPerCount, ItemStack eventInteractItem) {
         NBTItem nbtEventItem = new NBTItem(eventInteractItem);
         ItemStack inhandItem = player.getInventory().getItemInMainHand();
+        nbtEventItem.setFloat("cooldown_progress", setNew(nbtEventItem.getFloat("cooldown_progress") + addExpPerCount));
         if (inhandItem != null && inhandItem.getType() != Material.AIR) {
             NBTItem nbtInhandItem = new NBTItem(inhandItem);
             if (Objects.equals(nbtInhandItem.getString("item_type"),"gun")
                     && Objects.equals(player.getInventory().getItemInMainHand(),eventInteractItem)) {
-                float newExp = setNew(player.getExp() + addExpPerCount); //Prevent float from reporting errors due to accuracy
+                float newExp = setNew(nbtEventItem.getFloat("cooldown_progress")); //Prevent float from reporting errors due to accuracy
                 player.setExp(newExp);
+                System.out.println("newExp: " + newExp);
+                System.out.println("cooldown_progress" + nbtEventItem.getFloat("cooldown_progress"));
             }
         }
-        nbtEventItem.setFloat("cooldown_progress", setNew(nbtEventItem.getFloat("cooldown_progress") + addExpPerCount));
         eventInteractItem = nbtEventItem.getItem();
         switch (nbtEventItem.getString("gun_name")) {
             case ("shou_qiang"): {
@@ -190,50 +196,7 @@ public class OnUseHoeListener implements Listener {
     }
 
     public void reloadGunAmmo(ItemStack item, Player player) {
-        short newDurability = (short) (item.getDurability() - 1);
-        item.setDurability(newDurability);
-        NBTItem nbti = new NBTItem(item);
-        nbti.setFloat("cooldown_progress", 1.0f);
-        nbti.setBoolean("reloading", true);
-        item = nbti.getItem();
-        ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        item.setItemMeta(itemMeta);
-        short durability_new = item.getDurability();
-        if (durability_new == 0) {
-            System.out.println("set_false");
-            nbti.setBoolean("reloading", false);
-            item = nbti.getItem();
-            ItemMeta itemMeta_finish = item.getItemMeta();
-            itemMeta_finish.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            item.setItemMeta(itemMeta_finish);
-            player.setExp(1.0f);
-            switch (nbti.getString("gun_name")) {
-                case ("shou_qiang"): {
-                    player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 30));
-                    break;
-                }
-                case ("bu_qiang"): {
-                    player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 50));
-                    break;
-                }
-                default:
-                    throw new NullPointerException("Are you kidding me? no gun matches.");
-            }
-        }
-        switch (nbti.getString("gun_name")) {
-            case ("shou_qiang"): {
-                player.getInventory().setItem(1, item);
-                break;
-            }
-            case ("bu_qiang"): {
-                player.getInventory().setItem(2, item);
-                break;
-            }
-            default:
-                throw new NullPointerException("Are you kidding me? no gun matches.");
-        }
-        BukkitTask task = new ReloadGunTask(item, player, this).runTaskLater(plugin, 1);
+        BukkitTask task = new ReloadGunTask(item, player, this, gunReloadAmmoTime, gunDurabilityLegacy, gunMagazineFullAmmo, plugin).runTaskTimer(plugin, 0, 1);
     }
 
     public void bulletMove(ArmorStand armorStand){
