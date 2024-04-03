@@ -14,6 +14,9 @@ commands:
   testkit:
     description: get a test kit.
     usage: /<command>
+  init:
+    description: init command.
+    usage: /<command>
   test:
     description: test command.
     usage: /<command>

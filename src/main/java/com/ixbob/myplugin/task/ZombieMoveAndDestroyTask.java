@@ -1,14 +1,14 @@
 package com.ixbob.myplugin.task;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class SetZombieVelocityTask extends BukkitRunnable {
+public class ZombieMoveAndDestroyTask extends BukkitRunnable {
     @Override
     public void run() {
         for(Entity entity : Bukkit.getWorlds().get(0).getEntities()) {

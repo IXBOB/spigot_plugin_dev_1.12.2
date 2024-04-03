@@ -104,6 +104,7 @@ public class OnUseHoeListener implements Listener {
                     armorStand.teleport(interactLocation);
                     armorStand.teleport(armorStand.getLocation().setDirection(interactDirection));
                     armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, 0));
+                    armorStand.setMetadata("owner", new FixedMetadataValue(plugin, player));
                     bulletMove(armorStand);
 
                     int ammo_left = ammo_origin - 1;
@@ -201,9 +202,9 @@ public class OnUseHoeListener implements Listener {
 
     public void bulletMove(ArmorStand armorStand){
         System.out.println("running");
-        armorStand.teleport(armorStand.getLocation().add(armorStand.getLocation().getDirection().multiply(1.2)));
+        armorStand.teleport(armorStand.getLocation().add(armorStand.getLocation().getDirection().multiply(1.1)));
         armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, armorStand.getMetadata("fly_distance").get(0).asInt() + 1));
-        List<Entity> nearbyEntities = armorStand.getNearbyEntities(0.5,0.5,0.5);
+        List<Entity> nearbyEntities = armorStand.getNearbyEntities(0.1,0.1,0.1);
         if (!nearbyEntities.isEmpty()) {
             for (Entity entity : nearbyEntities) {
                 if (entity.getType() != EntityType.DROPPED_ITEM
@@ -216,6 +217,7 @@ public class OnUseHoeListener implements Listener {
                             || nearbyEntity.getType() == EntityType.SKELETON
                             || nearbyEntity.getType() == EntityType.CREEPER
                             || nearbyEntity.getType() == EntityType.SPIDER) {
+                        nearbyEntity.setMetadata("last_damage_bullet_pos_y", new FixedMetadataValue(plugin, armorStand.getLocation().getY()));
                         nearbyEntity.damage(gunDamage.get(usingGunName), eventPlayer);
                         armorStand.remove();
                         return;
@@ -229,7 +231,7 @@ public class OnUseHoeListener implements Listener {
             return;
         }
         armorStand.getWorld().spawnParticle(Particle.CRIT, armorStand.getLocation(),  1, 0, 0, 0, 0);
-        BukkitTask task = new BulletMoveTask(armorStand, this).runTaskLater(plugin, 2);
+        BukkitTask task = new BulletMoveTask(armorStand, this).runTaskLater(plugin, 1);
     }
 
     public float setNew(float origin) {

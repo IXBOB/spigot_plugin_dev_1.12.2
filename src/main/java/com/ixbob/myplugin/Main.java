@@ -1,20 +1,17 @@
 package com.ixbob.myplugin;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.ixbob.myplugin.command.CommandInit;
 import com.ixbob.myplugin.command.CommandLobby;
 import com.ixbob.myplugin.command.CommandTest;
 import com.ixbob.myplugin.command.CommandTestkit;
-import com.ixbob.myplugin.event.OnBreakBlockListener;
-import com.ixbob.myplugin.event.OnItemHoldChangeListener;
-import com.ixbob.myplugin.event.OnJoinListener;
-import com.ixbob.myplugin.event.OnUseHoeListener;
-import com.ixbob.myplugin.task.SetZombieVelocityTask;
+import com.ixbob.myplugin.event.*;
+import com.ixbob.myplugin.task.ZombieMoveAndDestroyTask;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-import org.bukkit.Location;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -26,8 +23,10 @@ public class Main extends JavaPlugin {
     private MongoClient client;
     @Override
     public void onEnable() {
+
         this.getCommand("lobby").setExecutor(new CommandLobby());
         this.getCommand("testkit").setExecutor(new CommandTestkit(this));
+        this.getCommand("init").setExecutor(new CommandInit(this));
         this.getCommand("test").setExecutor(new CommandTest(this));
 
         Listener OnJoinListener = new OnJoinListener();
@@ -42,7 +41,16 @@ public class Main extends JavaPlugin {
         Listener OnBreakBlockListener = new OnBreakBlockListener();
         getServer().getPluginManager().registerEvents(OnBreakBlockListener, this);
 
-//        BukkitTask task = new SetZombieVelocityTask().runTaskTimer(this, 0, 1);
+        Listener OnDamageMonsterListener = new OnDamageMonsterListener(this);
+        getServer().getPluginManager().registerEvents(OnDamageMonsterListener, this);
+
+        Listener OnKillMonsterListener = new OnKillMonsterListener();
+        getServer().getPluginManager().registerEvents(OnKillMonsterListener, this);
+
+        Listener OnOpenRaffleChestListener = new OnOpenRaffleChestListener();
+        getServer().getPluginManager().registerEvents(OnOpenRaffleChestListener, this);
+
+        BukkitTask task = new ZombieMoveAndDestroyTask().runTaskTimerAsynchronously(this, 0, 1);
 
         connect("127.0.0.1", 27017);
 
@@ -68,4 +76,5 @@ public class Main extends JavaPlugin {
         players = mcserverdb.getCollection("players");
         return true;
     }
+
 }

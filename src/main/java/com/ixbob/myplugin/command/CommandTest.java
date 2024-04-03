@@ -29,7 +29,7 @@ public class CommandTest implements CommandExecutor {
             ZombieLevel1 zombieLevel1 = new ZombieLevel1(location, plugin);
             zombieLevel1.spawn(location.getWorld());
             ItemStack item = player.getInventory().getItemInMainHand();
-            BukkitTask task = new TestTask(item).runTaskTimer(plugin, 0, 1);
+//            BukkitTask task = new TestTask(item).runTaskTimer(plugin, 0, 1);
         }
 
         return true;
