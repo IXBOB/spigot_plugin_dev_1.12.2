@@ -1,8 +1,8 @@
 package com.ixbob.myplugin.task;
 
+import com.ixbob.myplugin.GunProperties;
 import com.ixbob.myplugin.event.OnUseHoeListener;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.command.PluginCommandYamlParser;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -18,13 +18,17 @@ public class ReloadGunTask extends BukkitRunnable {
     private final OnUseHoeListener listener;
     private final Player player;
     private final Plugin plugin;
-    private final Map<String, Float> gunReloadAmmoTime;
-    private final Map<String, Integer> gunDurabilityLegacy;
-    private final Map<String, Integer> gunMagazineFullAmmo;
+    private final Map<GunProperties.GunType, Float> gunReloadAmmoTime;
+    private final Map<GunProperties.GunType, Integer> gunDurabilityLegacy;
+    private final Map<GunProperties.GunType, Integer> gunMagazineFullAmmo;
 
     private float reloadSpentTime = 0.0f;
 
-    public ReloadGunTask(ItemStack item, Player player, OnUseHoeListener listener, Map<String, Float> gunReloadAmmoTime, Map<String, Integer> gunDurabilityLegacy, Map<String, Integer> gunMagazineFullAmmo, Plugin plugin) {
+    public ReloadGunTask(ItemStack item, Player player, OnUseHoeListener listener,
+                         Map<GunProperties.GunType, Float> gunReloadAmmoTime,
+                         Map<GunProperties.GunType, Integer> gunDurabilityLegacy,
+                         Map<GunProperties.GunType, Integer> gunMagazineFullAmmo,
+                         Plugin plugin) {
         this.item = item;
         this.listener = listener;
         this.player = player;
@@ -40,7 +44,9 @@ public class ReloadGunTask extends BukkitRunnable {
             System.out.println("reloading");
             System.out.println("reload_time: " + reloadSpentTime);
             NBTItem nbti_cache = new NBTItem(item);
-            short newDurability = (short) ( gunDurabilityLegacy.get(nbti_cache.getString("gun_name")) - reloadSpentTime / gunReloadAmmoTime.get(nbti_cache.getString("gun_name")) * gunDurabilityLegacy.get(nbti_cache.getString("gun_name")) );
+            String usingGunName = nbti_cache.getString("gun_name");
+            GunProperties.GunType usingGunTypeInstance = GunProperties.GunType.valueOf(usingGunName.toUpperCase());
+            short newDurability = (short) ( gunDurabilityLegacy.get(usingGunTypeInstance) - reloadSpentTime / gunReloadAmmoTime.get(usingGunTypeInstance) * gunDurabilityLegacy.get(usingGunTypeInstance) );
             System.out.println("newDurability: " + newDurability);
             item = nbti_cache.getItem();
             item.setDurability(newDurability);
@@ -60,20 +66,23 @@ public class ReloadGunTask extends BukkitRunnable {
                 itemMeta_finish.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
                 item.setItemMeta(itemMeta_finish);
                 player.setExp(1.0f);
-                switch (nbti.getString("gun_name")) {
-                    case ("shou_qiang"): {
-                        player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 30));
-                        item.setAmount(gunMagazineFullAmmo.get("shou_qiang"));
-                        break;
-                    }
-                    case ("bu_qiang"): {
-                        player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 50));
-                        item.setAmount(gunMagazineFullAmmo.get("bu_qiang"));
-                        break;
-                    }
-                    default:
-                        throw new NullPointerException("Are you kidding me? no gun matches.");
-                }
+
+                player.setMetadata(usingGunTypeInstance.getPlayerMagazineAmmoMetadataKey(), new FixedMetadataValue(plugin, gunMagazineFullAmmo.get(usingGunTypeInstance).shortValue()));
+                item.setAmount(gunMagazineFullAmmo.get(usingGunTypeInstance));
+//                switch (nbti.getString("gun_name")) {
+//                    case ("shou_qiang"): {
+//                        player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 30));
+//                        item.setAmount(gunMagazineFullAmmo.get("shou_qiang"));
+//                        break;
+//                    }
+//                    case ("bu_qiang"): {
+//                        player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 50));
+//                        item.setAmount(gunMagazineFullAmmo.get("bu_qiang"));
+//                        break;
+//                    }
+//                    default:
+//                        throw new NullPointerException("Are you kidding me? no gun matches.");
+//                }
                 cancel();
             }
             switch (nbti.getString("gun_name")) {

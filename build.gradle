@@ -32,3 +32,7 @@ shadowJar {
 test {
     useJUnitPlatform()
 }
+
+javadoc {
+    options.encoding = 'UTF-8'
+}

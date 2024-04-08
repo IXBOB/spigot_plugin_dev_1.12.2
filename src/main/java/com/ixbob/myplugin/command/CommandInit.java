@@ -23,10 +23,11 @@ public class CommandInit implements CommandExecutor {
         Objective scoreboardObjective = scoreboard.registerNewObjective("main", "dummy");
         scoreboardObjective.setDisplayName(ChatColor.YELLOW + "½©Ê¬Ä©ÈÕ");
         Player player = (Player) commandSender;
-        player.setMetadata("coin_count", new FixedMetadataValue(plugin, 0));
+
         scoreboardObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        scoreboardObjective.getScore(player.getDisplayName() + " " + ChatColor.GOLD + 0).setScore(0);
         for (Player playerOnline : Bukkit.getOnlinePlayers()) {
+            playerOnline.setMetadata("coin_count", new FixedMetadataValue(plugin, 0));
+            scoreboardObjective.getScore(playerOnline.getDisplayName() + " " + ChatColor.GOLD + 0).setScore(0);
             playerOnline.setScoreboard(scoreboard);
         }
         player.setScoreboard(scoreboard);
