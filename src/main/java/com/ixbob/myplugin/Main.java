@@ -7,7 +7,8 @@ import com.ixbob.myplugin.command.CommandLobby;
 import com.ixbob.myplugin.command.CommandTest;
 import com.ixbob.myplugin.command.CommandTestkit;
 import com.ixbob.myplugin.event.*;
-import com.ixbob.myplugin.task.ZombieMoveAndDestroyTask;
+import com.ixbob.myplugin.task.ZombieDestroyTask;
+import com.ixbob.myplugin.task.ZombieMoveTask;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
@@ -38,8 +39,8 @@ public class Main extends JavaPlugin {
         Listener OnItemHoldChangeListener = new OnItemHoldChangeListener();
         getServer().getPluginManager().registerEvents(OnItemHoldChangeListener, this);
 
-        Listener OnBreakBlockListener = new OnBreakBlockListener();
-        getServer().getPluginManager().registerEvents(OnBreakBlockListener, this);
+//        Listener OnBreakBlockListener = new OnBreakBlockListener();
+//        getServer().getPluginManager().registerEvents(OnBreakBlockListener, this);
 
         Listener OnDamageMonsterListener = new OnDamageMonsterListener(this);
         getServer().getPluginManager().registerEvents(OnDamageMonsterListener, this);
@@ -50,7 +51,8 @@ public class Main extends JavaPlugin {
         Listener OnOpenRaffleChestListener = new OnOpenRaffleChestListener();
         getServer().getPluginManager().registerEvents(OnOpenRaffleChestListener, this);
 
-        BukkitTask task = new ZombieMoveAndDestroyTask().runTaskTimerAsynchronously(this, 0, 1);
+        BukkitTask zombieMoveTask = new ZombieMoveTask().runTaskTimerAsynchronously(this, 0, 1);
+        BukkitTask zombieDestroyTask = new ZombieDestroyTask(this).runTaskTimerAsynchronously(this, 0, 20);
 
         connect("127.0.0.1", 27017);
 
