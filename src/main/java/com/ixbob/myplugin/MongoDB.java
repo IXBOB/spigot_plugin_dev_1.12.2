@@ -27,7 +27,15 @@ public class MongoDB {
             plugin.getLogger().log(Level.SEVERE, "Could not connect to database!", e);
         }
     }
-
+    public long getCollectionSize(String collectionName) {
+        return mcserverdb.getCollection(collectionName).getCount();
+    }
+    public String getCollectionName() {
+        return collection.getName();
+    }
+    public void insert(DBObject object) {
+        collection.insert(object);
+    }
     public void insertTest() {
         DBObject obj = new BasicDBObject("test_key", "123456");
         obj.put("test_key2", "555555");

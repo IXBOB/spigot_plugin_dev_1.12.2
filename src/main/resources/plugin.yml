@@ -20,3 +20,6 @@ commands:
   test:
     description: test command.
     usage: /<command>
+  zombies:
+    description: control the main game functions and data.
+    usage: /<command>
