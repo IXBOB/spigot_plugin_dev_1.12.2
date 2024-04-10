@@ -23,6 +23,7 @@ public class ZombieLevel1 {
         Zombie zombie = (Zombie) world.spawnEntity(location, EntityType.ZOMBIE);
         zombie.setMetadata("custom_monster", new FixedMetadataValue(plugin, true));
         zombie.setMetadata("level", new FixedMetadataValue(plugin, 1));
+        zombie.setMetadata("justSpawnedForMoveTask", new FixedMetadataValue(plugin, true));
         Bukkit.broadcastMessage("Zombie has spawned!");
     }
 }

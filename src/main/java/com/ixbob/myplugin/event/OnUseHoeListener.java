@@ -54,7 +54,7 @@ public class OnUseHoeListener implements Listener {
                 GunProperties.GunType gunType = GunProperties.GunType.valueOf(nbtItem.getString("gun_name").toUpperCase());
                 int ammo_origin = player.getMetadata(gunType.getPlayerAmmoMetadataKey()).get(0).asInt();
                 int current_magazine_ammo = player.getMetadata(gunType.getPlayerMagazineAmmoMetadataKey()).get(0).asInt();
-                System.out.println(gunType);
+//                System.out.println(gunType);
                 usingGunName = gunType.getTypeName();
                 usingGunTypeInstance = GunProperties.GunType.valueOf(usingGunName.toUpperCase());
 //                int ammo_origin;
@@ -121,8 +121,8 @@ public class OnUseHoeListener implements Listener {
                     current_magazine_ammo -= 1;
                     player.setExp(0f);
                     player.setLevel(ammo_left);
-                    System.out.println(current_magazine_ammo);
-                    System.out.println(ammo_left);
+//                    System.out.println(current_magazine_ammo);
+//                    System.out.println(ammo_left);
                     nbtItem.setFloat("cooldown_progress", 0.0f);
                     item = nbtItem.getItem();
                     player.getInventory().setItemInMainHand(item);
@@ -167,8 +167,8 @@ public class OnUseHoeListener implements Listener {
                     && Objects.equals(player.getInventory().getItemInMainHand(),eventInteractItem)) {
                 float newExp = setNew(nbtEventItem.getFloat("cooldown_progress")); //Prevent float from reporting errors due to accuracy
                 player.setExp(newExp);
-                System.out.println("newExp: " + newExp);
-                System.out.println("cooldown_progress" + nbtEventItem.getFloat("cooldown_progress"));
+//                System.out.println("newExp: " + newExp);
+//                System.out.println("cooldown_progress" + nbtEventItem.getFloat("cooldown_progress"));
             }
         }
         eventInteractItem = nbtEventItem.getItem();
@@ -209,8 +209,8 @@ public class OnUseHoeListener implements Listener {
                             || nearbyEntity.getType() == EntityType.CREEPER
                             || nearbyEntity.getType() == EntityType.SPIDER) {
                         nearbyEntity.setMetadata("last_damage_bullet_pos_y", new FixedMetadataValue(plugin, armorStand.getLocation().getY()));
-                        nearbyEntity.damage(gunDamage.get(usingGunTypeInstance), eventPlayer);
                         eventPlayer.setMetadata("last_damage_using_gun_type", new FixedMetadataValue(plugin, armorStand.getMetadata("belong_gun_type").get(0).asString()));
+                        nearbyEntity.damage(gunDamage.get(usingGunTypeInstance), eventPlayer);
                         armorStand.remove();
                         return;
                     }

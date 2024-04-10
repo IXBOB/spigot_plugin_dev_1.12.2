@@ -13,34 +13,59 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockVector;
 import org.bukkit.util.Vector;
 
 public class ZombieMoveTask extends BukkitRunnable {
+    private final Plugin plugin;
     private ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
     private MongoDB mongoDB = new MongoDB("windowLoc");
+    public ZombieMoveTask (Plugin plugin) {
+        this.plugin = plugin;
+    }
     @Override
     public void run() {
         for(Entity entity : Bukkit.getWorlds().get(0).getEntities()) {
             if (entity.getType() == EntityType.ZOMBIE) {
+
                 Zombie zombie = (Zombie) entity;
-                if (zombie.getTicksLived() < 2) {
-                    setInitMove(zombie);
+
+                if (zombie.getMetadata("justSpawnedForMoveTask").get(0).asBoolean()) {
+                    Location nearestWindowLoc = getNearestWindowLoc(zombie);
+                    Vector moveVec3 = calculateMoveVec3(zombie, nearestWindowLoc);
+                    zombie.setMetadata("moveVec3_x", new FixedMetadataValue(plugin, moveVec3.getX()));
+                    zombie.setMetadata("moveVec3_z", new FixedMetadataValue(plugin, moveVec3.getZ()));
+                    zombie.setMetadata("justSpawnedForMoveTask", new FixedMetadataValue(plugin, false));
+                    zombie.setMetadata("waitingMoveToWindow", new FixedMetadataValue(plugin, true));
                 }
-                setZombieVelocity(zombie);
 
-
+                double distance = getNearestWindowLoc(zombie).distance(zombie.getLocation());
+                if (distance < 0.2) {
+                    zombie.setMetadata("waitingMoveToWindow", new FixedMetadataValue(plugin, false));
+                    continue;
+                }
+                if (!zombie.getMetadata("waitingMoveToWindow").get(0).asBoolean()) {
+                    continue;
+                }
+                setVelocity(zombie,  new Vector(zombie.getMetadata("moveVec3_x").get(0).asDouble(), 0, zombie.getMetadata("moveVec3_z").get(0).asDouble()));
             }
         }
     }
 
-    private void setZombieVelocity(Zombie zombie) {
-//        Vector velocity = new Vector(0.1,0,0.1);
-//        zombie.setVelocity(velocity);
+    private Vector calculateMoveVec3(Zombie zombie, Location windowLoc) {
+        Location zombieLoc = zombie.getLocation();
+        return new Vector(windowLoc.getX() - zombieLoc.getX(), 0, windowLoc.getZ() - zombieLoc.getZ()).normalize();
     }
 
-    private void setInitMove(Zombie zombie) {
+    private void setVelocity(Zombie zombie, Vector moveVec3) {
+        zombie.getLocation().setDirection(moveVec3); // TODO: Nothing happened (failed to set zombie's direction).
+        zombie.setVelocity(moveVec3.multiply(0.1f));
+    }
+
+    private Location getNearestWindowLoc(Zombie zombie) {
         long dbSize = mongoDB.getCollectionSize();
         Location location = zombie.getLocation();
         Vector zombieVec3 = new Vector(location.getX(), location.getY(), location.getZ());
@@ -56,6 +81,6 @@ public class ZombieMoveTask extends BukkitRunnable {
                 windowLocNearest = windowLoc;
             }
         }
-        System.out.println(windowLocNearest);
+        return windowLocNearest;
     }
 }

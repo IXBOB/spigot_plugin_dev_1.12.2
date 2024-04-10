@@ -47,7 +47,7 @@ public class ReloadGunTask extends BukkitRunnable {
             String usingGunName = nbti_cache.getString("gun_name");
             GunProperties.GunType usingGunTypeInstance = GunProperties.GunType.valueOf(usingGunName.toUpperCase());
             short newDurability = (short) ( gunDurabilityLegacy.get(usingGunTypeInstance) - reloadSpentTime / gunReloadAmmoTime.get(usingGunTypeInstance) * gunDurabilityLegacy.get(usingGunTypeInstance) );
-            System.out.println("newDurability: " + newDurability);
+//            System.out.println("newDurability: " + newDurability);
             item = nbti_cache.getItem();
             item.setDurability(newDurability);
             NBTItem nbti = new NBTItem(item);
@@ -59,7 +59,6 @@ public class ReloadGunTask extends BukkitRunnable {
             item.setItemMeta(itemMeta);
             short durability_new = item.getDurability();
             if (durability_new == 0) {
-                System.out.println("set_false");
                 nbti.setBoolean("reloading", false);
                 item = nbti.getItem();
                 ItemMeta itemMeta_finish = item.getItemMeta();

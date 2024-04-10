@@ -18,8 +18,6 @@ public class LangLoader {
         File languageFile = new File(plugin.getDataFolder(), "languages/zh_CN.yml");
         FileConfiguration translations = YamlConfiguration.loadConfiguration(languageFile.getAbsoluteFile());
         for (String translation : translations.getKeys(false)) {
-            System.out.println(translation);
-            System.out.println(translations.getString(translation));
             translationMap.put(translation, translations.getString(translation));
         }
 

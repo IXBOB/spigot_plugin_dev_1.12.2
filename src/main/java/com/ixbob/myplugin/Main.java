@@ -44,7 +44,7 @@ public class Main extends JavaPlugin {
         Listener OnOpenRaffleChestListener = new OnOpenRaffleChestListener();
         getServer().getPluginManager().registerEvents(OnOpenRaffleChestListener, this);
 
-        BukkitTask zombieMoveTask = new ZombieMoveTask().runTaskTimerAsynchronously(this, 0, 1);
+        BukkitTask zombieMoveTask = new ZombieMoveTask(this).runTaskTimerAsynchronously(this, 0, 1);
         BukkitTask zombieDestroyTask = new ZombieDestroyTask(this).runTaskTimerAsynchronously(this, 0, 20);
 
 
