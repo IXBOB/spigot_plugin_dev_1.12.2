@@ -1,5 +1,6 @@
 package com.ixbob.myplugin.event;
 
+import com.ixbob.myplugin.LangLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,11 +13,11 @@ import java.util.List;
 public class OnJoinListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST , ignoreCancelled = true)
     public void onPlayerJoin1(PlayerJoinEvent event) {
-        Bukkit.broadcastMessage("Welcome to the server2");
+        Bukkit.broadcastMessage(LangLoader.get("welcome_message2"));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin2(PlayerJoinEvent event) {
-        Bukkit.broadcastMessage("Welcome to the server1");
+        Bukkit.broadcastMessage(LangLoader.get("welcome_message1"));
     }
 }

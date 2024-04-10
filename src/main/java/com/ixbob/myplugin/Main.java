@@ -15,6 +15,8 @@ public class Main extends JavaPlugin {
         MongoDB mongoDB = new MongoDB();
         mongoDB.connect("127.0.0.1", 27017, this);
 
+        LangLoader.init(this);
+
         this.getCommand("lobby").setExecutor(new CommandLobby());
         this.getCommand("testkit").setExecutor(new CommandTestkit(this));
         this.getCommand("init").setExecutor(new CommandInit(this));

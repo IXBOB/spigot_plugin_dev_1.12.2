@@ -36,14 +36,7 @@ public class OnDamageMonsterListener implements Listener {
                 Scoreboard scoreboard = player.getScoreboard();
                 Objective scoreboardObjective = scoreboard.getObjective("main");
                 String a = player.getDisplayName() + " " + player.getMetadata("coin_count").get(0).asInt();
-                try {
-                    scoreboardObjective.getScoreboard().resetScores(player.getDisplayName() + " " + ChatColor.GOLD + playerCoinCount);
-                    scoreboardObjective.getScoreboard().resetScores("abab");
-                    System.out.println("Success-----------");
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    System.out.println("===========================");
-                }
+                scoreboardObjective.getScoreboard().resetScores(player.getDisplayName() + " " + ChatColor.GOLD + playerCoinCount);
                 if ( Math.abs(last_damage_bullet_pos_y - (current_pos_y + 1.75)) <= 0.5 ){
                     LivingEntity entity = (LivingEntity) event.getEntity();
                     entity.damage(3);
@@ -52,7 +45,7 @@ public class OnDamageMonsterListener implements Listener {
                     player.sendMessage(ChatColor.GOLD + message_add_coin_baotou);
                 }
                 else {
-                    String message_add_coin_normal = "命中 + 7 硬币";  //TODO: 有时命中也没有提示命中
+                    String message_add_coin_normal = "命中 + 7 硬币";
                     player.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + 7));
                     player.sendMessage(ChatColor.GOLD + message_add_coin_normal);
                 }
