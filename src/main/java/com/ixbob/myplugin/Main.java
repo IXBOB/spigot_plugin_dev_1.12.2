@@ -12,6 +12,9 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        MongoDB mongoDB = new MongoDB();
+        mongoDB.connect("127.0.0.1", 27017, this);
+
         this.getCommand("lobby").setExecutor(new CommandLobby());
         this.getCommand("testkit").setExecutor(new CommandTestkit(this));
         this.getCommand("init").setExecutor(new CommandInit(this));
@@ -42,10 +45,7 @@ public class Main extends JavaPlugin {
         BukkitTask zombieMoveTask = new ZombieMoveTask().runTaskTimerAsynchronously(this, 0, 1);
         BukkitTask zombieDestroyTask = new ZombieDestroyTask(this).runTaskTimerAsynchronously(this, 0, 20);
 
-        MongoDB mongoDB = new MongoDB();
-        mongoDB.connect("127.0.0.1", 27017, this);
-        mongoDB.setCollection("test");
-        mongoDB.insertTest();
+
 
 
 //        CustomEvent exampleEvent = new CustomEvent("iiixbob");

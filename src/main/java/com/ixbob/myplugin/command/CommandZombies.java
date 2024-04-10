@@ -48,14 +48,14 @@ public class CommandZombies implements CommandExecutor {
         executedSubCommandLength++;
         switch (inputSubCommand[2]) {
             case ("set"): settings_window_set(); break;
+            case ("read"): settings_window_read_(); break;
         }
     }
     private void settings_window_set() {
             String DBCollectionName = "windowLoc";
             MongoDB mongoDB = new MongoDB(DBCollectionName);
             Location location = player.getLocation();
-            long id = mongoDB.getCollectionSize(DBCollectionName);
-            System.out.println(id);
+            long id = mongoDB.getCollectionSize() + 1;  //从1开始赋予id值
             DBObject locObj = new BasicDBObject("id", id);
             double x = player.getLocation().getX();
             double y = player.getLocation().getY();
@@ -65,5 +65,20 @@ public class CommandZombies implements CommandExecutor {
             locObj.put("z", z);
             mongoDB.insert(locObj);
             player.sendMessage("window set! id: " + id + ", x: " + x + ", y: " + y + ", z: " + z);
+    }
+    private void settings_window_read_() {
+        if (executedSubCommandLength == inputSubCommandLength) {
+            return;
+        }
+        executedSubCommandLength++;
+        settings_window_read_id(Integer.parseInt(inputSubCommand[3]));
+    }
+    private void settings_window_read_id(int id) {
+        MongoDB mongoDB = new MongoDB("windowLoc");
+        Location readPos = mongoDB.readPos(id);
+        double x = readPos.getX();
+        double y = readPos.getY();
+        double z = readPos.getZ();
+        player.sendMessage("window id: " + id + ", x: " + x + ", y: " + y + ", z: " + z);
     }
 }

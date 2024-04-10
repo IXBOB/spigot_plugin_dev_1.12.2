@@ -52,7 +52,7 @@ public class OnDamageMonsterListener implements Listener {
                     player.sendMessage(ChatColor.GOLD + message_add_coin_baotou);
                 }
                 else {
-                    String message_add_coin_normal = "命中 + 7 硬币";
+                    String message_add_coin_normal = "命中 + 7 硬币";  //TODO: 有时命中也没有提示命中
                     player.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + 7));
                     player.sendMessage(ChatColor.GOLD + message_add_coin_normal);
                 }
