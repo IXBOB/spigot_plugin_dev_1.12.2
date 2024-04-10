@@ -41,8 +41,8 @@ public class ReloadGunTask extends BukkitRunnable {
     @Override
     public void run() {
         if (item.getDurability() > 0){
-            System.out.println("reloading");
-            System.out.println("reload_time: " + reloadSpentTime);
+//            System.out.println("reloading");
+//            System.out.println("reload_time: " + reloadSpentTime);
             NBTItem nbti_cache = new NBTItem(item);
             String usingGunName = nbti_cache.getString("gun_name");
             GunProperties.GunType usingGunTypeInstance = GunProperties.GunType.valueOf(usingGunName.toUpperCase());

@@ -92,7 +92,8 @@ public class OnUseHoeListener implements Listener {
                     armorStand.teleport(interactLocation);
                     armorStand.teleport(armorStand.getLocation().setDirection(interactDirection));
                     armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, 0));
-                    armorStand.setMetadata("owner", new FixedMetadataValue(plugin, player));
+                    armorStand.setMetadata("owner", new FixedMetadataValue(plugin, player.getName()));
+                    armorStand.setMetadata("belong_gun_type", new FixedMetadataValue(plugin, usingGunName));
                     bulletMove(armorStand);
 
                     int ammo_left = ammo_origin - 1;
@@ -192,7 +193,6 @@ public class OnUseHoeListener implements Listener {
     }
 
     public void bulletMove(ArmorStand armorStand){
-        System.out.println("running");
         armorStand.teleport(armorStand.getLocation().add(armorStand.getLocation().getDirection().multiply(1.1)));
         armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, armorStand.getMetadata("fly_distance").get(0).asInt() + 1));
         List<Entity> nearbyEntities = armorStand.getNearbyEntities(0.1,0.1,0.1);
@@ -210,6 +210,7 @@ public class OnUseHoeListener implements Listener {
                             || nearbyEntity.getType() == EntityType.SPIDER) {
                         nearbyEntity.setMetadata("last_damage_bullet_pos_y", new FixedMetadataValue(plugin, armorStand.getLocation().getY()));
                         nearbyEntity.damage(gunDamage.get(usingGunTypeInstance), eventPlayer);
+                        eventPlayer.setMetadata("last_damage_using_gun_type", new FixedMetadataValue(plugin, armorStand.getMetadata("belong_gun_type").get(0).asString()));
                         armorStand.remove();
                         return;
                     }

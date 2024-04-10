@@ -1,7 +1,11 @@
 package com.ixbob.myplugin.event;
 
+import com.ixbob.myplugin.GunProperties;
+import com.ixbob.myplugin.LangLoader;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,11 +32,11 @@ public class OnDamageMonsterListener implements Listener {
             boolean isCustomMonster = isCustomMonsterMeta.get(0).asBoolean();
             if (isCustomMonster && event.getDamager() instanceof Player) {
                 Player player = (Player) event.getDamager();
+                String damageBelongGunType = player.getMetadata("last_damage_using_gun_type").get(0).asString();
+                GunProperties.GunType damageBelongGunTypeInstance = GunProperties.GunType.valueOf(damageBelongGunType.toUpperCase());
                 int playerCoinCount = player.getMetadata("coin_count").get(0).asInt();
                 double last_damage_bullet_pos_y = event.getEntity().getMetadata("last_damage_bullet_pos_y").get(0).asDouble();
                 double current_pos_y = event.getEntity().getLocation().getY();
-                System.out.println(last_damage_bullet_pos_y);
-                System.out.println(current_pos_y);
                 Scoreboard scoreboard = player.getScoreboard();
                 Objective scoreboardObjective = scoreboard.getObjective("main");
                 String a = player.getDisplayName() + " " + player.getMetadata("coin_count").get(0).asInt();
@@ -40,12 +44,12 @@ public class OnDamageMonsterListener implements Listener {
                 if ( Math.abs(last_damage_bullet_pos_y - (current_pos_y + 1.75)) <= 0.5 ){
                     LivingEntity entity = (LivingEntity) event.getEntity();
                     entity.damage(3);
-                    String message_add_coin_baotou = "±¬Í·ÃüÖÐ + 10 Ó²±Ò";
+                    String message_add_coin_baotou = String.format(LangLoader.get("game_hit_monster_head"), GunProperties.gunHitHeadGetCoin.get(damageBelongGunTypeInstance));
                     player.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + 10));
                     player.sendMessage(ChatColor.GOLD + message_add_coin_baotou);
                 }
                 else {
-                    String message_add_coin_normal = "ÃüÖÐ + 7 Ó²±Ò";
+                    String message_add_coin_normal = String.format(LangLoader.get("game_hit_monster_default"), GunProperties.gunHitDefaultGetCoin.get(damageBelongGunTypeInstance));
                     player.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + 7));
                     player.sendMessage(ChatColor.GOLD + message_add_coin_normal);
                 }

@@ -49,4 +49,12 @@ public class GunProperties {
             GunType.SHOU_QIANG, 59,
             GunType.BU_QIANG, 131
     );
+    public static final Map<GunType, Integer> gunHitHeadGetCoin = Map.of(
+            GunType.SHOU_QIANG, 10,
+            GunType.BU_QIANG, 7
+    );
+    public static final Map<GunType, Integer> gunHitDefaultGetCoin = Map.of(
+            GunType.SHOU_QIANG, 7,
+            GunType.BU_QIANG, 4
+    );
 }
