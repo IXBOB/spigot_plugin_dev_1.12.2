@@ -23,30 +23,35 @@ public class Main extends JavaPlugin {
         this.getCommand("test").setExecutor(new CommandTest(this));
         this.getCommand("zombies").setExecutor(new CommandZombies());
 
-        Listener OnJoinListener = new OnJoinListener();
-        getServer().getPluginManager().registerEvents(OnJoinListener, this);
+        Listener onJoinListener = new OnJoinListener();
+        getServer().getPluginManager().registerEvents(onJoinListener, this);
 
-        Listener OnUseHoeListener = new OnUseHoeListener(this);
-        getServer().getPluginManager().registerEvents(OnUseHoeListener, this);
+        Listener onUseHoeListener = new OnUseHoeListener(this);
+        getServer().getPluginManager().registerEvents(onUseHoeListener, this);
 
-        Listener OnItemHoldChangeListener = new OnItemHoldChangeListener();
-        getServer().getPluginManager().registerEvents(OnItemHoldChangeListener, this);
+        Listener onItemHoldChangeListener = new OnItemHoldChangeListener();
+        getServer().getPluginManager().registerEvents(onItemHoldChangeListener, this);
 
-//        Listener OnBreakBlockListener = new OnBreakBlockListener();
-//        getServer().getPluginManager().registerEvents(OnBreakBlockListener, this);
+//        Listener onBreakBlockListener = new OnBreakBlockListener();
+//        getServer().getPluginManager().registerEvents(onBreakBlockListener, this);
 
-        Listener OnDamageMonsterListener = new OnDamageMonsterListener(this);
-        getServer().getPluginManager().registerEvents(OnDamageMonsterListener, this);
+        Listener onDamageMonsterListener = new OnDamageMonsterListener(this);
+        getServer().getPluginManager().registerEvents(onDamageMonsterListener, this);
 
-        Listener OnKillMonsterListener = new OnKillMonsterListener();
-        getServer().getPluginManager().registerEvents(OnKillMonsterListener, this);
+        Listener onKillMonsterListener = new OnKillMonsterListener();
+        getServer().getPluginManager().registerEvents(onKillMonsterListener, this);
 
-        Listener OnOpenRaffleChestListener = new OnOpenRaffleChestListener();
-        getServer().getPluginManager().registerEvents(OnOpenRaffleChestListener, this);
+        Listener onOpenRaffleChestListener = new OnOpenRaffleChestListener();
+        getServer().getPluginManager().registerEvents(onOpenRaffleChestListener, this);
+
+        Listener onInventoryClickListener = new OnInventoryClickListener();
+        getServer().getPluginManager().registerEvents(onInventoryClickListener, this);
+
+        Listener onPlayerDropItemListener = new OnPlayerDropItemListener();
+        getServer().getPluginManager().registerEvents(onPlayerDropItemListener, this);
 
         BukkitTask zombieMoveTask = new ZombieMoveTask(this).runTaskTimerAsynchronously(this, 0, 1);
         BukkitTask zombieDestroyTask = new ZombieDestroyTask(this).runTaskTimerAsynchronously(this, 0, 20);
-
 
 
 
