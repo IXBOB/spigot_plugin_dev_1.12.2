@@ -4,6 +4,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.material.MaterialData;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -41,7 +42,7 @@ public class ZombieDestroyTask extends BukkitRunnable {
                     double loopBlockZ = posFrontZ - faceX;
                     for(int j = 1; j <= 3; j++) {
                         Block block = world.getBlockAt((int)Math.round(loopBlockX - 0.5), (int)loopBlockY, (int)Math.round(loopBlockZ - 0.5));
-                        if (block.getType() == Material.WOOD_STEP) {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                if (block.getType() == Material.WOOD_STEP) {
                             blockList.add(block);
                             isListContainsWoodStep = true;
                         }
@@ -50,15 +51,19 @@ public class ZombieDestroyTask extends BukkitRunnable {
                     }
                     loopBlockY -= 1;
                 }
-                if (isListContainsWoodStep) {
+                if (isListContainsWoodStep && zombie.getMetadata("onTheRoadToWindow").get(0).asBoolean()) {
                     Block destroyBlock = blockList.get( (int) (Math.random() * blockList.size()) );
                     Bukkit.getServer().getScheduler().runTask(plugin, () -> {
                         Bukkit.getWorlds().get(0).spawnParticle(Particle.BLOCK_CRACK, destroyBlock.getLocation().add(0.5,0,0.5), 12, new MaterialData(Material.WOOD_STEP));
                         destroyBlock.setType(Material.AIR);
-                        zombie.setAI(false);
+                        zombie.setMetadata("frontAreaContainWoodStep", new FixedMetadataValue(plugin, true));
                     });
                 }
-                else zombie.setAI(true);
+                else {
+                    Bukkit.getServer().getScheduler().runTask(plugin, () -> {
+                        zombie.setMetadata("frontAreaContainWoodStep", new FixedMetadataValue(plugin, false));
+                    });
+                }
             }
         }
     }

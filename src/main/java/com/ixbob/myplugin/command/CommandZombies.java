@@ -58,7 +58,7 @@ public class CommandZombies implements CommandExecutor {
             long id = mongoDB.getCollectionSize() + 1;  //从1开始赋予id值
             DBObject locObj = new BasicDBObject("id", id);
             double x = player.getLocation().getX();
-            double y = player.getLocation().getY() + 1;
+            double y = player.getLocation().getY() + 1.7;  //僵尸眼睛位置
             double z = player.getLocation().getZ();
             locObj.put("x", x);
             locObj.put("y", y);

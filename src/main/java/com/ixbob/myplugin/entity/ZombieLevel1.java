@@ -13,6 +13,7 @@ import org.bukkit.util.Vector;
 public class ZombieLevel1 {
     private final Location location;
     private final Plugin plugin;
+    private Zombie zombie;
 
     public ZombieLevel1(Location location, Plugin plugin) {
         this.location = location;
@@ -23,7 +24,11 @@ public class ZombieLevel1 {
         Zombie zombie = (Zombie) world.spawnEntity(location, EntityType.ZOMBIE);
         zombie.setMetadata("custom_monster", new FixedMetadataValue(plugin, true));
         zombie.setMetadata("level", new FixedMetadataValue(plugin, 1));
-        zombie.setMetadata("justSpawnedForMoveTask", new FixedMetadataValue(plugin, true));
+        this.zombie = zombie;
         Bukkit.broadcastMessage("Zombie has spawned!");
+    }
+
+    public Zombie getEntity() {
+        return zombie;
     }
 }
