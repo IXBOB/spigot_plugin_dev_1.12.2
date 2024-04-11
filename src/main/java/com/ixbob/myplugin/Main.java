@@ -29,8 +29,8 @@ public class Main extends JavaPlugin {
         Listener onUseHoeListener = new OnUseHoeListener(this);
         getServer().getPluginManager().registerEvents(onUseHoeListener, this);
 
-        Listener onItemHoldChangeListener = new OnItemHoldChangeListener();
-        getServer().getPluginManager().registerEvents(onItemHoldChangeListener, this);
+        Listener onItemHeldChangeListener = new OnItemHeldChangeListener();
+        getServer().getPluginManager().registerEvents(onItemHeldChangeListener, this);
 
 //        Listener onBreakBlockListener = new OnBreakBlockListener();
 //        getServer().getPluginManager().registerEvents(onBreakBlockListener, this);
@@ -44,8 +44,8 @@ public class Main extends JavaPlugin {
         Listener onOpenRaffleChestListener = new OnOpenRaffleChestListener();
         getServer().getPluginManager().registerEvents(onOpenRaffleChestListener, this);
 
-        Listener onInventoryClickListener = new OnInventoryClickListener();
-        getServer().getPluginManager().registerEvents(onInventoryClickListener, this);
+//        Listener onInventoryClickListener = new OnInventoryClickListener();
+//        getServer().getPluginManager().registerEvents(onInventoryClickListener, this);
 
         Listener onPlayerDropItemListener = new OnPlayerDropItemListener();
         getServer().getPluginManager().registerEvents(onPlayerDropItemListener, this);

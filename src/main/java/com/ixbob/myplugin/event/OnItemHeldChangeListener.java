@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 
-public class OnItemHoldChangeListener implements Listener {
+public class OnItemHeldChangeListener implements Listener {
     @EventHandler
     public void onItemHoldChange(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
