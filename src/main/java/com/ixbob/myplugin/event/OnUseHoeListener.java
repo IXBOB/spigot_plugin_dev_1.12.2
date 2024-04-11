@@ -54,6 +54,7 @@ public class OnUseHoeListener implements Listener {
                 GunProperties.GunType gunType = GunProperties.GunType.valueOf(nbtItem.getString("gun_name").toUpperCase());
                 int ammo_origin = player.getMetadata(gunType.getPlayerAmmoMetadataKey()).get(0).asInt();
                 int current_magazine_ammo = player.getMetadata(gunType.getPlayerMagazineAmmoMetadataKey()).get(0).asInt();
+                System.out.println(current_magazine_ammo);
 //                System.out.println(gunType);
                 usingGunName = gunType.getTypeName();
                 usingGunTypeInstance = GunProperties.GunType.valueOf(usingGunName.toUpperCase());
@@ -118,7 +119,6 @@ public class OnUseHoeListener implements Listener {
 //                            throw new NullPointerException("Are you kidding me? no gun matches.");
 //                    }
 
-                    current_magazine_ammo -= 1;
                     player.setExp(0f);
                     player.setLevel(ammo_left);
 //                    System.out.println(current_magazine_ammo);
