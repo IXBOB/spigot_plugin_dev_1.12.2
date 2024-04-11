@@ -21,6 +21,7 @@ public class OnItemHeldChangeListener implements Listener {
         if (newSlotItem == null) {
             player.setExp(0.0f);
             player.setLevel(0);
+            player.removePotionEffect(PotionEffectType.SLOW_DIGGING);
         }
         if (newSlotItem != null) {
             NBTItem nbtNewSlotItem = new NBTItem(newSlotItem);
