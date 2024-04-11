@@ -6,8 +6,10 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
@@ -20,6 +22,11 @@ public class CommandTestkit implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(commandSender instanceof Player) {
             Player player = (Player) commandSender;
+
+            ItemStack item_iron_sword = new ItemStack(Material.IRON_SWORD, 1);
+            ItemMeta ironSwordItemMeta = item_iron_sword.getItemMeta();
+            ironSwordItemMeta.setUnbreakable(true);
+            item_iron_sword.setItemMeta(ironSwordItemMeta);
 
             ItemStack item_wood_hoe = new ItemStack(Material.WOOD_HOE, 30);
             NBTItem nbti_wood_hoe = new NBTItem(item_wood_hoe);
@@ -37,6 +44,7 @@ public class CommandTestkit implements CommandExecutor {
             nbti_stone_hoe.setBoolean("reloading", false);
             item_stone_hoe = nbti_stone_hoe.getItem();
 
+            player.getInventory().setItem(0, item_iron_sword);
             player.getInventory().setItem(1, item_wood_hoe);
             player.getInventory().setItem(2, item_stone_hoe);
 

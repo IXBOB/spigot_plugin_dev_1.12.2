@@ -1,11 +1,14 @@
 package com.ixbob.myplugin.event;
 
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 
@@ -44,6 +47,11 @@ public class OnItemHoldChangeListener implements Listener {
                 player.setExp(0.0f);
                 player.setLevel(0);
             }
+
+            if (newSlotItem.getType() == Material.IRON_SWORD) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 9999999, 3, false, false));
+            }
+            else player.removePotionEffect(PotionEffectType.SLOW_DIGGING);
         }
     }
 }
