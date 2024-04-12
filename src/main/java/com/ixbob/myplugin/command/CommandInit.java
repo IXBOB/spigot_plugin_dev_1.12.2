@@ -31,6 +31,9 @@ public class CommandInit implements CommandExecutor {
             playerOnline.setScoreboard(scoreboard);
         }
         player.setScoreboard(scoreboard);
+
+        player.setMetadata("last_damage_using_gun_type", new FixedMetadataValue(plugin, "empty"));
+
         return true;
     }
 }

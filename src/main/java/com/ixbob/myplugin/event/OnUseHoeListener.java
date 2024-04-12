@@ -11,6 +11,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
@@ -20,6 +21,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -172,7 +174,7 @@ public class OnUseHoeListener implements Listener {
             }
         }
         eventInteractItem = nbtEventItem.getItem();
-        switch (nbtEventItem.getString("gun_name")) {   // 等待后期换枪槽位实现完全后优化
+        switch (nbtEventItem.getString("gun_name")) {   // TODO: 等待后期换枪槽位实现完全后优化
             case ("shou_qiang"): {
                 player.getInventory().setItem(1, eventInteractItem);
                 break;

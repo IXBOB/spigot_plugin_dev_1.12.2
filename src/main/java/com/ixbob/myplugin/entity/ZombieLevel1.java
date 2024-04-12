@@ -22,6 +22,7 @@ public class ZombieLevel1 {
 
     public void spawn(World world) {
         Zombie zombie = (Zombie) world.spawnEntity(location, EntityType.ZOMBIE);
+        zombie.setBaby(false);
         zombie.setMetadata("custom_monster", new FixedMetadataValue(plugin, true));
         zombie.setMetadata("level", new FixedMetadataValue(plugin, 1));
         this.zombie = zombie;

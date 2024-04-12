@@ -2,6 +2,8 @@ package com.ixbob.myplugin.util;
 
 import com.ixbob.myplugin.MongoDB;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 public class Utils {
