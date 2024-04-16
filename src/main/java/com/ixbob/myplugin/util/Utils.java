@@ -6,6 +6,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
+
 public class Utils {
     private static MongoDB mongoDB = new MongoDB("windowLoc");
     public static Location getNearestWindowLoc(Location location) {
@@ -24,5 +32,23 @@ public class Utils {
             }
         }
         return windowLocNearest;
+    }
+
+    public static String loadJsonAsStringFromUrl(String url) {
+        StringBuilder json = new StringBuilder();
+        try {
+            URL urlObject = new URL(url);
+            URLConnection urlConnection = urlObject.openConnection();
+            urlConnection.setRequestProperty("User-Agent", "Mozilla/4.76");
+            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8));
+            String inputLine = null;
+            while ((inputLine = in.readLine()) != null) {
+                json.append(inputLine);
+            }
+            in.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return json.toString();
     }
 }

@@ -1,9 +1,14 @@
 package com.ixbob.myplugin.event;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.ixbob.myplugin.util.Utils;
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -21,20 +26,33 @@ public class OnPlayerDeathListener implements Listener {
     private PlayerConnection playerConnection;
     private int entityID;
     private Location location;
+    ProtocolManager manager = ProtocolLibrary.getProtocolManager();
     @EventHandler
-    public void onPlayerDeath(EntityDamageEvent event) {
+    public void onPlayerDeath(EntityDamageEvent event) throws Exception {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             double health = player.getHealth();
             if (health <= event.getDamage()) {
                 event.setCancelled(true);
                 player.setHealth(20);
+                String playerName = player.getName();
+
                 CraftPlayer craftPlayer = (CraftPlayer) player;
                 EntityPlayer entityPlayer = craftPlayer.getHandle();
 
                 MinecraftServer minecraftServer = entityPlayer.server;
                 WorldServer worldServer = entityPlayer.x(); //getWorldServer
-                GameProfile gameProfile = new GameProfile(UUID.randomUUID(), "BOB");
+                GameProfile gameProfile = new GameProfile(UUID.randomUUID(), playerName);
+
+                String DataFromName = Utils.loadJsonAsStringFromUrl("https://api.mojang.com/users/profiles/minecraft/" + playerName);
+                String UUID = JSON.parseObject(DataFromName).getString("id");
+                String url = "https://sessionserver.mojang.com/session/minecraft/profile/" + UUID + "?unsigned=false";
+                String DataFromUUID = Utils.loadJsonAsStringFromUrl(url);
+                JSONObject JsonFromUUID = JSON.parseObject(DataFromUUID).getJSONArray("properties").getJSONObject(0);
+
+                String texture = JsonFromUUID.getString("value");
+                String signature = JsonFromUUID.getString("signature");
+                gameProfile.getProperties().put("textures", new Property("textures", texture, signature));
 
                 EntityPlayer npc = new EntityPlayer(minecraftServer, worldServer, gameProfile, new PlayerInteractManager(minecraftServer.getWorld()));
                 this.entityID = (int)Math.ceil(Math.random() * 1000) + 2000;
@@ -53,6 +71,7 @@ public class OnPlayerDeathListener implements Listener {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+                enableOutsideSkin();
             }
         }
     }
@@ -119,5 +138,15 @@ public class OnPlayerDeathListener implements Listener {
         for (Player player : Bukkit.getOnlinePlayers()) {
             sendPacket.invoke(getConnection(player), packet);
         }
+    }
+
+    private void enableOutsideSkin() throws Exception {
+        DataWatcher dataWatcher = new DataWatcher(null);
+//        https://wiki.vg/Entity_metadata#Player
+        DataWatcherObject<Byte> displayedPartsObject = new DataWatcherObject<>(13, DataWatcherRegistry.a);
+        byte displayedSkinParts = (byte) (0x01 | 0x02 | 0x04 | 0x08 | 0x10 | 0x20 | 0x40);
+        dataWatcher.register(displayedPartsObject, displayedSkinParts);
+        PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
+        sendPacket(packet);
     }
 }
