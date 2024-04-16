@@ -2,6 +2,7 @@ package com.ixbob.myplugin;
 
 import com.ixbob.myplugin.command.*;
 import com.ixbob.myplugin.event.*;
+import com.ixbob.myplugin.handler.config.LangLoader;
 import com.ixbob.myplugin.task.ZombieDestroyTask;
 import com.ixbob.myplugin.task.ZombieMoveTask;
 import org.bukkit.event.Listener;
@@ -47,13 +48,14 @@ public class Main extends JavaPlugin {
 //        Listener onInventoryClickListener = new OnInventoryClickListener();
 //        getServer().getPluginManager().registerEvents(onInventoryClickListener, this);
 
+        Listener onPlayerDeathListener = new OnPlayerDeathListener();
+        getServer().getPluginManager().registerEvents(onPlayerDeathListener, this);
+
         Listener onPlayerDropItemListener = new OnPlayerDropItemListener();
         getServer().getPluginManager().registerEvents(onPlayerDropItemListener, this);
 
         BukkitTask zombieMoveTask = new ZombieMoveTask(this).runTaskTimerAsynchronously(this, 0, 1);
         BukkitTask zombieDestroyTask = new ZombieDestroyTask(this).runTaskTimerAsynchronously(this, 0, 20);
-
-
 
 //        CustomEvent exampleEvent = new CustomEvent("iiixbob");
 //        Bukkit.getPluginManager().callEvent(exampleEvent);

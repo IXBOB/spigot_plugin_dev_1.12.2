@@ -1,18 +1,14 @@
 package com.ixbob.myplugin.event;
 
 import com.ixbob.myplugin.GunProperties;
-import com.ixbob.myplugin.LangLoader;
-import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
+import com.ixbob.myplugin.handler.config.LangLoader;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;

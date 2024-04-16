@@ -10,7 +10,7 @@ public class GunProperties {
 
         private final String typeName;
         private final String playerAmmoMetadataKey;
-        private  final String playerMagazineAmmoMetadataKey;
+        private final String playerMagazineAmmoMetadataKey;
 
         GunType(String typeName, String playerAmmoMetadataKey, String playerMagazineAmmoMetadataKey) {
             this.typeName = typeName;

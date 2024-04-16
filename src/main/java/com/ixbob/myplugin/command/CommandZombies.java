@@ -55,10 +55,10 @@ public class CommandZombies implements CommandExecutor {
             String DBCollectionName = "windowLoc";
             MongoDB mongoDB = new MongoDB(DBCollectionName);
             Location location = player.getLocation();
-            long id = mongoDB.getCollectionSize() + 1;  //¥”1ø™ º∏≥”Ëid÷µ
+            long id = mongoDB.getCollectionSize() + 1;  //‰ªé1ÂºÄÂßãËµã‰∫àidÂÄº
             DBObject locObj = new BasicDBObject("id", id);
             double x = player.getLocation().getX();
-            double y = player.getLocation().getY() + 1.7;  //Ω© ¨—€æ¶Œª÷√
+            double y = player.getLocation().getY() + 1.7;  //ÂÉµÂ∞∏ÁúºÁùõ‰ΩçÁΩÆ
             double z = player.getLocation().getZ();
             locObj.put("x", x);
             locObj.put("y", y);

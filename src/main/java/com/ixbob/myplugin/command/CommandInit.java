@@ -21,7 +21,7 @@ public class CommandInit implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         Scoreboard scoreboard = commandSender.getServer().getScoreboardManager().getNewScoreboard();
         Objective scoreboardObjective = scoreboard.registerNewObjective("main", "dummy");
-        scoreboardObjective.setDisplayName(ChatColor.YELLOW + "½©Ê¬Ä©ÈÕ");
+        scoreboardObjective.setDisplayName(ChatColor.YELLOW + "åƒµå°¸æœ«æ—¥");
         Player player = (Player) commandSender;
 
         scoreboardObjective.setDisplaySlot(DisplaySlot.SIDEBAR);

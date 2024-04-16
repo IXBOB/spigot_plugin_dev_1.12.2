@@ -2,10 +2,12 @@ package com.ixbob.myplugin.entity;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
@@ -25,6 +27,7 @@ public class ZombieLevel1 {
         zombie.setBaby(false);
         zombie.setMetadata("custom_monster", new FixedMetadataValue(plugin, true));
         zombie.setMetadata("level", new FixedMetadataValue(plugin, 1));
+        zombie.getEquipment().setHelmet(new ItemStack(Material.GLASS, 1));
         this.zombie = zombie;
         Bukkit.broadcastMessage("Zombie has spawned!");
     }

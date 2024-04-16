@@ -4,9 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="Add: iron sword and its attack functions. Improve: zombielevel1 will no longer spawn baby.">
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="fix: when using sword, scoreboard update coin issue.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/MonsterProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/move_output.bat" beforeDir="false" afterPath="$PROJECT_DIR$/move_output.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/LangLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/handler/config/LangLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandZombies.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandZombies.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/entity/ZombieLevel1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/entity/ZombieLevel1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnDamageMonsterListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnDamageMonsterListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnJoinListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnJoinListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDropItemListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDropItemListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ZombieDestroyTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ZombieDestroyTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +107,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/IXBOB/spigot_plugin_dev_1.12.2.git&quot;,
-    &quot;accountId&quot;: &quot;1d0189e2-7bca-4c12-a70a-f7e7c97b9dab&quot;
+    &quot;accountId&quot;: &quot;ae5fdcd8-8dcc-408d-824d-829582806b06&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -111,31 +127,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Batch.move_output.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Build spigot_plugin_dev_1.12.2.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.Debug Plugin.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tqy/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2/src/main/resources&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.updates&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Batch.move_output.executor": "Debug",
+    "Gradle.Build spigot_plugin_dev_1.12.2.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor": "Run",
+    "JAR Application.Debug Plugin.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_buildtools/1.12.2/spigot-1.12.2.jar",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tqy\Desktop\spigot_plugin_dev_1.12.2\spigot_plugin_dev_1.12.2\src\main\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.ixbob.myplugin.handler.config" />
       <recent name="com.ixbob.myplugin.event" />
       <recent name="com.ixbob.myplugin.command" />
     </key>
@@ -177,12 +194,12 @@
     <configuration name="Debug Plugin" type="JarApplication">
       <option name="JAR_PATH" value="$PROJECT_DIR$/../../java_CloudServer/test_1.12.2/spigot.jar" />
       <option name="PROGRAM_PARAMETERS" value="nogui" />
-      <option name="WORKING_DIRECTORY" value="C:\Users\tqy\Desktop\java_CloudServer\test_1.12.2" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\IXBOB\Desktop\java_CloudServer\test_1.12.2" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <method v="2">
         <option name="Gradle.BeforeRunTask" enabled="true" tasks="shadowJar" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
-        <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_move_output_spigot_dev_1.12.2" />
+        <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_move_output" />
       </method>
     </configuration>
     <list>
@@ -193,9 +210,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
-        <item itemvalue="Batch.move_output" />
         <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
-        <item itemvalue="Batch.move_output" />
         <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
       </list>
     </recent_temporary>
@@ -417,7 +432,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712889254913</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="fix: when using sword, scoreboard update coin issue.">
+      <option name="closed" value="true" />
+      <created>1712890320256</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1712890320256</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -433,7 +456,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="gun bug fix" />
     <MESSAGE value="gun improvement + xp level ammo" />
     <MESSAGE value="gun improvement" />
     <MESSAGE value="wood hoe bug fix" />
@@ -458,6 +480,7 @@
     <MESSAGE value="Fix: When switching to empty-handed, if originally held a sword, the digging fatigue effect will not disappear." />
     <MESSAGE value="Add: iron sword and its attack functions.&#10;Improve: zombielevel1 will no longer spawn baby." />
     <MESSAGE value="Add: iron sword and its attack functions. Improve: zombielevel1 will no longer spawn baby." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add: iron sword and its attack functions. Improve: zombielevel1 will no longer spawn baby." />
+    <MESSAGE value="fix: when using sword, scoreboard update coin issue." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: when using sword, scoreboard update coin issue." />
   </component>
 </project>

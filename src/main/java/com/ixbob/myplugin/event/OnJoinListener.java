@@ -1,14 +1,11 @@
 package com.ixbob.myplugin.event;
 
-import com.ixbob.myplugin.LangLoader;
+import com.ixbob.myplugin.handler.config.LangLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import java.util.List;
 
 public class OnJoinListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST , ignoreCancelled = true)

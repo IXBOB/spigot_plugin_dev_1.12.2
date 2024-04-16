@@ -31,13 +31,13 @@ public class ZombieDestroyTask extends BukkitRunnable {
                 double faceZ = eyeLocation.getDirection().getZ();
                 double posFrontX = posX + faceX;
                 double posFrontY = posY + faceY;
-                double posFrontZ = posZ + faceZ; // »ñÈ¡ÃæÇ°1¸ñÔ¶Î»ÖÃµÄ·½¿é×ø±ê
+                double posFrontZ = posZ + faceZ; // è·å–é¢å‰1æ ¼è¿œä½ç½®çš„æ–¹å—åæ ‡
                 World world = Bukkit.getWorlds().get(0);
 
                 List<Block> blockList = new ArrayList<>();
                 boolean isListContainsWoodStep = false;
                 double loopBlockY = posFrontY + 1;
-                for (int i = 1; i <= 3; i++) { // ±éÀú»ñµÃÃæÇ°3x3ÇøÓò·½¿é
+                for (int i = 1; i <= 3; i++) { // éå†è·å¾—é¢å‰3x3åŒºåŸŸæ–¹å—
                     double loopBlockX = posFrontX + faceZ;
                     double loopBlockZ = posFrontZ - faceX;
                     for(int j = 1; j <= 3; j++) {

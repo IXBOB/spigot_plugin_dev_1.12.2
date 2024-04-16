@@ -174,7 +174,7 @@ public class OnUseHoeListener implements Listener {
             }
         }
         eventInteractItem = nbtEventItem.getItem();
-        switch (nbtEventItem.getString("gun_name")) {   // TODO: µÈ´ıºóÆÚ»»Ç¹²ÛÎ»ÊµÏÖÍêÈ«ºóÓÅ»¯
+        switch (nbtEventItem.getString("gun_name")) {   // TODO: ç­‰å¾…åæœŸæ¢æªæ§½ä½å®ç°å®Œå…¨åä¼˜åŒ–
             case ("shou_qiang"): {
                 player.getInventory().setItem(1, eventInteractItem);
                 break;

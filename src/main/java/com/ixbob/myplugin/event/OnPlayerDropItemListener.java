@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class OnPlayerDropItemListener implements Listener {
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        event.setCancelled(true); //TODO: µÈ´ıÇ¹Ğµ×öµÄ³ÉÊìºóĞŞ¸Ä¡£ÕâÀï»¹ÓĞbug£¬¶ª³ö¶ÑµşµÄÇ¹»á³öÏÖÎÊÌâ¡£
+        event.setCancelled(true); //TODO: ç­‰å¾…æªæ¢°åšçš„æˆç†Ÿåä¿®æ”¹ã€‚è¿™é‡Œè¿˜æœ‰bugï¼Œä¸¢å‡ºå †å çš„æªä¼šå‡ºç°é—®é¢˜ã€‚
 
     }
 }
