@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="player corpse skin.">
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="corpse support for offline players(with no registered player name on mojang server)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" afterDir="false" />
     </list>
@@ -130,7 +130,7 @@
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.updates"
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -442,7 +442,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713279074677</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="corpse support for offline players(with no registered player name on mojang server)">
+      <option name="closed" value="true" />
+      <created>1713317965097</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1713317965097</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -458,7 +466,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="wood hoe bug fix" />
     <MESSAGE value="gun improve and bug fix (2 guns function finish)" />
     <MESSAGE value="他妈的写崩溃了，一堆bug。休息去了" />
     <MESSAGE value="bug fix" />
@@ -483,6 +490,17 @@
     <MESSAGE value="fix: when using sword, scoreboard update coin issue." />
     <MESSAGE value="player corpse." />
     <MESSAGE value="player corpse skin." />
-    <option name="LAST_COMMIT_MESSAGE" value="player corpse skin." />
+    <MESSAGE value="corpse support for offline players(with no registered player name on mojang server)" />
+    <option name="LAST_COMMIT_MESSAGE" value="corpse support for offline players(with no registered player name on mojang server)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.RuntimeException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -50,7 +50,7 @@ public class OnItemHeldChangeListener implements Listener {
             }
 
             if (newSlotItem.getType() == Material.IRON_SWORD) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 9999999, 3, false, false));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 9999999, 4, false, false));
             }
             else player.removePotionEffect(PotionEffectType.SLOW_DIGGING);
         }

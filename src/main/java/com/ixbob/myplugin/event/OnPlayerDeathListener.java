@@ -2,17 +2,22 @@ package com.ixbob.myplugin.event;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.ixbob.myplugin.util.Utils;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_12_R1.*;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +27,8 @@ import org.bukkit.plugin.Plugin;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 public class OnPlayerDeathListener implements Listener {
@@ -72,13 +79,9 @@ public class OnPlayerDeathListener implements Listener {
                     this.entityID = (int)Math.ceil(Math.random() * 1000) + 2000;
                     npc.h(entityID); //h: setID
 
-                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                        PlayerConnection playerConnection = ((CraftPlayer) onlinePlayer).getHandle().playerConnection;
-                        //PlayerInfoPacket
-                        playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
-                        //SpawnPacket
-                        playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
-                    }
+                    Packet<?>[] packets = {new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc),
+                            new PacketPlayOutNamedEntitySpawn(npc)};
+                    Utils.sendNMSPacketsToAllPlayers(packets);
 
                     try {
                         sleep();
@@ -86,6 +89,19 @@ public class OnPlayerDeathListener implements Listener {
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
+
+                    Bukkit.getScheduler().runTask(plugin, () -> {
+                        Location spawnTextLoc = location.add(0, 1.0, 0);
+                        ArmorStand text1 = (ArmorStand) Bukkit.getWorlds().get(0).spawnEntity(spawnTextLoc, EntityType.ARMOR_STAND);
+                        ArmorStand text2 = (ArmorStand) Bukkit.getWorlds().get(0).spawnEntity(spawnTextLoc.add(0, -0.25, 0), EntityType.ARMOR_STAND);
+                        initArmorStandText(text1);
+                        initArmorStandText(text2);
+                        text1.setCustomName(ChatColor.YELLOW + playerName + " 倒下了 ！");
+                        text2.setCustomName(ChatColor.YELLOW + "你有 " + ChatColor.BOLD + ChatColor.AQUA + "20.0 秒" + ChatColor.RESET +ChatColor.YELLOW + " 来扶起这名玩家");
+
+                    });
+
+
                 });
             }
         }
@@ -163,5 +179,13 @@ public class OnPlayerDeathListener implements Listener {
         dataWatcher.register(displayedPartsObject, displayedSkinParts);
         PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
         sendPacketObj(packet);
+    }
+
+    private void initArmorStandText(ArmorStand armorStand) {
+        armorStand.setCustomNameVisible(true);
+        armorStand.setVisible(false);
+        armorStand.setGravity(false);
+        armorStand.setCollidable(false);
+        armorStand.setMarker(true);
     }
 }

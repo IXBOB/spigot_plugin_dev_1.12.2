@@ -1,7 +1,13 @@
 package com.ixbob.myplugin.util;
 
 import com.ixbob.myplugin.MongoDB;
+import net.minecraft.server.v1_12_R1.Packet;
+import net.minecraft.server.v1_12_R1.PacketPlayOutNamedEntitySpawn;
+import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
+import net.minecraft.server.v1_12_R1.PlayerConnection;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
@@ -15,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class Utils {
     private static MongoDB mongoDB = new MongoDB("windowLoc");
@@ -52,5 +59,22 @@ public class Utils {
             return null;
         }
         return json.toString();
+    }
+
+    public static void sendNMSPacketToAllPlayers(Packet<?> packet) {
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            PlayerConnection playerConnection = ((CraftPlayer) onlinePlayer).getHandle().playerConnection;
+            playerConnection.sendPacket(packet);
+        }
+    }
+
+    public static void sendNMSPacketsToAllPlayers(Packet<?>[] packets) {
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            PlayerConnection playerConnection = ((CraftPlayer) onlinePlayer).getHandle().playerConnection;
+            for (int i = 0; i <= packets.length - 1; i++) {
+                Packet<?> packet = packets[i];
+                playerConnection.sendPacket(packet);
+            }
+        }
     }
 }
