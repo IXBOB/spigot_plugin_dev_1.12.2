@@ -7,6 +7,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -46,8 +48,8 @@ public class Utils {
                 json.append(inputLine);
             }
             in.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            return null;
         }
         return json.toString();
     }

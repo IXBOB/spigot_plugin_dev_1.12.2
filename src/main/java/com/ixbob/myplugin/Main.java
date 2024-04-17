@@ -6,6 +6,7 @@ import com.ixbob.myplugin.handler.config.LangLoader;
 import com.ixbob.myplugin.task.ZombieDestroyTask;
 import com.ixbob.myplugin.task.ZombieMoveTask;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -48,7 +49,7 @@ public class Main extends JavaPlugin {
 //        Listener onInventoryClickListener = new OnInventoryClickListener();
 //        getServer().getPluginManager().registerEvents(onInventoryClickListener, this);
 
-        Listener onPlayerDeathListener = new OnPlayerDeathListener();
+        Listener onPlayerDeathListener = new OnPlayerDeathListener(this);
         getServer().getPluginManager().registerEvents(onPlayerDeathListener, this);
 
         Listener onPlayerDropItemListener = new OnPlayerDropItemListener();

@@ -9,6 +9,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -23,55 +25,68 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 
 public class OnPlayerDeathListener implements Listener {
-    private PlayerConnection playerConnection;
+    private final Plugin plugin;
     private int entityID;
     private Location location;
     ProtocolManager manager = ProtocolLibrary.getProtocolManager();
+
+
+    public OnPlayerDeathListener(Plugin plugin) {
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onPlayerDeath(EntityDamageEvent event) throws Exception {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             double health = player.getHealth();
             if (health <= event.getDamage()) {
+                player.setGameMode(GameMode.SPECTATOR);
                 event.setCancelled(true);
                 player.setHealth(20);
-                String playerName = player.getName();
 
-                CraftPlayer craftPlayer = (CraftPlayer) player;
-                EntityPlayer entityPlayer = craftPlayer.getHandle();
+                Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+                    String playerName = player.getName();
+                    this.location = player.getLocation();
 
-                MinecraftServer minecraftServer = entityPlayer.server;
-                WorldServer worldServer = entityPlayer.x(); //getWorldServer
-                GameProfile gameProfile = new GameProfile(UUID.randomUUID(), playerName);
+                    CraftPlayer craftPlayer = (CraftPlayer) player;
+                    EntityPlayer entityPlayer = craftPlayer.getHandle();
 
-                String DataFromName = Utils.loadJsonAsStringFromUrl("https://api.mojang.com/users/profiles/minecraft/" + playerName);
-                String UUID = JSON.parseObject(DataFromName).getString("id");
-                String url = "https://sessionserver.mojang.com/session/minecraft/profile/" + UUID + "?unsigned=false";
-                String DataFromUUID = Utils.loadJsonAsStringFromUrl(url);
-                JSONObject JsonFromUUID = JSON.parseObject(DataFromUUID).getJSONArray("properties").getJSONObject(0);
+                    MinecraftServer minecraftServer = entityPlayer.server;
+                    WorldServer worldServer = entityPlayer.x(); //getWorldServer
+                    GameProfile gameProfile = new GameProfile(UUID.randomUUID(), playerName);
 
-                String texture = JsonFromUUID.getString("value");
-                String signature = JsonFromUUID.getString("signature");
-                gameProfile.getProperties().put("textures", new Property("textures", texture, signature));
+                    String DataFromName = Utils.loadJsonAsStringFromUrl("https://api.mojang.com/users/profiles/minecraft/" + playerName);
+                    JSONObject JsonFromName = JSON.parseObject(DataFromName);
+                    if (JsonFromName != null) {
+                        String UUID = JsonFromName.getString("id");
+                        String DataFromUUID = Utils.loadJsonAsStringFromUrl("https://sessionserver.mojang.com/session/minecraft/profile/" + UUID + "?unsigned=false");
+                        JSONObject JsonFromUUID = JSON.parseObject(DataFromUUID).getJSONArray("properties").getJSONObject(0);
 
-                EntityPlayer npc = new EntityPlayer(minecraftServer, worldServer, gameProfile, new PlayerInteractManager(minecraftServer.getWorld()));
-                this.entityID = (int)Math.ceil(Math.random() * 1000) + 2000;
-                npc.h(entityID); //h: setID
+                        String texture = JsonFromUUID.getString("value");
+                        String signature = JsonFromUUID.getString("signature");
+                        gameProfile.getProperties().put("textures", new Property("textures", texture, signature));
+                    }
 
-                this.playerConnection = entityPlayer.playerConnection;
+                    EntityPlayer npc = new EntityPlayer(minecraftServer, worldServer, gameProfile, new PlayerInteractManager(minecraftServer.getWorld()));
+                    this.entityID = (int)Math.ceil(Math.random() * 1000) + 2000;
+                    npc.h(entityID); //h: setID
 
-                //PlayerInfoPacket
-                playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
-                //SpawnPacket
-                playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
+                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                        PlayerConnection playerConnection = ((CraftPlayer) onlinePlayer).getHandle().playerConnection;
+                        //PlayerInfoPacket
+                        playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc));
+                        //SpawnPacket
+                        playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(npc));
+                    }
 
-                this.location = player.getLocation();
-                try {
-                    sleep();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                enableOutsideSkin();
+                    try {
+                        sleep();
+                        enableOutsideSkin();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             }
         }
     }
@@ -86,14 +101,14 @@ public class OnPlayerDeathListener implements Listener {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendBlockChange(bedLocation, Material.BED_BLOCK, (byte)0);
         }
-        sendPacket(bedPacket);
+        sendPacketObj(bedPacket);
         teleport(getGround(location).add(0, 0.125, 0));
     }
 
     private Location getGround (Location var1) {
         return new Location(var1.getWorld(),
                 var1.getX(),
-                var1.getWorld().getHighestBlockYAt(var1.getBlockX(), var1.getBlockZ()),
+                var1.getY(),
                 var1.getZ());
     }
 
@@ -109,7 +124,7 @@ public class OnPlayerDeathListener implements Listener {
         setValue(packet, "d", var1.getZ());
         setValue(packet, "e", (byte)(var1.getYaw()));
         setValue(packet, "f", (byte)(var1.getPitch()));
-        sendPacket(packet);
+        sendPacketObj(packet);
     }
 
     public Class<?> getNMSClass(String clazz) throws Exception {
@@ -133,7 +148,7 @@ public class OnPlayerDeathListener implements Listener {
         return conField.get(nmsPlayer);
     }
 
-    private void sendPacket(Object packet) throws Exception{
+    private void sendPacketObj(Object packet) throws Exception{
         Method sendPacket = getNMSClass("PlayerConnection").getMethod("sendPacket", getNMSClass("Packet"));
         for (Player player : Bukkit.getOnlinePlayers()) {
             sendPacket.invoke(getConnection(player), packet);
@@ -147,6 +162,6 @@ public class OnPlayerDeathListener implements Listener {
         byte displayedSkinParts = (byte) (0x01 | 0x02 | 0x04 | 0x08 | 0x10 | 0x20 | 0x40);
         dataWatcher.register(displayedPartsObject, displayedSkinParts);
         PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
-        sendPacket(packet);
+        sendPacketObj(packet);
     }
 }
