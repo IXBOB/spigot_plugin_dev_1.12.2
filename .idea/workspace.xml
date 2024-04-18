@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="corpse support for offline players(with no registered player name on mojang server)">
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="corpse text finish; sword slow digging level 3 -&gt; 4">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandLobby.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,26 +112,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Batch.move_output.executor": "Debug",
-    "Gradle.Build spigot_plugin_dev_1.12.2.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor": "Run",
-    "JAR Application.Debug Plugin.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_buildtools/1.12.2/spigot-1.12.2.jar",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Batch.move_output.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Build spigot_plugin_dev_1.12.2.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.Debug Plugin.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_buildtools/1.12.2/spigot-1.12.2.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tqy\Desktop\spigot_plugin_dev_1.12.2\spigot_plugin_dev_1.12.2\src\main\resources" />
@@ -144,7 +143,7 @@
     </key>
   </component>
   <component name="RunManager" selected="JAR Application.Debug Plugin">
-    <configuration name="move_output" type="BatchConfigurationType" factoryName="Batch" temporary="true">
+    <configuration name="move_output" type="BatchConfigurationType" factoryName="Batch">
       <module name="spigot_plugin_dev_1.12.2" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -155,7 +154,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="spigot_plugin_dev_1.12.2 [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="spigot_plugin_dev_1.12.2 [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -177,15 +176,15 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="Debug Plugin" type="JarApplication">
+    <configuration name="Debug Plugin" type="JarApplication" singleton="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/../../java_CloudServer/test_1.12.2/spigot.jar" />
       <option name="PROGRAM_PARAMETERS" value="nogui" />
       <option name="WORKING_DIRECTORY" value="C:\Users\IXBOB\Desktop\java_CloudServer\test_1.12.2" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <method v="2">
-        <option name="Gradle.BeforeRunTask" enabled="true" tasks="shadowJar" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
-        <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_move_output" />
+        <option name="Gradle.BeforeRunTask" enabled="false" tasks="shadowJar" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
+        <option name="Gradle.BeforeRunTask" enabled="true" tasks="moveOutPut" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
       </method>
     </configuration>
     <list>
@@ -195,7 +194,6 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
         <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
         <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
       </list>
@@ -450,7 +448,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713317965097</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="corpse text finish; sword slow digging level 3 -&gt; 4">
+      <option name="closed" value="true" />
+      <created>1713337290151</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1713337290151</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -466,7 +472,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="gun improve and bug fix (2 guns function finish)" />
     <MESSAGE value="他妈的写崩溃了，一堆bug。休息去了" />
     <MESSAGE value="bug fix" />
     <MESSAGE value="gun function finish(may be)" />
@@ -491,7 +496,8 @@
     <MESSAGE value="player corpse." />
     <MESSAGE value="player corpse skin." />
     <MESSAGE value="corpse support for offline players(with no registered player name on mojang server)" />
-    <option name="LAST_COMMIT_MESSAGE" value="corpse support for offline players(with no registered player name on mojang server)" />
+    <MESSAGE value="corpse text finish; sword slow digging level 3 -&gt; 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="corpse text finish; sword slow digging level 3 -&gt; 4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
