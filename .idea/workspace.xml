@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="corpse text finish; sword slow digging level 3 -&gt; 4">
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="update lobby command; update build.gradle to auto move jar output.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandLobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandLobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/MongoDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/MongoDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +120,10 @@
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;Batch.move_output.executor&quot;: &quot;Debug&quot;,
     &quot;Gradle.Build spigot_plugin_dev_1.12.2.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.spigot_plugin_dev_1.12.2 [moveOutPut].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.spigot_plugin_dev_1.12.2 [moveOutput].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
     &quot;JAR Application.Debug Plugin.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
@@ -184,7 +190,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <method v="2">
         <option name="Gradle.BeforeRunTask" enabled="false" tasks="shadowJar" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
-        <option name="Gradle.BeforeRunTask" enabled="true" tasks="moveOutPut" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
+        <option name="Gradle.BeforeRunTask" enabled="false" tasks="moveOutput" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
       </method>
     </configuration>
     <list>
@@ -456,7 +462,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713337290151</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="update lobby command; update build.gradle to auto move jar output.">
+      <option name="closed" value="true" />
+      <created>1713443346853</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1713443346853</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -472,7 +486,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="他妈的写崩溃了，一堆bug。休息去了" />
     <MESSAGE value="bug fix" />
     <MESSAGE value="gun function finish(may be)" />
     <MESSAGE value="added protocolLib, open chest animation finish." />
@@ -497,7 +510,8 @@
     <MESSAGE value="player corpse skin." />
     <MESSAGE value="corpse support for offline players(with no registered player name on mojang server)" />
     <MESSAGE value="corpse text finish; sword slow digging level 3 -&gt; 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="corpse text finish; sword slow digging level 3 -&gt; 4" />
+    <MESSAGE value="update lobby command; update build.gradle to auto move jar output." />
+    <option name="LAST_COMMIT_MESSAGE" value="update lobby command; update build.gradle to auto move jar output." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -38,7 +38,7 @@ javadoc {
     options.encoding = 'UTF-8'
 }
 
-task moveOutPut(type: Exec) {
+task moveOutput(type: Exec) {
     workingDir = file('C:\\Users\\IXBOB\\Desktop\\spigot_plugin_dev_1.12.2\\spigot_plugin_dev_1.12.2')
     commandLine 'cmd', '/c', 'move_output.bat'
 }

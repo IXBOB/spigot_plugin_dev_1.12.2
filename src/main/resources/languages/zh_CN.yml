@@ -1,3 +1,4 @@
+game_name: "僵尸末日"
 welcome_message1: "Welcome to server1."
 welcome_message2: "Welcome to server2."
 game_hit_monster_head: "爆头命中 + %s 硬币"

@@ -1,5 +1,6 @@
 package com.ixbob.myplugin.command;
 
+import com.ixbob.myplugin.handler.config.LangLoader;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -21,7 +22,7 @@ public class CommandInit implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         Scoreboard scoreboard = commandSender.getServer().getScoreboardManager().getNewScoreboard();
         Objective scoreboardObjective = scoreboard.registerNewObjective("main", "dummy");
-        scoreboardObjective.setDisplayName(ChatColor.YELLOW + "僵尸末日");
+        scoreboardObjective.setDisplayName(ChatColor.YELLOW + LangLoader.get("game_name"));
         Player player = (Player) commandSender;
 
         scoreboardObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
