@@ -6,7 +6,6 @@ import com.ixbob.myplugin.handler.config.LangLoader;
 import com.ixbob.myplugin.task.ZombieDestroyTask;
 import com.ixbob.myplugin.task.ZombieMoveTask;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -19,7 +18,6 @@ public class Main extends JavaPlugin {
 
         LangLoader.init(this);
 
-        this.getCommand("lobby").setExecutor(new CommandLobby());
         this.getCommand("testkit").setExecutor(new CommandTestkit(this));
         this.getCommand("init").setExecutor(new CommandInit(this));
         this.getCommand("test").setExecutor(new CommandTest(this));

@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="update lobby command; update build.gradle to auto move jar output.">
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="Code format optimization">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/MongoDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/MongoDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandLobby.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -470,7 +468,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713443346853</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Code format optimization">
+      <option name="closed" value="true" />
+      <created>1713771522770</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1713771522770</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -486,7 +492,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="bug fix" />
     <MESSAGE value="gun function finish(may be)" />
     <MESSAGE value="added protocolLib, open chest animation finish." />
     <MESSAGE value="improve gun functions." />
@@ -511,7 +516,8 @@
     <MESSAGE value="corpse support for offline players(with no registered player name on mojang server)" />
     <MESSAGE value="corpse text finish; sword slow digging level 3 -&gt; 4" />
     <MESSAGE value="update lobby command; update build.gradle to auto move jar output." />
-    <option name="LAST_COMMIT_MESSAGE" value="update lobby command; update build.gradle to auto move jar output." />
+    <MESSAGE value="Code format optimization" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code format optimization" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
