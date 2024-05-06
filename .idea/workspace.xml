@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="Completed the countdown for the function of lifting the player up to respawn.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/PlayerSneakingListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerSneakToHelpCountDowner.java" afterDir="false" />
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="player death countdown finish.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerRespawnCountDowner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerRespawnCountDowner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -495,7 +491,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714978428648</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="player death countdown finish.">
+      <option name="closed" value="true" />
+      <created>1715003394645</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1715003394645</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -511,7 +515,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="improve gun functions." />
     <MESSAGE value="zombie break block AI done." />
     <MESSAGE value="database connect and insert function refactor" />
     <MESSAGE value="added set window command. Basic custom command system." />
@@ -536,7 +539,8 @@
     <MESSAGE value="Code format optimization" />
     <MESSAGE value="remove inner lobby command" />
     <MESSAGE value="Completed the countdown for the function of lifting the player up to respawn." />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed the countdown for the function of lifting the player up to respawn." />
+    <MESSAGE value="player death countdown finish." />
+    <option name="LAST_COMMIT_MESSAGE" value="player death countdown finish." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

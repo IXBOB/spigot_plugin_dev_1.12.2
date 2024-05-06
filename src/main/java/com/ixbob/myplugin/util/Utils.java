@@ -1,15 +1,18 @@
 package com.ixbob.myplugin.util;
 
 import com.ixbob.myplugin.MongoDB;
+import com.ixbob.myplugin.handler.config.LangLoader;
 import net.minecraft.server.v1_12_R1.Packet;
 import net.minecraft.server.v1_12_R1.PacketPlayOutNamedEntitySpawn;
 import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_12_R1.PlayerConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
 import java.io.BufferedReader;
@@ -22,6 +25,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Level;
 
 public class Utils {
     private static final MongoDB dbWindowLoc = new MongoDB("windowLoc");
@@ -76,5 +81,23 @@ public class Utils {
                 playerConnection.sendPacket(packet);
             }
         }
+    }
+
+    public static Location getGround (Location var1) {
+        Location loc = new Location(var1.getWorld(), var1.getX(), var1.getY() + 1, var1.getZ());
+        BlockIterator iterator = new BlockIterator(Bukkit.getWorlds().get(0), loc.toVector(), new Vector(0, -1, 0), 0, 15);
+        while (iterator.hasNext()) {
+            Block next = iterator.next();
+            System.out.println(next.getType() + " " + next.getY());
+            if (!next.getType().isTransparent()) {
+                double y = next.getY() + 1;
+                loc.setY(y);
+                return loc;
+            }
+        }
+        String errorMsg = LangLoader.get("code_throw_error_text_in_chat") + LangLoader.get("code_throw_error_no_ground_in_under_15_blocks") + loc + Arrays.toString((new RuntimeException()).getStackTrace());
+        Bukkit.broadcastMessage(errorMsg);
+        Bukkit.getLogger().log(Level.SEVERE, errorMsg);
+        return loc;
     }
 }

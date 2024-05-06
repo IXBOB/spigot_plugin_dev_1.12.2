@@ -12,6 +12,7 @@ import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -21,11 +22,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.util.BlockIterator;
+import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.logging.Level;
+
+import static com.ixbob.myplugin.util.Utils.getGround;
 
 public class OnPlayerDeathListener implements Listener {
     private final Plugin plugin;
@@ -50,7 +57,7 @@ public class OnPlayerDeathListener implements Listener {
 
                 Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                     String playerName = player.getName();
-                    this.location = player.getLocation();
+                    this.location = Utils.getGround(player.getLocation());
 
                     CraftPlayer craftPlayer = (CraftPlayer) player;
                     EntityPlayer entityPlayer = craftPlayer.getHandle();
@@ -122,12 +129,7 @@ public class OnPlayerDeathListener implements Listener {
         teleport(getGround(location).add(0, 0.125, 0));
     }
 
-    private Location getGround (Location var1) {
-        return new Location(var1.getWorld(),
-                var1.getX(),
-                var1.getY(),
-                var1.getZ());
-    }
+
 
     private void teleport(Location var1) throws Exception {
         double x = var1.getX();
