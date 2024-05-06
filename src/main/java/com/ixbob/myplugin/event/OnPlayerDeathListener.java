@@ -2,12 +2,10 @@ package com.ixbob.myplugin.event;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import com.ixbob.myplugin.handler.config.LangLoader;
+import com.ixbob.myplugin.task.PlayerRespawnCountDowner;
 import com.ixbob.myplugin.util.Utils;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -16,19 +14,17 @@ import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Optional;
 import java.util.UUID;
 
 public class OnPlayerDeathListener implements Listener {
@@ -92,16 +88,21 @@ public class OnPlayerDeathListener implements Listener {
 
                     Bukkit.getScheduler().runTask(plugin, () -> {
                         Location spawnTextLoc = location.add(0, 1.0, 0);
-                        ArmorStand text1 = (ArmorStand) Bukkit.getWorlds().get(0).spawnEntity(spawnTextLoc, EntityType.ARMOR_STAND);
-                        ArmorStand text2 = (ArmorStand) Bukkit.getWorlds().get(0).spawnEntity(spawnTextLoc.add(0, -0.25, 0), EntityType.ARMOR_STAND);
-                        initArmorStandText(text1);
-                        initArmorStandText(text2);
-                        text1.setCustomName(ChatColor.YELLOW + playerName + " 倒下了 ！");
-                        text2.setCustomName(ChatColor.YELLOW + "你有 " + ChatColor.BOLD + ChatColor.AQUA + "20.0 秒" + ChatColor.RESET +ChatColor.YELLOW + " 来扶起这名玩家");
+                        ArmorStand text1Stand = (ArmorStand) Bukkit.getWorlds().get(0).spawnEntity(spawnTextLoc, EntityType.ARMOR_STAND);
+                        ArmorStand text2Stand = (ArmorStand) Bukkit.getWorlds().get(0).spawnEntity(spawnTextLoc.add(0, -0.25, 0), EntityType.ARMOR_STAND);
+                        initArmorStandText(text1Stand);
+                        initArmorStandText(text2Stand);
+                        text1Stand.setCustomName(String.format(LangLoader.get("player_help_respawn_time_left_line1"), playerName));
+                        text2Stand.setCustomName(String.format(LangLoader.get("player_help_respawn_time_left_line2"), 20.0f));
+                        player.setMetadata("respawnTimeLeft", new FixedMetadataValue(plugin, 20.0f));
 
+                        PlayerRespawnCountDowner countDowner = new PlayerRespawnCountDowner(player, text1Stand, text2Stand);
+
+                        //this method returns a taskID when while schedule it,
+                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, countDowner, 0, 2);
+
+                        countDowner.setTaskID(taskID);
                     });
-
-
                 });
             }
         }
@@ -135,9 +136,9 @@ public class OnPlayerDeathListener implements Listener {
         Class<?> packetClass = getNMSClass("PacketPlayOutEntityTeleport");
         Object packet = packetClass.getDeclaredConstructor().newInstance();
         setValue(packet, "a", entityID);
-        setValue(packet, "b", var1.getX());
-        setValue(packet, "c", var1.getY());
-        setValue(packet, "d", var1.getZ());
+        setValue(packet, "b", x);
+        setValue(packet, "c", y);
+        setValue(packet, "d", z);
         setValue(packet, "e", (byte)(var1.getYaw()));
         setValue(packet, "f", (byte)(var1.getPitch()));
         sendPacketObj(packet);

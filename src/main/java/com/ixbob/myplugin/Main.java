@@ -6,12 +6,15 @@ import com.ixbob.myplugin.handler.config.LangLoader;
 import com.ixbob.myplugin.task.ZombieDestroyTask;
 import com.ixbob.myplugin.task.ZombieMoveTask;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 public class Main extends JavaPlugin {
+    public static Plugin plugin;
     @Override
     public void onEnable() {
+        plugin = this;
 
         MongoDB mongoDB = new MongoDB();
         mongoDB.connect("127.0.0.1", 27017, this);
