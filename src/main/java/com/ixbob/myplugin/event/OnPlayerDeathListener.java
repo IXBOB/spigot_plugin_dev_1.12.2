@@ -39,7 +39,7 @@ public class OnPlayerDeathListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDeath(EntityDamageEvent event) throws Exception {
+    public void onPlayerDeath(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             double health = player.getHealth();
@@ -94,14 +94,14 @@ public class OnPlayerDeathListener implements Listener {
                         initArmorStandText(text2Stand);
                         text1Stand.setCustomName(String.format(LangLoader.get("player_help_respawn_time_left_line1"), playerName));
                         text2Stand.setCustomName(String.format(LangLoader.get("player_help_respawn_time_left_line2"), 20.0f));
+                        player.setMetadata("needHelpToRespawn", new FixedMetadataValue(plugin, true));
                         player.setMetadata("respawnTimeLeft", new FixedMetadataValue(plugin, 20.0f));
 
-                        PlayerRespawnCountDowner countDowner = new PlayerRespawnCountDowner(player, text1Stand, text2Stand);
+                        PlayerRespawnCountDowner respawnCountDowner = new PlayerRespawnCountDowner(player, text1Stand, text2Stand);
 
-                        //this method returns a taskID when while schedule it,
-                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, countDowner, 0, 2);
-
-                        countDowner.setTaskID(taskID);
+                        //this method returns a taskID when while scheduling it,
+                        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, respawnCountDowner, 0, 2);
+                        respawnCountDowner.setTaskID(taskID);
                     });
                 });
             }

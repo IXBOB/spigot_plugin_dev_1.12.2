@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerRespawnCountDowner implements Runnable {
     private float timeLeft;
@@ -28,7 +27,10 @@ public class PlayerRespawnCountDowner implements Runnable {
                 String.format("%.1f", timeLeft)));
         if (timeLeft <= 0.0f) {
             text1Stand.remove();
-            text2Stand.remove();
+            text2Stand.setCustomName(LangLoader.get("player_died_armorstand_text"));
+            player.setMetadata("status_died", new FixedMetadataValue(Main.getInstance(), true));
+            player.setMetadata("needHelpToRespawn", new FixedMetadataValue(Main.getInstance(), false));
+            player.sendMessage(LangLoader.get("player_died_chat_text"));
             Bukkit.getScheduler().cancelTask(taskID);
         }
     }

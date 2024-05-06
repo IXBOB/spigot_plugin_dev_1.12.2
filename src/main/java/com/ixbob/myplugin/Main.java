@@ -56,6 +56,9 @@ public class Main extends JavaPlugin {
         Listener onPlayerDropItemListener = new OnPlayerDropItemListener();
         getServer().getPluginManager().registerEvents(onPlayerDropItemListener, this);
 
+        Listener playerSneakingListener = new PlayerSneakingListener();
+        getServer().getPluginManager().registerEvents(playerSneakingListener, this);
+
         BukkitTask zombieMoveTask = new ZombieMoveTask(this).runTaskTimerAsynchronously(this, 0, 1);
         BukkitTask zombieDestroyTask = new ZombieDestroyTask(this).runTaskTimerAsynchronously(this, 0, 20);
 
@@ -65,5 +68,9 @@ public class Main extends JavaPlugin {
 
 
 //        HandlerList.unregisterAll(OnJoinListener);
+    }
+
+    public static Plugin getInstance() {
+        return plugin;
     }
 }
