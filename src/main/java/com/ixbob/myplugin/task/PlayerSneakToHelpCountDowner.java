@@ -1,6 +1,11 @@
 package com.ixbob.myplugin.task;
 
 import com.ixbob.myplugin.handler.config.LangLoader;
+import com.ixbob.myplugin.util.Utils;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.Packet;
+import net.minecraft.server.v1_12_R1.PacketPlayOutEntityMetadata;
+import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.ArmorStand;
@@ -38,14 +43,18 @@ public class PlayerSneakToHelpCountDowner implements Runnable{
         if (helpTime <= 0.0f) {
             for(Player player : Bukkit.getOnlinePlayers()) {
                 player.sendMessage(String.format(LangLoader.get("player_respawn_success_chat_text"), doHelpPlayerName, getHelpedPlayerName));
-                text1Stand.remove();
-                text2Stand.remove();
-                getHelpedPlayer.setMetadata("isBeingHelped", new FixedMetadataValue(Main.getInstance(), false));
-                getHelpedPlayer.setMetadata("needHelpToRespawn", new FixedMetadataValue(Main.getInstance(), false));
-                getHelpedPlayer.setMetadata("justRespawned", new FixedMetadataValue(Main.getInstance(), true)); //在PlayerRespawnCountDowner.java中处理，会取消RespawnCountDowner
-                getHelpedPlayer.setGameMode(GameMode.ADVENTURE);
-                cancel();
             }
+            text1Stand.remove();
+            text2Stand.remove();
+            getHelpedPlayer.setMetadata("isBeingHelped", new FixedMetadataValue(Main.getInstance(), false));
+            getHelpedPlayer.setMetadata("needHelpToRespawn", new FixedMetadataValue(Main.getInstance(), false));
+            getHelpedPlayer.setMetadata("justRespawned", new FixedMetadataValue(Main.getInstance(), true)); //在PlayerRespawnCountDowner.java中处理，会取消RespawnCountDowner
+            getHelpedPlayer.setGameMode(GameMode.ADVENTURE);
+            EntityPlayer playerCorpse = Main.playerCorpseTransit.get(getHelpedPlayer);
+            Main.playerCorpseTransit.remove(getHelpedPlayer);
+            Packet<?> packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, playerCorpse);
+            Utils.sendNMSPacketToAllPlayers(packet);
+            cancel();
         }
     }
 

@@ -5,6 +5,8 @@ import com.ixbob.myplugin.event.*;
 import com.ixbob.myplugin.handler.config.LangLoader;
 import com.ixbob.myplugin.task.ZombieDestroyTask;
 import com.ixbob.myplugin.task.ZombieMoveTask;
+import com.ixbob.myplugin.util.PlayerCorpseTransit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,6 +14,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class Main extends JavaPlugin {
     public static Plugin plugin;
+    public static PlayerCorpseTransit playerCorpseTransit = new PlayerCorpseTransit();
     @Override
     public void onEnable() {
         plugin = this;

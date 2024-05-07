@@ -6,7 +6,9 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.ixbob.myplugin.handler.config.LangLoader;
 import com.ixbob.myplugin.task.PlayerRespawnCountDowner;
+import com.ixbob.myplugin.util.PlayerCorpseTransit;
 import com.ixbob.myplugin.util.Utils;
+import com.ixbob.myplugin.Main;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_12_R1.*;
@@ -76,6 +78,7 @@ public class OnPlayerDeathListener implements Listener {
                     EntityPlayer npc = new EntityPlayer(minecraftServer, worldServer, gameProfile, new PlayerInteractManager(minecraftServer.getWorld()));
                     this.entityID = (int)Math.ceil(Math.random() * 1000) + 2000;
                     npc.h(entityID); //h: setID
+                    Main.playerCorpseTransit.put(player, npc);
 
                     Packet<?>[] packets = {new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, npc),
                             new PacketPlayOutNamedEntitySpawn(npc)};

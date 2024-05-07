@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="player corpse get ground function finish">
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="basic functions of respawning players finish">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/PlayerCorpseTransit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandInit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/PlayerSneakingListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/PlayerSneakingListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerRespawnCountDowner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerRespawnCountDowner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerSneakToHelpCountDowner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerSneakToHelpCountDowner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -510,7 +509,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715005926981</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="basic functions of respawning players finish">
+      <option name="closed" value="true" />
+      <created>1715049540673</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1715049540673</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -526,7 +533,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="database connect and insert function refactor" />
     <MESSAGE value="added set window command. Basic custom command system." />
     <MESSAGE value="zombie get nearest window location." />
     <MESSAGE value="LangLoader finish" />
@@ -551,7 +557,8 @@
     <MESSAGE value="Completed the countdown for the function of lifting the player up to respawn." />
     <MESSAGE value="player death countdown finish." />
     <MESSAGE value="player corpse get ground function finish" />
-    <option name="LAST_COMMIT_MESSAGE" value="player corpse get ground function finish" />
+    <MESSAGE value="basic functions of respawning players finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="basic functions of respawning players finish" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
