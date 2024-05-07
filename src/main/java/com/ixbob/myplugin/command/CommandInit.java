@@ -33,6 +33,8 @@ public class CommandInit implements CommandExecutor {
             playerOnline.setMetadata("last_damage_using_gun_type", new FixedMetadataValue(plugin, "empty"));
             playerOnline.setMetadata("needHelpToRespawn", new FixedMetadataValue(plugin, false));
             playerOnline.setMetadata("status_died", new FixedMetadataValue(plugin, false));
+            playerOnline.setMetadata("isBeingHelped", new FixedMetadataValue(plugin, false));
+            playerOnline.setMetadata("justRespawned", new FixedMetadataValue(plugin, false));
             playerOnline.setGameMode(GameMode.ADVENTURE);
         }
 

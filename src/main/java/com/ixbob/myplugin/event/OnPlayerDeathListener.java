@@ -12,7 +12,6 @@ import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -22,15 +21,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.util.BlockIterator;
-import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.UUID;
-import java.util.logging.Level;
 
 import static com.ixbob.myplugin.util.Utils.getGround;
 
@@ -103,6 +98,8 @@ public class OnPlayerDeathListener implements Listener {
                         text2Stand.setCustomName(String.format(LangLoader.get("player_help_respawn_time_left_line2"), 20.0f));
                         player.setMetadata("needHelpToRespawn", new FixedMetadataValue(plugin, true));
                         player.setMetadata("respawnTimeLeft", new FixedMetadataValue(plugin, 20.0f));
+                        player.setMetadata("text1Stand_uuid", new FixedMetadataValue(plugin, text1Stand.getUniqueId().toString())); //绑定属于该玩家的2个显示文字的盔甲架，便于获取
+                        player.setMetadata("text2Stand_uuid", new FixedMetadataValue(plugin, text2Stand.getUniqueId().toString()));
 
                         PlayerRespawnCountDowner respawnCountDowner = new PlayerRespawnCountDowner(player, text1Stand, text2Stand);
 
