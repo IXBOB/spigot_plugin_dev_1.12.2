@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -66,6 +67,17 @@ public class Utils {
         return json.toString();
     }
 
+    public static Class<?> getNMSClass(String clazz) throws Exception {
+        return Class.forName("net.minecraft.server.v1_12_R1." + clazz);
+    }
+
+    private void sendPacket(Object packet) throws Exception {
+        Method sendPacket = getNMSClass("PlayerConnection").getMethod("sendPacket", getNMSClass("Packet"));
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            sendPacket.invoke(CorpseUtil.getConnection(player), packet);
+        }
+    }
+
     public static void sendNMSPacketToAllPlayers(Packet<?> packet) {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             PlayerConnection playerConnection = ((CraftPlayer) onlinePlayer).getHandle().playerConnection;
@@ -83,8 +95,21 @@ public class Utils {
         }
     }
 
+    public static void sendNMSPacket(Packet<?> packet, Player player) {
+        PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
+        playerConnection.sendPacket(packet);
+    }
+
+    public static void sendNMSPackets(Packet<?>[] packets, Player player) {
+        PlayerConnection playerConnection = ((CraftPlayer) player).getHandle().playerConnection;
+        for (int i = 0; i <= packets.length - 1; i++) {
+            Packet<?> packet = packets[i];
+            playerConnection.sendPacket(packet);
+        }
+    }
+
     public static Location getGround (Location var1) {
-        Location loc = new Location(var1.getWorld(), var1.getX(), var1.getY() + 1, var1.getZ());
+        Location loc = new Location(var1.getWorld(), var1.getX(), var1.getY() + 1, var1.getZ(), var1.getYaw(), var1.getPitch());
         BlockIterator iterator = new BlockIterator(Bukkit.getWorlds().get(0), loc.toVector(), new Vector(0, -1, 0), 0, 15);
         while (iterator.hasNext()) {
             Block next = iterator.next();
@@ -100,4 +125,6 @@ public class Utils {
         Bukkit.getLogger().log(Level.SEVERE, errorMsg);
         return loc;
     }
+
+
 }

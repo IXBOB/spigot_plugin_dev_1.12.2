@@ -1,10 +1,8 @@
 package com.ixbob.myplugin.task;
 
 import com.ixbob.myplugin.handler.config.LangLoader;
-import com.ixbob.myplugin.util.Utils;
 import net.minecraft.server.v1_12_R1.EntityPlayer;
 import net.minecraft.server.v1_12_R1.Packet;
-import net.minecraft.server.v1_12_R1.PacketPlayOutEntityMetadata;
 import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -12,6 +10,10 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import com.ixbob.myplugin.Main;
+
+import static com.ixbob.myplugin.util.CorpseUtil.sendPacketObj;
+import static com.ixbob.myplugin.util.Utils.getNMSClass;
+import static com.ixbob.myplugin.util.Utils.sendNMSPacketToAllPlayers;
 
 public class PlayerSneakToHelpCountDowner implements Runnable{
     private int taskID;
@@ -52,8 +54,15 @@ public class PlayerSneakToHelpCountDowner implements Runnable{
             getHelpedPlayer.setGameMode(GameMode.ADVENTURE);
             EntityPlayer playerCorpse = Main.playerCorpseTransit.get(getHelpedPlayer);
             Main.playerCorpseTransit.remove(getHelpedPlayer);
+
             Packet<?> packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, playerCorpse);
-            Utils.sendNMSPacketToAllPlayers(packet);
+            sendNMSPacketToAllPlayers(packet);
+            try {
+                removeCorpse(playerCorpse.getId());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
             cancel();
         }
     }
@@ -64,5 +73,14 @@ public class PlayerSneakToHelpCountDowner implements Runnable{
 
     public void cancel() {
         Bukkit.getScheduler().cancelTask(taskID);
+    }
+
+    public void removeCorpse(int entityID) throws Exception{
+        Object removeEntity = invokeConstructor(getNMSClass("PacketPlayOutEntityDestroy"), new Class<?>[] { int[].class }, new int[] { entityID });
+        sendPacketObj(removeEntity);
+    }
+
+    private Object invokeConstructor(Class<?> clazz, Class<?>[] args, Object... initargs) throws Exception {
+        return clazz.getConstructor(args).newInstance(initargs);
     }
 }

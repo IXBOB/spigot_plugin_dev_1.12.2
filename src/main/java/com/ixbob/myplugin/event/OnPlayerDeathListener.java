@@ -6,6 +6,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.ixbob.myplugin.handler.config.LangLoader;
 import com.ixbob.myplugin.task.PlayerRespawnCountDowner;
+import com.ixbob.myplugin.util.CorpseUtil;
 import com.ixbob.myplugin.util.PlayerCorpseTransit;
 import com.ixbob.myplugin.util.Utils;
 import com.ixbob.myplugin.Main;
@@ -14,6 +15,8 @@ import com.mojang.authlib.properties.Property;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.*;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftArmorStand;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -24,9 +27,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.UUID;
 
 import static com.ixbob.myplugin.util.Utils.getGround;
@@ -35,8 +35,6 @@ public class OnPlayerDeathListener implements Listener {
     private final Plugin plugin;
     private int entityID;
     private Location location;
-    ProtocolManager manager = ProtocolLibrary.getProtocolManager();
-
 
     public OnPlayerDeathListener(Plugin plugin) {
         this.plugin = plugin;
@@ -54,7 +52,7 @@ public class OnPlayerDeathListener implements Listener {
 
                 Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
                     String playerName = player.getName();
-                    this.location = Utils.getGround(player.getLocation());
+                    this.location = getGround(player.getLocation());
 
                     CraftPlayer craftPlayer = (CraftPlayer) player;
                     EntityPlayer entityPlayer = craftPlayer.getHandle();
@@ -104,7 +102,12 @@ public class OnPlayerDeathListener implements Listener {
                         player.setMetadata("text1Stand_uuid", new FixedMetadataValue(plugin, text1Stand.getUniqueId().toString())); //绑定属于该玩家的2个显示文字的盔甲架，便于获取
                         player.setMetadata("text2Stand_uuid", new FixedMetadataValue(plugin, text2Stand.getUniqueId().toString()));
 
-                        PlayerRespawnCountDowner respawnCountDowner = new PlayerRespawnCountDowner(player, text1Stand, text2Stand);
+                        PlayerRespawnCountDowner respawnCountDowner = new PlayerRespawnCountDowner(player, text1Stand, text2Stand, location);
+                        EntityArmorStand text1EntityStand = ((CraftArmorStand)text1Stand).getHandle();
+                        EntityArmorStand text2EntityStand = ((CraftArmorStand)text2Stand).getHandle();
+                        Packet<?>[] removeStandPackets = {new PacketPlayOutEntityDestroy(text1EntityStand.getId()),
+                        new PacketPlayOutEntityDestroy(text2EntityStand.getId())};
+                        Utils.sendNMSPackets(removeStandPackets, player);
 
                         //this method returns a taskID when while scheduling it,
                         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, respawnCountDowner, 0, 2);
@@ -115,63 +118,66 @@ public class OnPlayerDeathListener implements Listener {
         }
     }
     private void sleep() throws Exception {
-        Location bedLocation = new Location(location.getWorld(), 1, 1, 1);
-        Class<?> packetClass = getNMSClass("PacketPlayOutBed");
+        Location bedLocation1 = new Location(location.getWorld(), 1, 1, 1);
+        Location bedLocation2 = new Location(location.getWorld(), 2, 1, 1);
+        Location bedLocation3 = new Location(location.getWorld(), 3, 1, 1);
+        Location bedLocation4 = new Location(location.getWorld(), 4, 1, 1);
+        Class<?> packetClass = Utils.getNMSClass("PacketPlayOutBed");
         Object bedPacket = packetClass.getDeclaredConstructor().newInstance();
-        setValue(bedPacket, "a", entityID);
-        setValue(bedPacket, "b", getNMSClass("BlockPosition")
+        CorpseUtil.setValue(bedPacket, "a", entityID);
+        Location corpseLocation = getGround(location).add(0, 0.125, 0);
+        //尸体血
+        double x = corpseLocation.getBlockX();
+        double y = corpseLocation.getBlockY();
+        double z = corpseLocation.getBlockZ();
+        World world = Bukkit.getWorlds().get(0);
+
+        for (int plX = (int) x - 1; plX <= x + 1; plX++) {
+            for (int plZ = (int) z - 1; plZ <= z + 1; plZ++) {
+                if (world.getBlockAt((int)x, (int)y, (int)z).getType() == Material.AIR) {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        int n = (int) Math.floor(Math.random()*2);
+                        if (n == 0) {
+                            player.sendBlockChange(new Location(world, plX, y, plZ), Material.REDSTONE_WIRE, (byte)0);
+                        }
+                    }
+                };
+            }
+        }
+        //随机躺下朝向
+        Location bedLocation = null;
+        int posNum = (int) (Math.floor(Math.random() * 4) + 1);
+        switch (posNum) {
+            case 1: bedLocation = bedLocation1; break;
+            case 2: bedLocation = bedLocation2; break;
+            case 3: bedLocation = bedLocation3; break;
+            case 4: bedLocation = bedLocation4; break;
+        }
+        assert bedLocation != null;
+        CorpseUtil.setValue(bedPacket, "b", Utils.getNMSClass("BlockPosition")
                 .getConstructor(int.class, int.class, int.class)
                 .newInstance(bedLocation.getBlockX(), bedLocation.getBlockY(), bedLocation.getBlockZ()));
         for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendBlockChange(bedLocation, Material.BED_BLOCK, (byte)0);
+            player.sendBlockChange(bedLocation, Material.BED_BLOCK, (byte)(posNum-1));
         }
-        sendPacketObj(bedPacket);
-        teleport(getGround(location).add(0, 0.125, 0));
+
+        CorpseUtil.sendPacketObj(bedPacket);
+        teleport(corpseLocation);
     }
-
-
 
     private void teleport(Location var1) throws Exception {
         double x = var1.getX();
         double y = var1.getY();
         double z = var1.getZ();
-        Class<?> packetClass = getNMSClass("PacketPlayOutEntityTeleport");
+        Class<?> packetClass = Utils.getNMSClass("PacketPlayOutEntityTeleport");
         Object packet = packetClass.getDeclaredConstructor().newInstance();
-        setValue(packet, "a", entityID);
-        setValue(packet, "b", x);
-        setValue(packet, "c", y);
-        setValue(packet, "d", z);
-        setValue(packet, "e", (byte)(var1.getYaw()));
-        setValue(packet, "f", (byte)(var1.getPitch()));
-        sendPacketObj(packet);
-    }
-
-    public Class<?> getNMSClass(String clazz) throws Exception {
-        return Class.forName("net.minecraft.server.v1_12_R1." + clazz);
-    }
-
-    private void setValue(Object obj, String name, Object value) {
-        try {
-            Field field = obj.getClass().getDeclaredField(name);
-            field.setAccessible(true);
-            field.set(obj, value);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private Object getConnection(Player player) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-        Method getHandle = player.getClass().getMethod("getHandle");
-        Object nmsPlayer = getHandle.invoke(player);
-        Field conField = nmsPlayer.getClass().getField("playerConnection");
-        return conField.get(nmsPlayer);
-    }
-
-    private void sendPacketObj(Object packet) throws Exception{
-        Method sendPacket = getNMSClass("PlayerConnection").getMethod("sendPacket", getNMSClass("Packet"));
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            sendPacket.invoke(getConnection(player), packet);
-        }
+        CorpseUtil.setValue(packet, "a", entityID);
+        CorpseUtil.setValue(packet, "b", x);
+        CorpseUtil.setValue(packet, "c", y);
+        CorpseUtil.setValue(packet, "d", z);
+        CorpseUtil.setValue(packet, "e", (byte)(var1.getYaw()));
+        CorpseUtil.setValue(packet, "f", (byte)(var1.getPitch()));
+        CorpseUtil.sendPacketObj(packet);
     }
 
     private void enableOutsideSkin() throws Exception {
@@ -181,7 +187,7 @@ public class OnPlayerDeathListener implements Listener {
         byte displayedSkinParts = (byte) (0x01 | 0x02 | 0x04 | 0x08 | 0x10 | 0x20 | 0x40);
         dataWatcher.register(displayedPartsObject, displayedSkinParts);
         PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
-        sendPacketObj(packet);
+        CorpseUtil.sendPacketObj(packet);
     }
 
     private void initArmorStandText(ArmorStand armorStand) {

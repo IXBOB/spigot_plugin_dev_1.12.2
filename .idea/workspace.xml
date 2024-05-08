@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="basic functions of respawning players finish">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/PlayerCorpseTransit.java" afterDir="false" />
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="respawn player function finish">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/CorpseUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerRespawnCountDowner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerRespawnCountDowner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerSneakToHelpCountDowner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/PlayerSneakToHelpCountDowner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +34,17 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="spigot_plugin_dev_1.12.2" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="spigot_plugin_dev_1.12.2" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="spigot_plugin_dev_1.12.2" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -114,29 +125,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Batch.move_output.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Build spigot_plugin_dev_1.12.2.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.spigot_plugin_dev_1.12.2 [moveOutPut].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.spigot_plugin_dev_1.12.2 [moveOutput].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.Debug Plugin.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_buildtools/1.12.2/spigot-1.12.2.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.updates&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Batch.move_output.executor": "Debug",
+    "Gradle.Build spigot_plugin_dev_1.12.2.executor": "Run",
+    "Gradle.C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2 [shadowJar].executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.spigot_plugin_dev_1.12.2 [clean].executor": "Run",
+    "Gradle.spigot_plugin_dev_1.12.2 [moveOutPut].executor": "Run",
+    "Gradle.spigot_plugin_dev_1.12.2 [moveOutput].executor": "Run",
+    "Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor": "Run",
+    "JAR Application.Debug Plugin.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_buildtools/1.12.2/spigot-1.12.2.jar",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tqy\Desktop\spigot_plugin_dev_1.12.2\spigot_plugin_dev_1.12.2\src\main\resources" />
@@ -158,6 +170,28 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="spigot_plugin_dev_1.12.2 [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
     </configuration>
     <configuration name="spigot_plugin_dev_1.12.2 [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
@@ -195,10 +229,12 @@
     <list>
       <item itemvalue="Batch.move_output" />
       <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
+      <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [clean]" />
       <item itemvalue="JAR Application.Debug Plugin" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [clean]" />
         <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
         <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
       </list>
@@ -517,7 +553,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715049540673</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="remove player corpse after respawn(not finished)">
+      <option name="closed" value="true" />
+      <created>1715071626247</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1715071626247</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -533,8 +577,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added set window command. Basic custom command system." />
-    <MESSAGE value="zombie get nearest window location." />
     <MESSAGE value="LangLoader finish" />
     <MESSAGE value="hit-get-coin function improve." />
     <MESSAGE value="zombie auto find and move to window function." />
@@ -558,7 +600,9 @@
     <MESSAGE value="player death countdown finish." />
     <MESSAGE value="player corpse get ground function finish" />
     <MESSAGE value="basic functions of respawning players finish" />
-    <option name="LAST_COMMIT_MESSAGE" value="basic functions of respawning players finish" />
+    <MESSAGE value="remove player corpse after respawn(not finished)" />
+    <MESSAGE value="respawn player function finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="respawn player function finish" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
