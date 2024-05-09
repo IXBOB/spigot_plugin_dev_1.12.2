@@ -2,6 +2,7 @@
 package com.ixbob.myplugin.command;
 
 import com.ixbob.myplugin.entity.ZombieLevel1;
+import com.ixbob.myplugin.entity.ZombieLevel2;
 import com.ixbob.myplugin.util.Mth;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -16,7 +17,7 @@ import static com.ixbob.myplugin.util.Utils.getNearestWindowLoc;
 
 public class CommandTest implements CommandExecutor {
 
-    private Plugin plugin;
+    private final Plugin plugin;
 
     public CommandTest (Plugin plugin) {
         this.plugin = plugin;
@@ -34,11 +35,18 @@ public class CommandTest implements CommandExecutor {
             location.setYaw((float) Mth.vec3ToYaw(moveVec3));
 
             ZombieLevel1 zombieLevel1 = new ZombieLevel1(location, plugin);
-            zombieLevel1.spawn(location.getWorld());
+            zombieLevel1.spawn();
             zombieLevel1.getEntity().setMetadata("moveVec3_x", new FixedMetadataValue(plugin, moveVec3.getX()));
             zombieLevel1.getEntity().setMetadata("moveVec3_z", new FixedMetadataValue(plugin, moveVec3.getZ()));
             zombieLevel1.getEntity().setMetadata("onTheRoadToWindow", new FixedMetadataValue(plugin, true));
             zombieLevel1.getEntity().setMetadata("frontAreaContainWoodStep", new FixedMetadataValue(plugin, false));
+
+            ZombieLevel2 zombieLevel2 = new ZombieLevel2(location, plugin);
+            zombieLevel2.spawn();
+            zombieLevel2.getEntity().setMetadata("moveVec3_x", new FixedMetadataValue(plugin, moveVec3.getX()));
+            zombieLevel2.getEntity().setMetadata("moveVec3_z", new FixedMetadataValue(plugin, moveVec3.getZ()));
+            zombieLevel2.getEntity().setMetadata("onTheRoadToWindow", new FixedMetadataValue(plugin, true));
+            zombieLevel2.getEntity().setMetadata("frontAreaContainWoodStep", new FixedMetadataValue(plugin, false));
 //            BukkitTask task = new TestTask(item).runTaskTimer(plugin, 0, 1);
         }
         return true;

@@ -134,7 +134,7 @@ public class OnPlayerDeathListener implements Listener {
 
         for (int plX = (int) x - 1; plX <= x + 1; plX++) {
             for (int plZ = (int) z - 1; plZ <= z + 1; plZ++) {
-                if (world.getBlockAt((int)x, (int)y, (int)z).getType() == Material.AIR) {
+                if (world.getBlockAt(plX, (int)y, plZ).getType() == Material.AIR) {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         int n = (int) Math.floor(Math.random()*2);
                         if (n == 0) {

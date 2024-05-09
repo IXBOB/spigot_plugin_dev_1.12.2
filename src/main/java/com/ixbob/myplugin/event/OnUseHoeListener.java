@@ -209,7 +209,8 @@ public class OnUseHoeListener implements Listener {
                     if (nearbyEntity.getType() == EntityType.ZOMBIE
                             || nearbyEntity.getType() == EntityType.SKELETON
                             || nearbyEntity.getType() == EntityType.CREEPER
-                            || nearbyEntity.getType() == EntityType.SPIDER) {
+                            || nearbyEntity.getType() == EntityType.SPIDER
+                            || nearbyEntity.getType() == EntityType.PIG_ZOMBIE) {
                         nearbyEntity.setMetadata("last_damage_bullet_pos_y", new FixedMetadataValue(plugin, armorStand.getLocation().getY()));
                         eventPlayer.setMetadata("last_damage_using_gun_type", new FixedMetadataValue(plugin, armorStand.getMetadata("belong_gun_type").get(0).asString()));
                         nearbyEntity.damage(gunDamage.get(usingGunTypeInstance), eventPlayer);

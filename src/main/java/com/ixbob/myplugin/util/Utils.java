@@ -2,16 +2,20 @@ package com.ixbob.myplugin.util;
 
 import com.ixbob.myplugin.MongoDB;
 import com.ixbob.myplugin.handler.config.LangLoader;
-import net.minecraft.server.v1_12_R1.Packet;
-import net.minecraft.server.v1_12_R1.PacketPlayOutNamedEntitySpawn;
-import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_12_R1.PlayerConnection;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
@@ -126,5 +130,49 @@ public class Utils {
         return loc;
     }
 
+    public static void randomArmor(int armorLevel, LivingEntity entity) {
+        ItemStack leatherChestplate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+        ItemStack leatherLeggings = new ItemStack(Material.LEATHER_LEGGINGS, 1);
+        ItemStack leatherBoots = new ItemStack(Material.LEATHER_BOOTS, 1);
+        ItemStack chainChestplate = new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1);
+        ItemStack chainLeggings = new ItemStack(Material.CHAINMAIL_LEGGINGS, 1);
+        ItemStack chainBoots = new ItemStack(Material.CHAINMAIL_BOOTS, 1);
+        switch (armorLevel) {
+            case 1: {
+                for (int i = 1; i <= 4; i++) {
+                    EntityEquipment equipment = entity.getEquipment();
+                    switch (Mth.randomInt(1, 10)) {
+                        case 1: equipment.setChestplate(leatherChestplate); break;
+                        case 2: equipment.setLeggings(leatherLeggings); break;
+                        case 3: equipment.setBoots(leatherBoots); break;
+                        case 4: leatherChestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                        case 5: leatherLeggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                        case 6: leatherBoots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                        case 7: leatherChestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                        case 8: leatherLeggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                        case 9: leatherBoots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                        case 10: entity.addPotionEffect(PotionEffectType.SPEED.createEffect(99999, 1)); break;
+                    }
+                } break;
+            }
+            case 2: {
+                for (int i = 1; i <= 4; i++) {
+                    EntityEquipment equipment = entity.getEquipment();
+                    switch (Mth.randomInt(1, 10)) {
+                        case 1: equipment.setChestplate(chainChestplate); break;
+                        case 2: equipment.setLeggings(chainLeggings); break;
+                        case 3: equipment.setBoots(chainBoots); break;
+                        case 4: chainChestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                        case 5: chainLeggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                        case 6: chainBoots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+                        case 7: chainChestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                        case 8: chainLeggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                        case 9: chainBoots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+                        case 10: entity.addPotionEffect(PotionEffectType.SPEED.createEffect(99999, 1)); break;
+                    }
+                } break;
+            }
+        }
 
+    }
 }

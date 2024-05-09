@@ -35,13 +35,13 @@ public class ZombieMoveTask extends BukkitRunnable {
                 Location location = zombie.getEyeLocation();
 
                 if(zombie.getMetadata("onTheRoadToWindow").get(0).asBoolean()) {
-                    System.out.println("run");
+//                    System.out.println("run");
                     double distance = zombie.getEyeLocation().distance(Utils.getNearestWindowLoc(location));
                     boolean set_move = true;
                     if (zombie.getMetadata("frontAreaContainWoodStep").get(0).asBoolean()) {
                         zombie.setAI(false);
                         set_move = false;
-                        System.out.println("close AI");
+//                        System.out.println("close AI");
                     }
                     System.out.println(distance);
                     System.out.println(zombie.getEyeLocation().add(zombie.getLocation().getDirection()).distance(Utils.getNearestWindowLoc(location)));
@@ -49,11 +49,11 @@ public class ZombieMoveTask extends BukkitRunnable {
                         Vector moveVec3 = new Vector(zombie.getMetadata("moveVec3_x").get(0).asDouble(), 0, zombie.getMetadata("moveVec3_z").get(0).asDouble());
                         Location locationNew = new Location(zombie.getWorld(), location.getX(), zombie.getLocation().getY(), location.getZ(), (float) Mth.vec3ToYaw(moveVec3), 0);
                         zombie.teleport(locationNew);
-                        System.out.println("adjust pos");
+//                        System.out.println("adjust pos");
                     }
                     if (distance < 0.4 && !zombie.getMetadata("frontAreaContainWoodStep").get(0).asBoolean()) {
                         zombie.setMetadata("onTheRoadToWindow", new FixedMetadataValue(plugin, false));
-                        System.out.println("stop");
+//                        System.out.println("stop");
                         set_move = false;
                         zombie.setAI(true);
                     }
@@ -61,9 +61,9 @@ public class ZombieMoveTask extends BukkitRunnable {
                         zombie.setAI(true);
                         Vector moveVec3 = new Vector(zombie.getMetadata("moveVec3_x").get(0).asDouble(), 0, zombie.getMetadata("moveVec3_z").get(0).asDouble());
                         setVelocity(zombie, moveVec3);
-                        System.out.println("set move");
+//                        System.out.println("set move");
                     }
-                    System.out.println("============");
+//                    System.out.println("============");
                 }
             }
         }
