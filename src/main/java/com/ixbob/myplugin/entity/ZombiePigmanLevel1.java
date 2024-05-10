@@ -3,18 +3,17 @@ package com.ixbob.myplugin.entity;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class ZombieLevel2 {
+public class ZombiePigmanLevel1 {
     private final Location location;
     private final Plugin plugin;
     private PigZombie pigzombie;
-    public ZombieLevel2(Location location, Plugin plugin) {
+    public ZombiePigmanLevel1(Location location, Plugin plugin) {
         this.location = location;
         this.plugin = plugin;
     }
