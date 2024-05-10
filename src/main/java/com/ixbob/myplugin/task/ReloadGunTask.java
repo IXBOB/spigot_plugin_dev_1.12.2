@@ -93,6 +93,10 @@ public class ReloadGunTask extends BukkitRunnable {
                     player.getInventory().setItem(2, item);
                     break;
                 }
+                case ("xiandan_qiang"): {
+                    player.getInventory().setItem(3, item);
+                    break;
+                }
                 default:
                     throw new NullPointerException("Are you kidding me? no gun matches.");
             }

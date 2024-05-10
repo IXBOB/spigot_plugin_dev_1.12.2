@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="add: 1. window location data and fill data now can store in the window_data.yml. 2. quick fix all the window function.">
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="rename ZombieLevel2 to ZombiePigmanLevel1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTestkit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTestkit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ReloadGunTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ReloadGunTask.java" afterDir="false" />
     </list>
     <list id="f16b69f0-f12d-4b5a-8b67-77de91e087e0" name="Changes by admin" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -515,7 +520,23 @@
       <option name="project" value="LOCAL" />
       <updated>1715306703937</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="gun move speed and gun move distance are now controlled by GunProperties.java enum">
+      <option name="closed" value="true" />
+      <created>1715308221313</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1715308221313</updated>
+    </task>
+    <task id="LOCAL-00044" summary="rename ZombieLevel2 to ZombiePigmanLevel1">
+      <option name="closed" value="true" />
+      <created>1715308424537</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1715308424537</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -531,9 +552,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="zombie auto find and move to window function." />
-    <MESSAGE value="zombie auto walk to window and break function finish" />
-    <MESSAGE value="player gun slot data store; standardized some naming in Main.java; added clickListener and dropListener." />
     <MESSAGE value="added iron sword" />
     <MESSAGE value="bug fix: unexpectedly -2 ammo when first shot after reload." />
     <MESSAGE value="Rename: ItemHold -&gt; ItemHeld" />
@@ -556,7 +574,10 @@
     <MESSAGE value="respawn player function finish" />
     <MESSAGE value="1. added random armor util. 2. started writing game main thread. 3. added zombie pigman." />
     <MESSAGE value="add: 1. window location data and fill data now can store in the window_data.yml. 2. quick fix all the window function." />
-    <option name="LAST_COMMIT_MESSAGE" value="add: 1. window location data and fill data now can store in the window_data.yml. 2. quick fix all the window function." />
+    <MESSAGE value="gun move speed and gun move distance are now controlled by GunProperties.java enum." />
+    <MESSAGE value="gun move speed and gun move distance are now controlled by GunProperties.java enum" />
+    <MESSAGE value="rename ZombieLevel2 to ZombiePigmanLevel1" />
+    <option name="LAST_COMMIT_MESSAGE" value="rename ZombieLevel2 to ZombiePigmanLevel1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

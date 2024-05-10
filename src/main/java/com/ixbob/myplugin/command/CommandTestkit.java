@@ -45,18 +45,30 @@ public class CommandTestkit implements CommandExecutor {
             nbti_stone_hoe.setBoolean("reloading", false);
             item_stone_hoe = nbti_stone_hoe.getItem();
 
+            ItemStack item_stone_shovel = new ItemStack(Material.STONE_SPADE, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.XIANDAN_QIANG));
+            NBTItem nbti_stone_shovel = new NBTItem(item_stone_shovel);
+            nbti_stone_shovel.setString("item_type", "gun");
+            nbti_stone_shovel.setString("gun_name", "xiandan_qiang");
+            nbti_stone_shovel.setFloat("cooldown_progress", 1.0f);
+            nbti_stone_shovel.setBoolean("reloading", false);
+            item_stone_shovel = nbti_stone_shovel.getItem();
+
             player.getInventory().setItem(0, item_iron_sword);
             player.getInventory().setItem(1, item_wood_hoe);
             player.getInventory().setItem(2, item_stone_hoe);
+            player.getInventory().setItem(3, item_stone_shovel);
 
             player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, 300));
             player.setMetadata("bu_qiang_ammo", new FixedMetadataValue(plugin, 300));
+            player.setMetadata("xiandan_qiang_ammo", new FixedMetadataValue(plugin, 300));
 
             player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.SHOU_QIANG)));
             player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.BU_QIANG)));
+            player.setMetadata("xiandan_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.XIANDAN_QIANG)));
 
             player.setMetadata("gun_name_slot_1", new FixedMetadataValue(plugin, nbti_wood_hoe.getString("gun_name")));
             player.setMetadata("gun_name_slot_2", new FixedMetadataValue(plugin, nbti_stone_hoe.getString("gun_name")));
+            player.setMetadata("gun_name_slot_3", new FixedMetadataValue(plugin, nbti_stone_shovel.getString("gun_name")));
         }
 
         return true;

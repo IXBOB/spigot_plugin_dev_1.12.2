@@ -26,10 +26,10 @@ public class CommandTest implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(commandSender instanceof Player) {
+            Player player = (Player) commandSender;
 
             WindowAreaLoader.fixAllWindow();
 
-            Player player = (Player) commandSender;
             Location location = player.getLocation();
             location.setPitch(0);
 

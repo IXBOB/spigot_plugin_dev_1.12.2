@@ -85,6 +85,7 @@ public class OnPlayerDeathListener implements Listener {
                     try {
                         sleep();
                         enableOutsideSkin();
+//                        test();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -189,6 +190,16 @@ public class OnPlayerDeathListener implements Listener {
         PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
         CorpseUtil.sendPacketObj(packet);
     }
+
+//    private void test() throws Exception {
+//        DataWatcher dataWatcher = new DataWatcher(null);
+////        https://wiki.vg/Entity_metadata#Player
+//        DataWatcherObject<Integer> displayedPartsObject = new DataWatcherObject<>(10, DataWatcherRegistry.b); //8
+//        int displayedSkinParts = 30;
+//        dataWatcher.register(displayedPartsObject, displayedSkinParts);
+//        PacketPlayOutEntityMetadata packet = new PacketPlayOutEntityMetadata(entityID, dataWatcher, true);
+//        CorpseUtil.sendPacketObj(packet);
+//    }
 
     private void initArmorStandText(ArmorStand armorStand) {
         armorStand.setCustomNameVisible(true);

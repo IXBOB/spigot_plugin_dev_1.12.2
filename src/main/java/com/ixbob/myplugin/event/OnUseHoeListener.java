@@ -60,26 +60,6 @@ public class OnUseHoeListener implements Listener {
 //                System.out.println(gunType);
                 usingGunName = gunType.getTypeName();
                 usingGunTypeInstance = GunProperties.GunType.valueOf(usingGunName.toUpperCase());
-//                int ammo_origin;
-//                int shou_qiang_current_magazine_ammo = player.getMetadata("shou_qiang_current_magazine_ammo").get(0).asInt();
-//                int bu_qiang_current_magazine_ammo = player.getMetadata("bu_qiang_current_magazine_ammo").get(0).asInt();
-//                int current_magazine_ammo;
-//                switch (nbtItem.getString("gun_name")) {
-//                    case ("shou_qiang"): {
-//                        ammo_origin = player.getMetadata("shou_qiang_ammo").get(0).asInt();
-//                        current_magazine_ammo = shou_qiang_current_magazine_ammo;
-//                        usingGunName = "shou_qiang";
-//                        break;
-//                    }
-//                    case ("bu_qiang"): {
-//                        ammo_origin = player.getMetadata("bu_qiang_ammo").get(0).asInt();
-//                        current_magazine_ammo = bu_qiang_current_magazine_ammo;
-//                        usingGunName = "bu_qiang";
-//                        break;
-//                    }
-//                    default:
-//                        throw new NullPointerException("Are you kidding me? no gun matches.");
-//                }
 
                 if ((action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK)
                         && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
@@ -104,23 +84,6 @@ public class OnUseHoeListener implements Listener {
                     player.setMetadata(gunType.getPlayerAmmoMetadataKey(),new FixedMetadataValue(plugin, ammo_left));
                     current_magazine_ammo -= 1;
                     player.setMetadata(gunType.getPlayerMagazineAmmoMetadataKey(), new FixedMetadataValue(plugin, current_magazine_ammo));
-//                    switch (usingGunName) {
-//                        case ("shou_qiang"): {
-//                            player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, ammo_left));
-//                            current_magazine_ammo -= 1;
-//                            player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, shou_qiang_current_magazine_ammo));
-//                            break;
-//                        }
-//                        case ("bu_qiang"): {
-//                            player.setMetadata("bu_qiang_ammo", new FixedMetadataValue(plugin, ammo_left));
-//                            current_magazine_ammo -= 1;
-//                            player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, bu_qiang_current_magazine_ammo));
-//                            break;
-//                        }
-//                        default:
-//                            throw new NullPointerException("Are you kidding me? no gun matches.");
-//                    }
-
                     player.setExp(0f);
                     player.setLevel(ammo_left);
 //                    System.out.println(current_magazine_ammo);
@@ -181,6 +144,10 @@ public class OnUseHoeListener implements Listener {
             }
             case ("bu_qiang"): {
                 player.getInventory().setItem(2, eventInteractItem);
+                break;
+            }
+            case ("xiandan_qiang"): {
+                player.getInventory().setItem(3, eventInteractItem);
                 break;
             }
             default:
