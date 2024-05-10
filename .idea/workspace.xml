@@ -4,15 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="rename ZombieLevel2 to ZombiePigmanLevel1">
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="added xiandan qiang (haven't finished)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/handler/config/MonsterReceiveAmmoHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTestkit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTestkit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/entity/ZombieLevel1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/entity/ZombieLevel1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/entity/ZombiePigmanLevel1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/entity/ZombiePigmanLevel1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnDamageMonsterListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnDamageMonsterListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ReloadGunTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ReloadGunTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/languages/zh_CN.yml" afterDir="false" />
     </list>
     <list id="f16b69f0-f12d-4b5a-8b67-77de91e087e0" name="Changes by admin" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -128,32 +130,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Batch.move_output.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Build spigot_plugin_dev_1.12.2.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.spigot_plugin_dev_1.12.2 [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.spigot_plugin_dev_1.12.2 [moveOutPut].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.spigot_plugin_dev_1.12.2 [moveOutput].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.Debug Plugin.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2/src/main/java/com/ixbob/myplugin/entity&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Batch.move_output.executor": "Debug",
+    "Gradle.Build spigot_plugin_dev_1.12.2.executor": "Run",
+    "Gradle.C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2 [shadowJar].executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.spigot_plugin_dev_1.12.2 [clean].executor": "Run",
+    "Gradle.spigot_plugin_dev_1.12.2 [moveOutPut].executor": "Run",
+    "Gradle.spigot_plugin_dev_1.12.2 [moveOutput].executor": "Run",
+    "Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor": "Run",
+    "JAR Application.Debug Plugin.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2/src/main/java/com/ixbob/myplugin",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\IXBOB\Desktop\spigot_plugin_dev_1.12.2\spigot_plugin_dev_1.12.2\src\main\java\com\ixbob\myplugin" />
       <recent name="C:\Users\IXBOB\Desktop\spigot_plugin_dev_1.12.2\spigot_plugin_dev_1.12.2\src\main\java\com\ixbob\myplugin\entity" />
       <recent name="C:\Users\tqy\Desktop\spigot_plugin_dev_1.12.2\spigot_plugin_dev_1.12.2\src\main\resources" />
     </key>
@@ -536,7 +539,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715308424537</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="added xiandan qiang (haven't finished)">
+      <option name="closed" value="true" />
+      <created>1715324057143</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1715324057143</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -552,7 +563,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added iron sword" />
     <MESSAGE value="bug fix: unexpectedly -2 ammo when first shot after reload." />
     <MESSAGE value="Rename: ItemHold -&gt; ItemHeld" />
     <MESSAGE value="Fix: When switching to empty-handed, if originally held a sword, the digging fatigue effect will not disappear." />
@@ -577,7 +587,8 @@
     <MESSAGE value="gun move speed and gun move distance are now controlled by GunProperties.java enum." />
     <MESSAGE value="gun move speed and gun move distance are now controlled by GunProperties.java enum" />
     <MESSAGE value="rename ZombieLevel2 to ZombiePigmanLevel1" />
-    <option name="LAST_COMMIT_MESSAGE" value="rename ZombieLevel2 to ZombiePigmanLevel1" />
+    <MESSAGE value="added xiandan qiang (haven't finished)" />
+    <option name="LAST_COMMIT_MESSAGE" value="added xiandan qiang (haven't finished)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

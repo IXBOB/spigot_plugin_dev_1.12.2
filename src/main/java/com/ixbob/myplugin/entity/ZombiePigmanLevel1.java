@@ -30,6 +30,7 @@ public class ZombiePigmanLevel1 {
         pigzombie.setBaby(false);
         pigzombie.setMetadata("custom_monster", new FixedMetadataValue(plugin, true));
         pigzombie.setMetadata("level", new FixedMetadataValue(plugin, 1));
+        pigzombie.setMetadata("receiving_damage_once", new FixedMetadataValue(plugin, 0));
     }
     public void initArmor(){
         pigzombie.getEquipment().setHelmet(new ItemStack(Material.GOLD_BLOCK, 1));

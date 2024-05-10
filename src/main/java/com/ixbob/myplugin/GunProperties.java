@@ -37,7 +37,7 @@ public class GunProperties {
     public static final Map<GunType, Float> gunDamage = Map.of(
             GunType.SHOU_QIANG, 4.5f,
             GunType.BU_QIANG, 2.5f,
-            GunType.XIANDAN_QIANG, 2.0f
+            GunType.XIANDAN_QIANG, 1.5f
     );
 
     public static final Map<GunType, Float> gunReloadAmmoTime = Map.of(
@@ -69,12 +69,12 @@ public class GunProperties {
     public static final Map<GunType, Integer> gunHitHeadGetCoin = Map.of(
             GunType.SHOU_QIANG, 10,
             GunType.BU_QIANG, 7,
-            GunType.XIANDAN_QIANG, 5
+            GunType.XIANDAN_QIANG, 3
     );
     public static final Map<GunType, Integer> gunHitDefaultGetCoin = Map.of(
             GunType.SHOU_QIANG, 7,
             GunType.BU_QIANG, 4,
-            GunType.XIANDAN_QIANG, 3
+            GunType.XIANDAN_QIANG, 2
     );
 
     public static GunType getGunTypeByString(String gunName) {

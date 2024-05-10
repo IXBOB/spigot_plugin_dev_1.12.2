@@ -2,6 +2,7 @@ package com.ixbob.myplugin.event;
 
 import com.ixbob.myplugin.GunProperties;
 import com.ixbob.myplugin.handler.config.LangLoader;
+import com.ixbob.myplugin.util.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
@@ -31,44 +32,19 @@ public class OnDamageMonsterListener implements Listener {
             if (isCustomMonster && event.getDamager() instanceof Player) {
                 Player player = (Player) event.getDamager();
                 String damageBelongGunType = player.getMetadata("last_damage_using_gun_type").get(0).asString();
-                Scoreboard scoreboard = player.getScoreboard();
-                Objective scoreboardObjective = scoreboard.getObjective("main");
-                scoreboardObjective.getScoreboard().resetScores(player.getDisplayName() + " " + ChatColor.GOLD + player.getMetadata("coin_count").get(0).asInt());
-                if (!Objects.equals(damageBelongGunType, "empty")) {
-                    GunProperties.GunType damageBelongGunTypeInstance = GunProperties.GunType.valueOf(damageBelongGunType.toUpperCase());
-                    int playerCoinCount = player.getMetadata("coin_count").get(0).asInt();
-                    double last_damage_bullet_pos_y = event.getEntity().getMetadata("last_damage_bullet_pos_y").get(0).asDouble();
-                    double current_pos_y = event.getEntity().getLocation().getY();
-                    if ( Math.abs(last_damage_bullet_pos_y - (current_pos_y + 1.75)) <= 0.5 ){
-                        LivingEntity entity = (LivingEntity) event.getEntity();
-                        entity.damage(3);
-                        player.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + GunProperties.gunHitHeadGetCoin.get(damageBelongGunTypeInstance)));
-                        String message = String.format(LangLoader.get("game_hit_monster_head"), GunProperties.gunHitHeadGetCoin.get(damageBelongGunTypeInstance));
-                        player.sendMessage(ChatColor.GOLD + message);
-                    }
-                    else {
-                        player.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + GunProperties.gunHitDefaultGetCoin.get(damageBelongGunTypeInstance)));
-                        String message = String.format(LangLoader.get("game_hit_monster_default"), GunProperties.gunHitDefaultGetCoin.get(damageBelongGunTypeInstance));
-                        player.sendMessage(ChatColor.GOLD + message);
-                    }
-                    updateScoreboard(player);
-                    player.setMetadata("last_damage_using_gun_type", new FixedMetadataValue(plugin, "empty"));
-                }
                 if (Objects.equals(damageBelongGunType, "empty")
                         && player.getInventory().getItemInMainHand().getType() == Material.IRON_SWORD) {
+                    Scoreboard scoreboard = player.getScoreboard();
+                    Objective scoreboardObjective = scoreboard.getObjective("main");
+                    scoreboardObjective.getScoreboard().resetScores(player.getDisplayName() + " " + ChatColor.GOLD + player.getMetadata("coin_count").get(0).asInt());
                     int playerCoinCount = player.getMetadata("coin_count").get(0).asInt();
                     player.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + GunProperties.swordHitGetCoin));
                     String message = String.format(LangLoader.get("game_hit_monster_sword"), GunProperties.swordHitGetCoin);
                     player.sendMessage(ChatColor.GOLD + message);
-                    updateScoreboard(player);
+                    Utils.updatePlayerCoinScoreboard(player);
                 }
             }
         }
     }
-    public void updateScoreboard(Player player) {
-        Scoreboard scoreboard = player.getScoreboard();
-        Objective scoreboardObjective = scoreboard.getObjective("main");
-        scoreboardObjective.getScore(player.getDisplayName() + " " + ChatColor.GOLD +player.getMetadata("coin_count").get(0).asInt()).setScore(0);
-        player.setScoreboard(scoreboardObjective.getScoreboard());
-    }
+
 }

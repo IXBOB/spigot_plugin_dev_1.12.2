@@ -33,6 +33,7 @@ public class ZombieLevel1 {
     private void initMetaData() {
         zombie.setMetadata("custom_monster", new FixedMetadataValue(plugin, true));
         zombie.setMetadata("level", new FixedMetadataValue(plugin, 1));
+        zombie.setMetadata("receiving_damage_once", new FixedMetadataValue(plugin, 0));
     }
 
     private void initArmor() {

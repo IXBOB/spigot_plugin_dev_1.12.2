@@ -3,10 +3,12 @@ package com.ixbob.myplugin;
 import com.ixbob.myplugin.command.*;
 import com.ixbob.myplugin.event.*;
 import com.ixbob.myplugin.handler.config.LangLoader;
+import com.ixbob.myplugin.handler.config.MonsterReceiveAmmoHandler;
 import com.ixbob.myplugin.handler.config.WindowAreaLoader;
 import com.ixbob.myplugin.task.ZombieDestroyTask;
 import com.ixbob.myplugin.task.ZombieMoveTask;
 import com.ixbob.myplugin.util.PlayerCorpseTransit;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -73,9 +75,11 @@ public class Main extends JavaPlugin {
 
 
 //        HandlerList.unregisterAll(OnJoinListener);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new MonsterReceiveAmmoHandler(), 0, 0);
     }
 
     public static Plugin getInstance() {
         return plugin;
     }
+
 }

@@ -2,9 +2,11 @@ package com.ixbob.myplugin.event;
 
 import com.ixbob.myplugin.GunProperties;
 import com.ixbob.myplugin.Main;
+import com.ixbob.myplugin.handler.config.LangLoader;
 import com.ixbob.myplugin.task.BulletMoveTask;
 import com.ixbob.myplugin.task.ReloadGunTask;
 import com.ixbob.myplugin.task.ShotCoolDownTask;
+import com.ixbob.myplugin.util.Utils;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -19,6 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -33,6 +37,9 @@ public class OnUseHoeListener implements Listener {
     private Player eventPlayer;
     private String usingGunName;
     private GunType usingGunTypeInstance;
+    private Vector interactDirection;
+    private Location interactLocation;
+    private World world;
 
     public OnUseHoeListener(Main plugin) {
         this.plugin = plugin;
@@ -43,7 +50,7 @@ public class OnUseHoeListener implements Listener {
         Action action = event.getAction();
         Player player = event.getPlayer();
         this.eventPlayer = player;
-        World world = event.getPlayer().getWorld();
+        this.world = event.getPlayer().getWorld();
 
         if (event.getHand() == EquipmentSlot.HAND
                 && item != null) {
@@ -65,19 +72,23 @@ public class OnUseHoeListener implements Listener {
                         && !item.getItemMeta().hasItemFlag(ItemFlag.HIDE_ATTRIBUTES)
                         && nbtItem.getFloat("cooldown_progress") == 1.0f
                         && ammo_origin > 0) {
-                    Vector interactDirection = player.getLocation().getDirection();
-                    Location interactLocation = new Location(world, player.getLocation().getX(), player.getLocation().getY() + 1.5, player.getLocation().getZ());
+                    this.interactDirection = player.getLocation().getDirection();
+                    this.interactLocation = new Location(world, player.getLocation().getX(), player.getLocation().getY() + 1.5, player.getLocation().getZ());
 
-                    Location spawnCacheLocation = new Location(world,interactLocation.getX(), interactLocation.getY() + 100d, interactLocation.getZ());
-                    ArmorStand armorStand = (ArmorStand) world.spawnEntity(spawnCacheLocation, EntityType.ARMOR_STAND);
-                    armorStand.setGravity(false);
-                    armorStand.setVisible(false);
-                    armorStand.teleport(interactLocation);
-                    armorStand.teleport(armorStand.getLocation().setDirection(interactDirection));
-                    armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, 0));
-                    armorStand.setMetadata("owner", new FixedMetadataValue(plugin, player.getName()));
-                    armorStand.setMetadata("belong_gun_type", new FixedMetadataValue(plugin, usingGunName));
-                    bulletMove(armorStand);
+                    if (Objects.equals(usingGunName, "xiandan_qiang")) {
+                        Location initLocation = this.interactLocation;
+                        Vector initDirection = this.interactDirection;
+                        for (int i = 1; i <= 6; i++) {
+                            this.interactLocation = initLocation;
+                            this.interactDirection = initDirection;
+                            this.interactLocation.add(new Location(world, (Math.random()-0.5)*0.15, (Math.random()-0.5)*0.15, (Math.random()-0.5)*0.15));
+                            this.interactDirection.add(new Vector((Math.random()-0.5)*0.35, (Math.random()-0.5)*0.35, (Math.random()-0.5)*0.35)).normalize();
+                            spawnBullet();
+                        }
+                    }
+                    else {
+                        spawnBullet();
+                    }
 
                     int ammo_left = ammo_origin - 1;
 
@@ -179,9 +190,29 @@ public class OnUseHoeListener implements Listener {
                             || nearbyEntity.getType() == EntityType.CREEPER
                             || nearbyEntity.getType() == EntityType.SPIDER
                             || nearbyEntity.getType() == EntityType.PIG_ZOMBIE) {
+                        boolean hitHead = false;
                         nearbyEntity.setMetadata("last_damage_bullet_pos_y", new FixedMetadataValue(plugin, armorStand.getLocation().getY()));
-                        eventPlayer.setMetadata("last_damage_using_gun_type", new FixedMetadataValue(plugin, armorStand.getMetadata("belong_gun_type").get(0).asString()));
-                        nearbyEntity.damage(gunDamage.get(usingGunTypeInstance), eventPlayer);
+                        nearbyEntity.setMetadata("receiving_damage_once", new FixedMetadataValue(plugin, nearbyEntity.getMetadata("receiving_damage_once").get(0).asInt() + gunDamage.get(belongGunType)));
+                        if (Utils.isAmmoHitHead(nearbyEntity, eventPlayer)) {
+                            nearbyEntity.setMetadata("receiving_damage_once", new FixedMetadataValue(plugin, nearbyEntity.getMetadata("receiving_damage_once").get(0).asInt() + 3));
+                            hitHead = true;
+                        }
+                        Player owner = Bukkit.getPlayer(armorStand.getMetadata("owner").get(0).asString());
+                        int playerCoinCount = owner.getMetadata("coin_count").get(0).asInt();
+                        Scoreboard scoreboard = owner.getScoreboard();
+                        Objective scoreboardObjective = scoreboard.getObjective("main");
+                        scoreboardObjective.getScoreboard().resetScores(owner.getDisplayName() + " " + ChatColor.GOLD + owner.getMetadata("coin_count").get(0).asInt());
+                        String message;
+                        if (hitHead) {
+                            owner.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + GunProperties.gunHitHeadGetCoin.get(belongGunType)));
+                            message = String.format(LangLoader.get("game_hit_monster_head"), GunProperties.gunHitHeadGetCoin.get(belongGunType));
+                        }
+                        else {
+                            owner.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + GunProperties.gunHitDefaultGetCoin.get(belongGunType)));
+                            message = String.format(LangLoader.get("game_hit_monster_default"), GunProperties.gunHitDefaultGetCoin.get(belongGunType));
+                        }
+                        owner.sendMessage(message);
+                        Utils.updatePlayerCoinScoreboard(owner);
                         armorStand.remove();
                         return;
                     }
@@ -200,5 +231,18 @@ public class OnUseHoeListener implements Listener {
 
     public float setNew(float origin) {
         return Math.min(1.0f, Math.max(0.0f, origin));
+    }
+
+    public void spawnBullet() {
+        Location spawnCacheLocation = new Location(world ,interactLocation.getX(), interactLocation.getY() + 100d, interactLocation.getZ());
+        ArmorStand armorStand = (ArmorStand) world.spawnEntity(spawnCacheLocation, EntityType.ARMOR_STAND);
+        armorStand.setGravity(false);
+        armorStand.setVisible(false);
+        armorStand.teleport(interactLocation);
+        armorStand.teleport(armorStand.getLocation().setDirection(interactDirection));
+        armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, 0));
+        armorStand.setMetadata("owner", new FixedMetadataValue(plugin, eventPlayer.getName()));
+        armorStand.setMetadata("belong_gun_type", new FixedMetadataValue(plugin, usingGunName));
+        bulletMove(armorStand);
     }
 }

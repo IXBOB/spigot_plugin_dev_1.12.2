@@ -1,9 +1,12 @@
 package com.ixbob.myplugin.util;
 
+import com.ixbob.myplugin.GunProperties;
 import com.ixbob.myplugin.MongoDB;
 import com.ixbob.myplugin.handler.config.LangLoader;
+import com.ixbob.myplugin.Main;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,8 +17,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
@@ -31,6 +37,8 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class Utils {
@@ -128,6 +136,19 @@ public class Utils {
         Bukkit.broadcastMessage(errorMsg);
         Bukkit.getLogger().log(Level.SEVERE, errorMsg);
         return loc;
+    }
+
+    public static boolean isAmmoHitHead(LivingEntity nearByEntity, Player player) {
+        double last_damage_bullet_pos_y = nearByEntity.getMetadata("last_damage_bullet_pos_y").get(0).asDouble();
+        double current_pos_y = nearByEntity.getLocation().getY();
+        return Math.abs(last_damage_bullet_pos_y - (current_pos_y + 1.75)) <= 0.5;
+    }
+
+    public static void updatePlayerCoinScoreboard(Player player) {
+        Scoreboard scoreboard = player.getScoreboard();
+        Objective scoreboardObjective = scoreboard.getObjective("main");
+        scoreboardObjective.getScore(player.getDisplayName() + " " + ChatColor.GOLD +player.getMetadata("coin_count").get(0).asInt()).setScore(0);
+        player.setScoreboard(scoreboardObjective.getScoreboard());
     }
 
     public static void randomArmor(int armorLevel, LivingEntity entity) {
