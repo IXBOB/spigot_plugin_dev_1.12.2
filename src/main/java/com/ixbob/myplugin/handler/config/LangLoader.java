@@ -18,7 +18,6 @@ public class LangLoader {
         for (String translation : translations.getKeys(false)) {
             translationMap.put(translation, translations.getString(translation));
         }
-
     }
 
     public static String get(String key) {

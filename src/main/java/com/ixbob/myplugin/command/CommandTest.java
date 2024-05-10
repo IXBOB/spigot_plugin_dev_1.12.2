@@ -3,6 +3,7 @@ package com.ixbob.myplugin.command;
 
 import com.ixbob.myplugin.entity.ZombieLevel1;
 import com.ixbob.myplugin.entity.ZombieLevel2;
+import com.ixbob.myplugin.handler.config.WindowAreaLoader;
 import com.ixbob.myplugin.util.Mth;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -25,6 +26,9 @@ public class CommandTest implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if(commandSender instanceof Player) {
+
+            WindowAreaLoader.fixAllWindow();
+
             Player player = (Player) commandSender;
             Location location = player.getLocation();
             location.setPitch(0);

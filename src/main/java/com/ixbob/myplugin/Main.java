@@ -3,6 +3,7 @@ package com.ixbob.myplugin;
 import com.ixbob.myplugin.command.*;
 import com.ixbob.myplugin.event.*;
 import com.ixbob.myplugin.handler.config.LangLoader;
+import com.ixbob.myplugin.handler.config.WindowAreaLoader;
 import com.ixbob.myplugin.task.ZombieDestroyTask;
 import com.ixbob.myplugin.task.ZombieMoveTask;
 import com.ixbob.myplugin.util.PlayerCorpseTransit;
@@ -23,6 +24,7 @@ public class Main extends JavaPlugin {
         mongoDB.connect("127.0.0.1", 27017, this);
 
         LangLoader.init(this);
+        WindowAreaLoader.init(this);
 
         this.getCommand("testkit").setExecutor(new CommandTestkit(this));
         this.getCommand("init").setExecutor(new CommandInit(this));

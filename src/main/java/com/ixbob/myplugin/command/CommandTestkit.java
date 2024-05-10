@@ -1,6 +1,7 @@
 
 package com.ixbob.myplugin.command;
 
+import com.ixbob.myplugin.GunProperties;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -28,7 +29,7 @@ public class CommandTestkit implements CommandExecutor {
             ironSwordItemMeta.setUnbreakable(true);
             item_iron_sword.setItemMeta(ironSwordItemMeta);
 
-            ItemStack item_wood_hoe = new ItemStack(Material.WOOD_HOE, 30);
+            ItemStack item_wood_hoe = new ItemStack(Material.WOOD_HOE, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.SHOU_QIANG));
             NBTItem nbti_wood_hoe = new NBTItem(item_wood_hoe);
             nbti_wood_hoe.setString("item_type", "gun");
             nbti_wood_hoe.setString("gun_name", "shou_qiang");
@@ -36,7 +37,7 @@ public class CommandTestkit implements CommandExecutor {
             nbti_wood_hoe.setBoolean("reloading", false);
             item_wood_hoe = nbti_wood_hoe.getItem();
 
-            ItemStack item_stone_hoe = new ItemStack(Material.STONE_HOE, 50);
+            ItemStack item_stone_hoe = new ItemStack(Material.STONE_HOE, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.BU_QIANG));
             NBTItem nbti_stone_hoe = new NBTItem(item_stone_hoe);
             nbti_stone_hoe.setString("item_type", "gun");
             nbti_stone_hoe.setString("gun_name", "bu_qiang");
@@ -51,8 +52,8 @@ public class CommandTestkit implements CommandExecutor {
             player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, 300));
             player.setMetadata("bu_qiang_ammo", new FixedMetadataValue(plugin, 300));
 
-            player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 30));
-            player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, 50));
+            player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.SHOU_QIANG)));
+            player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.BU_QIANG)));
 
             player.setMetadata("gun_name_slot_1", new FixedMetadataValue(plugin, nbti_wood_hoe.getString("gun_name")));
             player.setMetadata("gun_name_slot_2", new FixedMetadataValue(plugin, nbti_stone_hoe.getString("gun_name")));

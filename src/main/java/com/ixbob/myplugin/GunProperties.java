@@ -34,7 +34,7 @@ public class GunProperties {
     );
     public static final Map<GunType, Float> gunDamage = Map.of(
             GunType.SHOU_QIANG, 4.5f,
-            GunType.BU_QIANG, 3.0f
+            GunType.BU_QIANG, 2.5f
     );
 
     public static final Map<GunType, Float> gunReloadAmmoTime = Map.of(
@@ -42,8 +42,8 @@ public class GunProperties {
             GunType.BU_QIANG, 5.0f
     );
     public static final Map<GunType, Integer> gunMagazineFullAmmo = Map.of(
-            GunType.SHOU_QIANG, 30,
-            GunType.BU_QIANG, 50
+            GunType.SHOU_QIANG, 20,
+            GunType.BU_QIANG, 30
     );
     public static final Map<GunType, Integer> gunDurabilityLegacy = Map.of(
             GunType.SHOU_QIANG, 59,

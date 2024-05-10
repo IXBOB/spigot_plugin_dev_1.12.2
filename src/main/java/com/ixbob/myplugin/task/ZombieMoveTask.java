@@ -43,8 +43,8 @@ public class ZombieMoveTask extends BukkitRunnable {
                         set_move = false;
 //                        System.out.println("close AI");
                     }
-                    System.out.println(distance);
-                    System.out.println(zombie.getEyeLocation().add(zombie.getLocation().getDirection()).distance(Utils.getNearestWindowLoc(location)));
+//                    System.out.println(distance);
+//                    System.out.println(zombie.getEyeLocation().add(zombie.getLocation().getDirection()).distance(Utils.getNearestWindowLoc(location)));
                     if (distance < 1 && zombie.getEyeLocation().add(zombie.getLocation().getDirection()).distance(Utils.getNearestWindowLoc(location)) > 0.7 ) {
                         Vector moveVec3 = new Vector(zombie.getMetadata("moveVec3_x").get(0).asDouble(), 0, zombie.getMetadata("moveVec3_z").get(0).asDouble());
                         Location locationNew = new Location(zombie.getWorld(), location.getX(), zombie.getLocation().getY(), location.getZ(), (float) Mth.vec3ToYaw(moveVec3), 0);

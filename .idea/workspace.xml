@@ -4,18 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="respawn player function finish">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/entity/ZombieLevel2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/GameMainThread.java" afterDir="false" />
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="add: 1. window location data and fill data now can store in the window_data.yml. 2. quick fix all the window function.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/handler/config/WindowAreaLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/settings/window_data.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandZombies.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandZombies.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/entity/ZombieLevel1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/entity/ZombieLevel1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnPlayerDeathListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTestkit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTestkit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/handler/config/LangLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/handler/config/LangLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ZombieMoveTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ZombieMoveTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Mth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Mth.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/util/Utils.java" afterDir="false" />
     </list>
     <list id="f16b69f0-f12d-4b5a-8b67-77de91e087e0" name="Changes by admin" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -131,30 +129,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Batch.move_output.executor": "Debug",
-    "Gradle.Build spigot_plugin_dev_1.12.2.executor": "Run",
-    "Gradle.C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2 [shadowJar].executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.spigot_plugin_dev_1.12.2 [clean].executor": "Run",
-    "Gradle.spigot_plugin_dev_1.12.2 [moveOutPut].executor": "Run",
-    "Gradle.spigot_plugin_dev_1.12.2 [moveOutput].executor": "Run",
-    "Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor": "Run",
-    "JAR Application.Debug Plugin.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2/src/main/java/com/ixbob/myplugin/entity",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Batch.move_output.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Build spigot_plugin_dev_1.12.2.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.spigot_plugin_dev_1.12.2 [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.spigot_plugin_dev_1.12.2 [moveOutPut].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.spigot_plugin_dev_1.12.2 [moveOutput].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.spigot_plugin_dev_1.12.2 [shadowJar].executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.Debug Plugin.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/IXBOB/Desktop/spigot_plugin_dev_1.12.2/spigot_plugin_dev_1.12.2/src/main/java/com/ixbob/myplugin/entity&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\IXBOB\Desktop\spigot_plugin_dev_1.12.2\spigot_plugin_dev_1.12.2\src\main\java\com\ixbob\myplugin\entity" />
@@ -177,11 +175,6 @@
         <option name="Gradle.BeforeRunTask" enabled="true" tasks="moveOutput" externalProjectPath="$PROJECT_DIR$" vmOptions="" scriptParameters="" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle.spigot_plugin_dev_1.12.2 [shadowJar]" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -512,7 +505,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715156302219</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="1. added random armor util. 2. started writing game main thread. 3. added zombie pigman.">
+      <option name="closed" value="true" />
+      <created>1715248301075</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1715248301075</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -528,8 +529,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="LangLoader finish" />
-    <MESSAGE value="hit-get-coin function improve." />
     <MESSAGE value="zombie auto find and move to window function." />
     <MESSAGE value="zombie auto walk to window and break function finish" />
     <MESSAGE value="player gun slot data store; standardized some naming in Main.java; added clickListener and dropListener." />
@@ -553,7 +552,9 @@
     <MESSAGE value="basic functions of respawning players finish" />
     <MESSAGE value="remove player corpse after respawn(not finished)" />
     <MESSAGE value="respawn player function finish" />
-    <option name="LAST_COMMIT_MESSAGE" value="respawn player function finish" />
+    <MESSAGE value="1. added random armor util. 2. started writing game main thread. 3. added zombie pigman." />
+    <MESSAGE value="add: 1. window location data and fill data now can store in the window_data.yml. 2. quick fix all the window function." />
+    <option name="LAST_COMMIT_MESSAGE" value="add: 1. window location data and fill data now can store in the window_data.yml. 2. quick fix all the window function." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
