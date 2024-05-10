@@ -45,6 +45,14 @@ public class GunProperties {
             GunType.SHOU_QIANG, 20,
             GunType.BU_QIANG, 30
     );
+    public static final Map<GunType, Float> gunBulletMoveSpeed = Map.of(
+            GunType.SHOU_QIANG, 1.1f,
+            GunType.BU_QIANG, 1.3f
+    );
+    public static final Map<GunType, Float> gunBulletMoveDistance = Map.of(
+            GunType.SHOU_QIANG, 20.0f,
+            GunType.BU_QIANG, 50.0f
+    );
     public static final Map<GunType, Integer> gunDurabilityLegacy = Map.of(
             GunType.SHOU_QIANG, 59,
             GunType.BU_QIANG, 131
@@ -58,4 +66,12 @@ public class GunProperties {
             GunType.SHOU_QIANG, 7,
             GunType.BU_QIANG, 4
     );
+
+    public static GunType getGunTypeByString(String gunName) {
+        switch (gunName) {
+            case "shou_qiang": return GunType.SHOU_QIANG;
+            case "bu_qiang": return GunType.BU_QIANG;
+        }
+        return null;
+    }
 }

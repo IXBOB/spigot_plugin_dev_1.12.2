@@ -195,8 +195,9 @@ public class OnUseHoeListener implements Listener {
     }
 
     public void bulletMove(ArmorStand armorStand){
-        armorStand.teleport(armorStand.getLocation().add(armorStand.getLocation().getDirection().multiply(1.1)));
-        armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, armorStand.getMetadata("fly_distance").get(0).asInt() + 1));
+        GunType belongGunType = GunProperties.getGunTypeByString(armorStand.getMetadata("belong_gun_type").get(0).asString());
+        float bulletSpeed = gunBulletMoveSpeed.get(belongGunType);
+        armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, armorStand.getMetadata("fly_distance").get(0).asFloat() + bulletSpeed));
         List<Entity> nearbyEntities = armorStand.getNearbyEntities(0.1,0.1,0.1);
         if (!nearbyEntities.isEmpty()) {
             for (Entity entity : nearbyEntities) {
@@ -221,11 +222,12 @@ public class OnUseHoeListener implements Listener {
             }
         }
         if (armorStand.getLocation().getBlock().getType() != Material.AIR
-                || armorStand.getMetadata("fly_distance").get(0).asInt() >= 20) {
+                || armorStand.getMetadata("fly_distance").get(0).asFloat() >= gunBulletMoveDistance.get(belongGunType)) {
             armorStand.remove();
             return;
         }
         armorStand.getWorld().spawnParticle(Particle.CRIT, armorStand.getLocation(),  1, 0, 0, 0, 0);
+        armorStand.teleport(armorStand.getLocation().add(armorStand.getLocation().getDirection().multiply(bulletSpeed)));
         BukkitTask task = new BulletMoveTask(armorStand, this).runTaskLater(plugin, 1);
     }
 
