@@ -45,6 +45,9 @@ public class OnItemHeldChangeListener implements Listener {
                     case ("dianyong_qiang"): {
                         gun_ammo = player.getMetadata("dianyong_qiang_ammo").get(0).asInt();
                         break;
+                    }case ("guci"): {
+                        gun_ammo = player.getMetadata("guci_ammo").get(0).asInt();
+                        break;
                     }
                     default: {
                         throw new NullPointerException("Are you kidding me? no gun matches.");

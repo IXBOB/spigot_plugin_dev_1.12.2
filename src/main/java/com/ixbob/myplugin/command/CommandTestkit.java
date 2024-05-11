@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -61,26 +62,38 @@ public class CommandTestkit implements CommandExecutor {
             nbti_diamond_hoe.setBoolean("reloading", false);
             item_diamond_hoe = nbti_diamond_hoe.getItem();
 
+            ItemStack item_golden_pickaxe = new ItemStack(Material.GOLD_PICKAXE, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.GUCI));
+            NBTItem nbti_golden_pickaxe = new NBTItem(item_golden_pickaxe);
+            nbti_golden_pickaxe.setString("item_type", "gun");
+            nbti_golden_pickaxe.setString("gun_name", "guci");
+            nbti_golden_pickaxe.setFloat("cooldown_progress", 1.0f);
+            nbti_golden_pickaxe.setBoolean("reloading", false);
+            item_golden_pickaxe = nbti_golden_pickaxe.getItem();
+
             player.getInventory().setItem(0, item_iron_sword);
             player.getInventory().setItem(1, item_wood_hoe);
             player.getInventory().setItem(2, item_stone_hoe);
             player.getInventory().setItem(3, item_stone_shovel);
             player.getInventory().setItem(4, item_diamond_hoe);
+            player.getInventory().setItem(5, item_golden_pickaxe);
 
             player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, 300));
             player.setMetadata("bu_qiang_ammo", new FixedMetadataValue(plugin, 300));
             player.setMetadata("xiandan_qiang_ammo", new FixedMetadataValue(plugin, 300));
             player.setMetadata("dianyong_qiang_ammo", new FixedMetadataValue(plugin, 300));
+            player.setMetadata("guci_ammo", new FixedMetadataValue(plugin, 300));
 
             player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.SHOU_QIANG)));
             player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.BU_QIANG)));
             player.setMetadata("xiandan_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.XIANDAN_QIANG)));
             player.setMetadata("dianyong_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.DIANYONG_QIANG)));
+            player.setMetadata("guci_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.DIANYONG_QIANG)));
 
             player.setMetadata("gun_name_slot_1", new FixedMetadataValue(plugin, nbti_wood_hoe.getString("gun_name")));
             player.setMetadata("gun_name_slot_2", new FixedMetadataValue(plugin, nbti_stone_hoe.getString("gun_name")));
             player.setMetadata("gun_name_slot_3", new FixedMetadataValue(plugin, nbti_stone_shovel.getString("gun_name")));
             player.setMetadata("gun_name_slot_4", new FixedMetadataValue(plugin, nbti_diamond_hoe.getString("gun_name")));
+            player.setMetadata("gun_name_slot_5", new FixedMetadataValue(plugin, nbti_golden_pickaxe.getString("gun_name")));
         }
 
         return true;

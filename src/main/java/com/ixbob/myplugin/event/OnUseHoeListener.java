@@ -155,6 +155,9 @@ public class OnUseHoeListener implements Listener {
             case ("dianyong_qiang"): {
                 player.getInventory().setItem(4, eventInteractItem);
                 break;
+            }case ("guci"): {
+                player.getInventory().setItem(5, eventInteractItem);
+                break;
             }
             default:
                 throw new NullPointerException("Are you kidding me? no gun matches.");
