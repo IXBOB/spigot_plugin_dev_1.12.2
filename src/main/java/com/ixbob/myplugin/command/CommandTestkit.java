@@ -87,7 +87,7 @@ public class CommandTestkit implements CommandExecutor {
             player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.BU_QIANG)));
             player.setMetadata("xiandan_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.XIANDAN_QIANG)));
             player.setMetadata("dianyong_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.DIANYONG_QIANG)));
-            player.setMetadata("guci_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.DIANYONG_QIANG)));
+            player.setMetadata("guci_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.GUCI)));
 
             player.setMetadata("gun_name_slot_1", new FixedMetadataValue(plugin, nbti_wood_hoe.getString("gun_name")));
             player.setMetadata("gun_name_slot_2", new FixedMetadataValue(plugin, nbti_stone_hoe.getString("gun_name")));

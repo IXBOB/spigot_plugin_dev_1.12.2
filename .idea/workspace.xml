@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="added dianyong qiang (finished) and improved gun code structure a lot.">
+    <list default="true" id="09449e1f-4360-458d-857d-bfc1ed0096bb" name="Changes" comment="added guci(a kind of sniper gun).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/GunProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTestkit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/command/CommandTestkit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnItemHeldChangeListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/event/OnUseHoeListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ReloadGunTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ReloadGunTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/BulletMoveTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/BulletMoveTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ReloadGunTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ReloadGunAmmoTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ShotCoolDownTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ixbob/myplugin/task/ShotCoolDownTask.java" afterDir="false" />
     </list>
     <list id="f16b69f0-f12d-4b5a-8b67-77de91e087e0" name="Changes by admin" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -559,7 +558,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715396873158</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="added guci(a kind of sniper gun).">
+      <option name="closed" value="true" />
+      <created>1715398026131</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1715398026131</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -575,7 +582,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Add: iron sword and its attack functions.&#10;Improve: zombielevel1 will no longer spawn baby." />
     <MESSAGE value="Add: iron sword and its attack functions. Improve: zombielevel1 will no longer spawn baby." />
     <MESSAGE value="fix: when using sword, scoreboard update coin issue." />
     <MESSAGE value="player corpse." />
@@ -600,7 +606,8 @@
     <MESSAGE value="added xiandan qiang (finished) and improved code structure a lot." />
     <MESSAGE value="added xiandan qiang (finished) and improved gun code structure a lot." />
     <MESSAGE value="added dianyong qiang (finished) and improved gun code structure a lot." />
-    <option name="LAST_COMMIT_MESSAGE" value="added dianyong qiang (finished) and improved gun code structure a lot." />
+    <MESSAGE value="added guci(a kind of sniper gun)." />
+    <option name="LAST_COMMIT_MESSAGE" value="added guci(a kind of sniper gun)." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

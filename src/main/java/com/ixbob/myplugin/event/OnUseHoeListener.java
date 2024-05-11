@@ -3,7 +3,7 @@ package com.ixbob.myplugin.event;
 import com.ixbob.myplugin.GunProperties;
 import com.ixbob.myplugin.Main;
 import com.ixbob.myplugin.task.BulletMoveTask;
-import com.ixbob.myplugin.task.ReloadGunTask;
+import com.ixbob.myplugin.task.ReloadGunAmmoTask;
 import com.ixbob.myplugin.task.ShotCoolDownTask;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.*;
@@ -16,7 +16,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.Objects;
@@ -102,8 +101,9 @@ public class OnUseHoeListener implements Listener {
                     else {
                         item.setAmount(current_magazine_ammo);
                     }
-                    shotCoolDown(player, addExpPerCount, item);
-
+                    ShotCoolDownTask shotCoolDownTask = new ShotCoolDownTask(player, addExpPerCount, item);
+                    int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, shotCoolDownTask, 0, 0);
+                    shotCoolDownTask.setTaskID(taskID);
                 }
                 if ((action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK)
                         && item.getAmount() != gunMagazineFullAmmo.get(usingGunTypeInstance)
@@ -124,55 +124,13 @@ public class OnUseHoeListener implements Listener {
         return 1.0f / addExpCount;  //fill how much per time
     }
 
-    public void shotCoolDown(Player player, float addExpPerCount, ItemStack eventInteractItem) {
-        NBTItem nbtEventItem = new NBTItem(eventInteractItem);
-        ItemStack inhandItem = player.getInventory().getItemInMainHand();
-        nbtEventItem.setFloat("cooldown_progress", setNew(nbtEventItem.getFloat("cooldown_progress") + addExpPerCount));
-        if (inhandItem != null && inhandItem.getType() != Material.AIR) {
-            NBTItem nbtInhandItem = new NBTItem(inhandItem);
-            if (Objects.equals(nbtInhandItem.getString("item_type"),"gun")
-                    && Objects.equals(player.getInventory().getItemInMainHand(),eventInteractItem)) {
-                float newExp = setNew(nbtEventItem.getFloat("cooldown_progress")); //Prevent float from reporting errors due to accuracy
-                player.setExp(newExp);
-//                System.out.println("newExp: " + newExp);
-//                System.out.println("cooldown_progress" + nbtEventItem.getFloat("cooldown_progress"));
-            }
-        }
-        eventInteractItem = nbtEventItem.getItem();
-        switch (nbtEventItem.getString("gun_name")) {   // TODO: 等待后期换枪槽位实现完全后优化
-            case ("shou_qiang"): {
-                player.getInventory().setItem(1, eventInteractItem);
-                break;
-            }
-            case ("bu_qiang"): {
-                player.getInventory().setItem(2, eventInteractItem);
-                break;
-            }
-            case ("xiandan_qiang"): {
-                player.getInventory().setItem(3, eventInteractItem);
-                break;
-            }
-            case ("dianyong_qiang"): {
-                player.getInventory().setItem(4, eventInteractItem);
-                break;
-            }case ("guci"): {
-                player.getInventory().setItem(5, eventInteractItem);
-                break;
-            }
-            default:
-                throw new NullPointerException("Are you kidding me? no gun matches.");
-        }
-
-        BukkitTask task = new ShotCoolDownTask(player, addExpPerCount, eventInteractItem,this).runTaskLater(plugin, 1);
-    }
-
     public void reloadGunAmmo(ItemStack item, Player player) {
-        BukkitTask task = new ReloadGunTask(item, player, this, gunReloadAmmoTime, gunDurabilityLegacy, gunMagazineFullAmmo, plugin).runTaskTimer(plugin, 0, 1);
+        ReloadGunAmmoTask reloadGunAmmoTask = new ReloadGunAmmoTask(item, player, this, gunReloadAmmoTime, gunDurabilityLegacy, gunMagazineFullAmmo, plugin);
+        int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, reloadGunAmmoTask, 0, 0);
+        reloadGunAmmoTask.setTaskID(taskID);
     }
 
-    public float setNew(float origin) {
-        return Math.min(1.0f, Math.max(0.0f, origin));
-    }
+
 
     public void spawnBullet() {
         Location spawnCacheLocation = new Location(world ,interactLocation.getX(), interactLocation.getY() + 100d, interactLocation.getZ());

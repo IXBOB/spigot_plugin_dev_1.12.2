@@ -42,7 +42,7 @@ public class BulletMoveTask implements Runnable {
                         && entity.getType() != EntityType.SPLASH_POTION
                         && entity.getType() != EntityType.EXPERIENCE_ORB) {
                     LivingEntity nearbyEntity = (LivingEntity) nearbyEntities.get(0);
-                    if (nearbyEntity.getType() == EntityType.ZOMBIE
+                    if (!nearbyEntity.isDead() && nearbyEntity.getType() == EntityType.ZOMBIE
                             || nearbyEntity.getType() == EntityType.SKELETON
                             || nearbyEntity.getType() == EntityType.CREEPER
                             || nearbyEntity.getType() == EntityType.SPIDER
