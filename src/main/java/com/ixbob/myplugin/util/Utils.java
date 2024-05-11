@@ -138,7 +138,7 @@ public class Utils {
         return loc;
     }
 
-    public static boolean isAmmoHitHead(LivingEntity nearByEntity, Player player) {
+    public static boolean isAmmoHitHead(LivingEntity nearByEntity) {
         double last_damage_bullet_pos_y = nearByEntity.getMetadata("last_damage_bullet_pos_y").get(0).asDouble();
         double current_pos_y = nearByEntity.getLocation().getY();
         return Math.abs(last_damage_bullet_pos_y - (current_pos_y + 1.75)) <= 0.5;

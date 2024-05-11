@@ -53,22 +53,34 @@ public class CommandTestkit implements CommandExecutor {
             nbti_stone_shovel.setBoolean("reloading", false);
             item_stone_shovel = nbti_stone_shovel.getItem();
 
+            ItemStack item_diamond_hoe = new ItemStack(Material.DIAMOND_HOE, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.DIANYONG_QIANG));
+            NBTItem nbti_diamond_hoe = new NBTItem(item_diamond_hoe);
+            nbti_diamond_hoe.setString("item_type", "gun");
+            nbti_diamond_hoe.setString("gun_name", "dianyong_qiang");
+            nbti_diamond_hoe.setFloat("cooldown_progress", 1.0f);
+            nbti_diamond_hoe.setBoolean("reloading", false);
+            item_diamond_hoe = nbti_diamond_hoe.getItem();
+
             player.getInventory().setItem(0, item_iron_sword);
             player.getInventory().setItem(1, item_wood_hoe);
             player.getInventory().setItem(2, item_stone_hoe);
             player.getInventory().setItem(3, item_stone_shovel);
+            player.getInventory().setItem(4, item_diamond_hoe);
 
             player.setMetadata("shou_qiang_ammo", new FixedMetadataValue(plugin, 300));
             player.setMetadata("bu_qiang_ammo", new FixedMetadataValue(plugin, 300));
             player.setMetadata("xiandan_qiang_ammo", new FixedMetadataValue(plugin, 300));
+            player.setMetadata("dianyong_qiang_ammo", new FixedMetadataValue(plugin, 300));
 
             player.setMetadata("shou_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.SHOU_QIANG)));
             player.setMetadata("bu_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.BU_QIANG)));
             player.setMetadata("xiandan_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.XIANDAN_QIANG)));
+            player.setMetadata("dianyong_qiang_current_magazine_ammo", new FixedMetadataValue(plugin, GunProperties.gunMagazineFullAmmo.get(GunProperties.GunType.DIANYONG_QIANG)));
 
             player.setMetadata("gun_name_slot_1", new FixedMetadataValue(plugin, nbti_wood_hoe.getString("gun_name")));
             player.setMetadata("gun_name_slot_2", new FixedMetadataValue(plugin, nbti_stone_hoe.getString("gun_name")));
             player.setMetadata("gun_name_slot_3", new FixedMetadataValue(plugin, nbti_stone_shovel.getString("gun_name")));
+            player.setMetadata("gun_name_slot_4", new FixedMetadataValue(plugin, nbti_diamond_hoe.getString("gun_name")));
         }
 
         return true;

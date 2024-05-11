@@ -2,32 +2,23 @@ package com.ixbob.myplugin.event;
 
 import com.ixbob.myplugin.GunProperties;
 import com.ixbob.myplugin.Main;
-import com.ixbob.myplugin.handler.config.LangLoader;
 import com.ixbob.myplugin.task.BulletMoveTask;
 import com.ixbob.myplugin.task.ReloadGunTask;
 import com.ixbob.myplugin.task.ShotCoolDownTask;
-import com.ixbob.myplugin.util.Utils;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import static com.ixbob.myplugin.GunProperties.*;
@@ -161,6 +152,10 @@ public class OnUseHoeListener implements Listener {
                 player.getInventory().setItem(3, eventInteractItem);
                 break;
             }
+            case ("dianyong_qiang"): {
+                player.getInventory().setItem(4, eventInteractItem);
+                break;
+            }
             default:
                 throw new NullPointerException("Are you kidding me? no gun matches.");
         }
@@ -170,63 +165,6 @@ public class OnUseHoeListener implements Listener {
 
     public void reloadGunAmmo(ItemStack item, Player player) {
         BukkitTask task = new ReloadGunTask(item, player, this, gunReloadAmmoTime, gunDurabilityLegacy, gunMagazineFullAmmo, plugin).runTaskTimer(plugin, 0, 1);
-    }
-
-    public void bulletMove(ArmorStand armorStand){
-        GunType belongGunType = GunProperties.getGunTypeByString(armorStand.getMetadata("belong_gun_type").get(0).asString());
-        float bulletSpeed = gunBulletMoveSpeed.get(belongGunType);
-        armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, armorStand.getMetadata("fly_distance").get(0).asFloat() + bulletSpeed));
-        List<Entity> nearbyEntities = armorStand.getNearbyEntities(0.1,0.1,0.1);
-        if (!nearbyEntities.isEmpty()) {
-            for (Entity entity : nearbyEntities) {
-                if (entity.getType() != EntityType.DROPPED_ITEM
-                        && entity.getType() != EntityType.ARROW
-                        && entity.getType() != EntityType.LINGERING_POTION
-                        && entity.getType() != EntityType.SPLASH_POTION
-                        && entity.getType() != EntityType.EXPERIENCE_ORB) {
-                    LivingEntity nearbyEntity = (LivingEntity) nearbyEntities.get(0);
-                    if (nearbyEntity.getType() == EntityType.ZOMBIE
-                            || nearbyEntity.getType() == EntityType.SKELETON
-                            || nearbyEntity.getType() == EntityType.CREEPER
-                            || nearbyEntity.getType() == EntityType.SPIDER
-                            || nearbyEntity.getType() == EntityType.PIG_ZOMBIE) {
-                        boolean hitHead = false;
-                        nearbyEntity.setMetadata("last_damage_bullet_pos_y", new FixedMetadataValue(plugin, armorStand.getLocation().getY()));
-                        nearbyEntity.setMetadata("receiving_damage_once", new FixedMetadataValue(plugin, nearbyEntity.getMetadata("receiving_damage_once").get(0).asInt() + gunDamage.get(belongGunType)));
-                        if (Utils.isAmmoHitHead(nearbyEntity, eventPlayer)) {
-                            nearbyEntity.setMetadata("receiving_damage_once", new FixedMetadataValue(plugin, nearbyEntity.getMetadata("receiving_damage_once").get(0).asInt() + 3));
-                            hitHead = true;
-                        }
-                        Player owner = Bukkit.getPlayer(armorStand.getMetadata("owner").get(0).asString());
-                        int playerCoinCount = owner.getMetadata("coin_count").get(0).asInt();
-                        Scoreboard scoreboard = owner.getScoreboard();
-                        Objective scoreboardObjective = scoreboard.getObjective("main");
-                        scoreboardObjective.getScoreboard().resetScores(owner.getDisplayName() + " " + ChatColor.GOLD + owner.getMetadata("coin_count").get(0).asInt());
-                        String message;
-                        if (hitHead) {
-                            owner.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + GunProperties.gunHitHeadGetCoin.get(belongGunType)));
-                            message = String.format(LangLoader.get("game_hit_monster_head"), GunProperties.gunHitHeadGetCoin.get(belongGunType));
-                        }
-                        else {
-                            owner.setMetadata("coin_count",new FixedMetadataValue(plugin, playerCoinCount + GunProperties.gunHitDefaultGetCoin.get(belongGunType)));
-                            message = String.format(LangLoader.get("game_hit_monster_default"), GunProperties.gunHitDefaultGetCoin.get(belongGunType));
-                        }
-                        owner.sendMessage(message);
-                        Utils.updatePlayerCoinScoreboard(owner);
-                        armorStand.remove();
-                        return;
-                    }
-                }
-            }
-        }
-        if (armorStand.getLocation().getBlock().getType() != Material.AIR
-                || armorStand.getMetadata("fly_distance").get(0).asFloat() >= gunBulletMoveDistance.get(belongGunType)) {
-            armorStand.remove();
-            return;
-        }
-        armorStand.getWorld().spawnParticle(Particle.CRIT, armorStand.getLocation(),  1, 0, 0, 0, 0);
-        armorStand.teleport(armorStand.getLocation().add(armorStand.getLocation().getDirection().multiply(bulletSpeed)));
-        BukkitTask task = new BulletMoveTask(armorStand, this).runTaskLater(plugin, 1);
     }
 
     public float setNew(float origin) {
@@ -243,6 +181,8 @@ public class OnUseHoeListener implements Listener {
         armorStand.setMetadata("fly_distance", new FixedMetadataValue(plugin, 0));
         armorStand.setMetadata("owner", new FixedMetadataValue(plugin, eventPlayer.getName()));
         armorStand.setMetadata("belong_gun_type", new FixedMetadataValue(plugin, usingGunName));
-        bulletMove(armorStand);
+        BulletMoveTask bulletMoveTask = new BulletMoveTask(armorStand);
+        int taskID = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bulletMoveTask, 0, 0);
+        bulletMoveTask.setTaskID(taskID);
     }
 }
